@@ -9,19 +9,19 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
+//@ComponentScan
 public class AppConfig
 {
     @Bean
-    @DatabaseType("MYSQL")
-//    @Conditional(MySQLDatabaseTypeCondition.class)
+//    @DatabaseType("MYSQL")
+    @Conditional(MySQLDatabaseTypeCondition.class)
     public UserDAO jdbcUserDAO(){
         return new JdbcUserDAO();
     }
 
     @Bean
-    @DatabaseType("MONGO")
-//    @Conditional(MongoDbTypePropertyCondition.class)
+//    @DatabaseType("MONGO")
+    @Conditional(MongoDBDatabaseTypeCondition.class)
     public UserDAO mongoUserDAO(){
         return new MongoUserDAO();
     }

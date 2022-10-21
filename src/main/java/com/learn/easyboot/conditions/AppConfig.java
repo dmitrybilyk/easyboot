@@ -14,14 +14,14 @@ public class AppConfig
 {
     @Bean
 //    @DatabaseType("MYSQL")
-    @Conditional(MySQLDatabaseTypeCondition.class)
+    @Conditional(MysqlDbTypePropertyCondition.class)
     public UserDAO jdbcUserDAO(){
         return new JdbcUserDAO();
     }
 
     @Bean
 //    @DatabaseType("MONGO")
-    @Conditional(MongoDBDatabaseTypeCondition.class)
+    @Conditional(MongoDbTypePropertyCondition.class)
     public UserDAO mongoUserDAO(){
         return new MongoUserDAO();
     }

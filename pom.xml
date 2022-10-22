@@ -66,7 +66,65 @@
 					</excludes>
 				</configuration>
 			</plugin>
-		</plugins>
+			<plugin>
+    				<groupId>com.github.ekryd.echo-maven-plugin</groupId>
+   				 <artifactId>echo-maven-plugin</artifactId>
+   				 <version>1.3.2</version>
+<executions>
+    <execution>
+        <id>echo-clean-phase</id>
+        <phase>clean</phase>
+        <goals>
+            <goal>echo</goal>
+        </goals>
+        <configuration>
+            <message>
+                Hello, clean phase
+            </message>
+            <level>INFO</level>
+            <!-- <toFile>/logs/log-echo.txt</toFile> -->
+            <append>true</append>
+        </configuration>
+    </execution>
+	<execution>
+        <id>echo-install-phase</id>
+        <phase>install</phase>
+        <goals>
+            <goal>echo</goal>
+        </goals>
+        <configuration>
+            <message>
+                Hello, install phase
+            </message>
+            <level>INFO</level>
+            <!-- <toFile>/logs/log-echo.txt</toFile> -->
+            <append>true</append>
+        </configuration>
+    </execution>
+</executions>
+			</plugin>			
+<plugin>
+    <groupId>org.codehaus.gmaven</groupId>
+    <artifactId>groovy-maven-plugin</artifactId>
+    <version>2.1.1</version>
+<executions>
+    <execution>
+        <phase>validate</phase>
+        <goals>
+            <goal>execute</goal>
+        </goals>
+        <configuration>
+            <source>
+                log.info('Test message: {}', 'Hello, World!')
+                log.info('Embed a line break {}', System.lineSeparator())
+                log.info('ArtifactId is: ${project.artifactId}')
+                log.warn('Message only in debug mode')
+            </source>
+        </configuration>
+    </execution>
+</executions>
+</plugin>	
+	</plugins>
 	</build>
 
 </project>

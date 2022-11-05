@@ -1,0 +1,10 @@
+Hello, world
+                Embed a line break: 
+
+                ArtifactId is easyboot-starterHello, world
+                Embed a line break: 
+
+                ArtifactId is easyboot-starterHello, world
+                Embed a line break: 
+
+                ArtifactId is easyboot-starter

@@ -135,6 +135,7 @@
 				<plugins>
 					<plugin>
 						<groupId>io.fabric8</groupId>
+						<version>0.40.1</version>
 						<artifactId>docker-maven-plugin</artifactId>
 						<executions>
 							<execution>
@@ -155,7 +156,7 @@
 						<configuration>
 							<images>
 								<image>
-									<name>learn/easyboot/${project.parent.artifactId}</name>
+									<name>easy/easy:${chart.version}</name>
 									<build>
 										<dockerFileDir>service</dockerFileDir>
 										<filter>@</filter>

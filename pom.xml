@@ -156,7 +156,7 @@
 						<configuration>
 							<images>
 								<image>
-									<name>easy/easy:${chart.version}</name>
+									<name>easy/easy:latest</name>
 									<build>
 										<dockerFileDir>service</dockerFileDir>
 										<filter>@</filter>

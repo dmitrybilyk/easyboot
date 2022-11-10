@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(AppConfig.class)
+// @Import(AppConfig.class)
 public class EasybootApplication {
 
 	public static void main(String[] args) {

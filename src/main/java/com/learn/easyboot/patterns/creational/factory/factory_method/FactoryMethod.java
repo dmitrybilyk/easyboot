@@ -1,7 +1,4 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package com.learn.easyboot.patterns.creational.factory.factory_method;
 
 class FactoryMethod {
 	private static Dialog dialog;

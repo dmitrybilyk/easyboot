@@ -2,7 +2,7 @@ package com.learn.easyboot.patterns.creational.factory;
 
 public class AbstractFactory {
     public static void main(String[] args) {
-        Client client = new Client(new WinControlsFactory());
+        Client client = new Client(new LinuxControlsFactory());
         Button button = client.createButton();
         CheckBox checkBox = client.createCheckBox();
         button.click();
@@ -11,7 +11,7 @@ public class AbstractFactory {
 }
 
 class Client {
-    private ControlsAbstractFactory abstractFactory;
+    private final ControlsAbstractFactory abstractFactory;
 
     public Client(ControlsAbstractFactory abstractFactory) {
         this.abstractFactory = abstractFactory;
@@ -43,6 +43,13 @@ class MacButton implements Button {
         System.out.println("mac button clicks");
     }
 }
+class LinuxButton implements Button {
+
+    @Override
+    public void click() {
+        System.out.println("linux button clicks");
+    }
+}
 
 interface CheckBox {
     void tick();
@@ -61,6 +68,13 @@ class MacCheckBox implements CheckBox {
     @Override
     public void tick() {
         System.out.println("mac checkbox ticks");
+    }
+}
+class LinuxCheckBox implements CheckBox {
+
+    @Override
+    public void tick() {
+        System.out.println("linux checkbox ticks");
     }
 }
 
@@ -92,5 +106,18 @@ class MacControlsFactory implements ControlsAbstractFactory {
     @Override
     public CheckBox createCheckBox() {
         return new MacCheckBox();
+    }
+}
+
+class LinuxControlsFactory implements ControlsAbstractFactory {
+
+    @Override
+    public Button createButton() {
+        return new LinuxButton();
+    }
+
+    @Override
+    public CheckBox createCheckBox() {
+        return new LinuxCheckBox();
     }
 }

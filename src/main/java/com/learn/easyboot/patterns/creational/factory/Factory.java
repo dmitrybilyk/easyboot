@@ -1,10 +1,11 @@
+package com.learn.easyboot.patterns.creational.factory;
 
 public class Factory {
 
 	public static void main(String[] args) {
 		CoffeeShop coffeeShop = new CoffeeShop(new SimpleCoffeeFactory());
 
-		Coffee coffee = coffeeShop.orderCoffee(CoffeeType.AMERICANO);
+		Coffee coffee = coffeeShop.orderCoffee(CoffeeType.COLD_COFFEE);
 		coffee.makeCoffee();
 		coffee.grindCoffee();
 		coffee.pourIntoCup();
@@ -30,6 +31,9 @@ class SimpleCoffeeFactory {
                 break;
             case CAFFE_LATTE:
                 coffee = new CaffeLatte();
+                break;
+            case COLD_COFFEE:
+                coffee = new ColdCoffee();
                 break;
         }
 
@@ -75,10 +79,18 @@ class Americano extends Coffee {}
 class Cappuccino extends Coffee {}
 class CaffeLatte extends Coffee {}
 class Espresso extends Coffee {}
+class ColdCoffee extends Coffee {
+    @Override
+    public void makeCoffee() {
+        super.makeCoffee();
+        System.out.println("Also making coffee cold");
+    }
+}
 
 enum CoffeeType {
     ESPRESSO,
     AMERICANO,
     CAFFE_LATTE,
-    CAPPUCCINO
+    CAPPUCCINO,
+    COLD_COFFEE
 }

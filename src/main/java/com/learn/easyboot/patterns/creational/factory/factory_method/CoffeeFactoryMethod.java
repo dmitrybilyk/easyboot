@@ -1,6 +1,6 @@
-package com.learn.easyboot.patterns.creational.factory;
+package com.learn.easyboot.patterns.creational.factory.factory_method;
 
-public class Factory {
+public class CoffeeFactoryMethod {
 
 	public static void main(String[] args) {
 		CoffeeShop coffeeShop = new CoffeeShop(new SimpleCoffeeFactory());

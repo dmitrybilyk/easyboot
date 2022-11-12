@@ -1,4 +1,4 @@
-package com.learn.easyboot.patterns.creational.factory;
+package com.learn.easyboot.patterns.creational.factory.abstract_factory;
 
 public class AbstractFactory {
     public static void main(String[] args) {

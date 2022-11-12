@@ -2,8 +2,9 @@ package com.learn.easyboot.patterns.creational.factory.abstract_factory;
 
 public class AbstractFactoryVehicleCheck {
     public static void main(String[] args) {
-        String sizeName = "big";
+        String sizeName = "small";
         ShowRunner showRunner = new ShowRunner();
+        showRunner.configure(sizeName);
         showRunner.setRaceSizeAbstractFactory(new MiddleSizeRaceAbstractFactory());
         showRunner.configure(sizeName);
         showRunner.runShow();
@@ -20,6 +21,13 @@ class ShowRunner {
     }
 
     void configure(String sizeName) {
+        if (sizeName.equals("big")) {
+            setRaceSizeAbstractFactory(new BigSizeRaceAbstractFactory());
+        } else if (sizeName.equals("middle")) {
+            setRaceSizeAbstractFactory(new MiddleSizeRaceAbstractFactory());
+        } else {
+            setRaceSizeAbstractFactory(new SmallSizeRaceAbstractFactory());
+        }
         car = raceSizeAbstractFactory.createCar();
         motoBike = raceSizeAbstractFactory.createMotoBike();
     }

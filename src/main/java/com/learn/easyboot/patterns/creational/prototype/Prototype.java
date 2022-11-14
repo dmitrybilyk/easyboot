@@ -1,4 +1,4 @@
-package com.learn.easyboot.patterns.creational.factory.prototype;
+package com.learn.easyboot.patterns.creational.prototype;
 
 public class Prototype {
     public static void main(String[] args) {

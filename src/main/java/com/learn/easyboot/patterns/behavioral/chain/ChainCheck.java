@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.behavioral.chain;
 
 public class ChainCheck {
 	public static void main(String[] args) {

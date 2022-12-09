@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.behavioral.command;
 
 public class CommandCheck {
 	public static void main(String[] args) {

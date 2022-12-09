@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.behavioral.iterator;
 
 public class IteratorPattern {
 	public static void main(String[] args) {
@@ -26,7 +27,7 @@ class Notification
 // Collection interface
 interface Collection
 {
-    public Iterator createIterator();
+    public IteratorPat createIterator();
 }
  
 // Collection of notifications
@@ -58,9 +59,9 @@ class NotificationCollection implements Collection
         }
     }
  
-    public Iterator createIterator()
+    public IteratorPat createIterator()
     {
-        return new NotificationIterator(notificationList);
+        return new NotificationIteratorPat(notificationList);
     }
 }
  
@@ -76,7 +77,7 @@ interface Iterator
 }
  
 // Notification iterator
-class NotificationIterator implements Iterator
+class NotificationIteratorPat implements IteratorPat
 {
     Notification[] notificationList;
  
@@ -85,7 +86,7 @@ class NotificationIterator implements Iterator
  
     // Constructor takes the array of notificationList are
     // going to iterate over.
-    public  NotificationIterator (Notification[] notificationList)
+    public NotificationIteratorPat(Notification[] notificationList)
     {
         this.notificationList = notificationList;
     }
@@ -121,11 +122,11 @@ class NotificationBar
  
     public void printNotifications()
     {
-        Iterator iterator = notifications.createIterator();
+        IteratorPat iteratorPat = notifications.createIterator();
         System.out.println("-------NOTIFICATION BAR------------");
-        while (iterator.hasNext())
+        while (iteratorPat.hasNext())
         {
-            Notification n = (Notification)iterator.next();
+            Notification n = (Notification) iteratorPat.next();
             System.out.println(n.getNotification());
         }
     }

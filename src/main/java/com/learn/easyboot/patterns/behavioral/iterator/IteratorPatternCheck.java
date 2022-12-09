@@ -1,3 +1,5 @@
+package com.learn.easyboot.patterns.behavioral.iterator;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -5,9 +7,9 @@ import java.util.ArrayList;
 public class IteratorPatternCheck {
 	public static void main(String[] args) {
 		CarsCollection carsCollection = new CarsCollectionImpl();
-		Iterator iterator = carsCollection.iterator();
-		while(iterator.hasNext()) {
-			System.out.println(iterator.next());
+		IteratorPat iteratorPat = carsCollection.iterator();
+		while(iteratorPat.hasNext()) {
+			System.out.println(iteratorPat.next());
 		}
 	}
 }
@@ -25,15 +27,15 @@ class Car {
 	}
 }
 
-interface Iterator {
+interface IteratorPat {
 	boolean hasNext();
-	Car next();
+	Object next();
 }
 
-class CarsIterator implements Iterator {
+class CarsIteratorPat implements IteratorPat {
 	private int currentPosition;
 	CarsCollection cars = new CarsCollectionImpl();
-	public CarsIterator() {
+	public CarsIteratorPat() {
 		cars.add(new Car("Opel"));
 		cars.add(new Car("Honda"));
 	}
@@ -48,7 +50,7 @@ class CarsIterator implements Iterator {
 }
 
 interface CarsCollection {
-	Iterator iterator();
+	IteratorPat iterator();
 	void add(Car car);
 	Car get(int index);
 	int size();
@@ -56,8 +58,8 @@ interface CarsCollection {
 
 class CarsCollectionImpl implements CarsCollection {
 	List<Car> carsList = new ArrayList();
-	public Iterator iterator() {
-		return new CarsIterator();
+	public IteratorPat iterator() {
+		return new CarsIteratorPat();
 	}
 
 	public void add(Car car) {

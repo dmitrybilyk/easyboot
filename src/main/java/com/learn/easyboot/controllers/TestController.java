@@ -16,7 +16,7 @@ public class TestController {
 
     @GetMapping("/get")
     public Human getHuman() {
-        userDAO.getAllUserNames().forEach(System.out::println);
+//        userDAO.getAllUserNames().forEach(System.out::println);
         return Human.builder().name("some name").build();
     }
 }

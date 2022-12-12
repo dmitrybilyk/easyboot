@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8104/easy/get
+GET http://localhost:8707/easy/get
 
 <> 2022-10-20T200659.200.json
 

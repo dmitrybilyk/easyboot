@@ -1,8 +1,9 @@
+package com.learn.easyboot.patterns.structural.adapter;
 
 public class AdapterCheck {
 	public static void main(String[] args) {
 		JsonFile jsonFile = new JsonFile();
-		SomeWebService service = new SomeWebServiceAdapter(new SomeWebServiceImpl());
+		SomeWebServiceAdapter service = new SomeWebServiceAdapter(new SomeWebServiceImpl());
 		service.sendData(jsonFile);
 	}
 }
@@ -26,7 +27,7 @@ class SomeWebServiceImpl implements SomeWebService {
 	}
 }
 
-class SomeWebServiceAdapter implements SomeWebService {
+class SomeWebServiceAdapter {
 	private SomeWebService service;
 	public SomeWebServiceAdapter(SomeWebService someWebService) {
 		this.service = someWebService;

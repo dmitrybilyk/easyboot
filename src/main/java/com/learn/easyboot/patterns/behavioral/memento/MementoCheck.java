@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.behavioral.memento;
 
 public class MementoCheck {
 	public static void main(String[] args) {

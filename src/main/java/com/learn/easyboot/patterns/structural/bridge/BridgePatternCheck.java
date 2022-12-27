@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.structural.bridge;
 
 public class BridgePatternCheck {
 	public static void main(String[] args) {

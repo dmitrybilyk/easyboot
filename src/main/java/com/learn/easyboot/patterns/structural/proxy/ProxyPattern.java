@@ -1,3 +1,5 @@
+package com.learn.easyboot.patterns.structural.proxy;
+
 import java.util.HashMap;
 
 

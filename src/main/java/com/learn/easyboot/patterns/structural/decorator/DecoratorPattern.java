@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.structural.decorator;
 
 public class DecoratorPattern {
 	public static void main(String[] args) {

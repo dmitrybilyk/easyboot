@@ -1,3 +1,5 @@
+package com.learn.easyboot.patterns.structural.flyweight;
+
 import java.util.HashMap;
 import java.util.Map;
 

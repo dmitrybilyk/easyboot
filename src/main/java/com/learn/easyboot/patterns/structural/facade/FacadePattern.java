@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.structural.facade;
 
 public class FacadePattern {
 	public static void main(String[] args) {

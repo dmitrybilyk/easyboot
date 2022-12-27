@@ -1,3 +1,5 @@
+package com.learn.easyboot.patterns.structural.composite;
+
 import java.util.List;
 import java.util.ArrayList;
 

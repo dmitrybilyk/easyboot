@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.structural.adapter;
 
 public class AdapterCheck2 {
 	public static void main(String[] args) {

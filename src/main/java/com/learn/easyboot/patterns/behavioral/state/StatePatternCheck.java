@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.behavioral.state;
 
 public class StatePatternCheck {
 	public static void main(String[] args) {

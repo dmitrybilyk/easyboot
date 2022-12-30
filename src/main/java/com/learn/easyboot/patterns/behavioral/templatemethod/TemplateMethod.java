@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.behavioral.templatemethod;
 
 public class TemplateMethod {
 	public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package com.learn.easyboot.algorythms.sorting;
+
 public class MergeSort {
 
 	public static void main(String[] args) {

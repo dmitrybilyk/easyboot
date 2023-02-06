@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.creational.singleton;
 
 public class SimpleSingletone {
 	// This is init on demand. The static class is getting initialized when the method getInstance is triggered

@@ -1,3 +1,5 @@
+package com.learn.easyboot.patterns.creational.factory.factory_method;
+
 public class FactoryMethodCheck {
 	public static void main(String[] args) {
 		CoctailMaker coctailMaker;

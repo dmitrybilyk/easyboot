@@ -5,3 +5,6 @@ GET http://localhost:8707/easy/get
 
 ###
 GET http://localhost:8080/get
+
+###
+GET http://localhost:8080/easy/rest/John

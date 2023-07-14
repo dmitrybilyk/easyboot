@@ -8,3 +8,6 @@ GET http://localhost:8080/get
 
 ###
 GET http://localhost:8080/easy/rest/John
+
+###
+GET http://localhost:8707/easy/example/44

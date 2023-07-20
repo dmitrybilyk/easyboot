@@ -10,4 +10,4 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 EXPOSE 8104
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.learn.easyboot.EasybootApplication","--logging.config=classpath:logback-docker.xml"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.learn.easyboot.EasyBootApplication","--logging.config=classpath:logback-docker.xml"]

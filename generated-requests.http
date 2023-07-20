@@ -1,13 +1,8 @@
-###
+### Test Controller
 GET http://localhost:8707/easy/get
 
-<> 2022-10-20T200659.200.json
+###
+GET http://localhost:8707/easy/rest/John
 
 ###
-GET http://localhost:8080/get
-
-###
-GET http://localhost:8080/easy/rest/John
-
-###
-GET http://localhost:8707/easy/example/44
+GET http://localhost:8707/easy/rest/example/44

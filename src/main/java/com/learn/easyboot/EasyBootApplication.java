@@ -1,18 +1,17 @@
 package com.learn.easyboot;
 
-import com.learn.easyboot.conditions.AppConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@ComponentScan("com.learn.easyboot.camel.*")
+//@ComponentScan
+//@ComponentScan("com.learn.easyboot.controllers")
 // @Import(AppConfig.class)
-public class EasybootApplication {
+public class EasyBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EasybootApplication.class, args);
+		SpringApplication.run(EasyBootApplication.class, args);
 	}
 
 }

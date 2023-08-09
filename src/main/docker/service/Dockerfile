@@ -1,4 +1,4 @@
-FROM openjdk:11.0-jdk-slim as build
+FROM openjdk:17.0-jdk-slim as build
 WORKDIR /workspace/app
 ADD maven/@project.build.finalName@.jar application.jar
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /workspace/app/application.jar)

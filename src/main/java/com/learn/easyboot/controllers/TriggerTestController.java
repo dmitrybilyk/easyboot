@@ -13,7 +13,7 @@ public class TriggerTestController {
     public Human getHuman() {
         RestTemplate restTemplate = new RestTemplate();
         String fooResourceUrl
-                = "http://172.17.0.2:8707/easy/get";
+                = "http://first:8707/easy/get";
         ResponseEntity<Human> response
                 = restTemplate.getForEntity(fooResourceUrl, Human.class);
         return response.getBody();

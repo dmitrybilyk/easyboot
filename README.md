@@ -4,6 +4,7 @@ Barbara Liskov!!!
 mvn clean install
 docker build -t easy07:1.1.1 .
 docker run -p 8707:8707 --name exec07 easy07:1.1.1
+docker run -p 8707:8707 --name exec07 --network easy-network --hostname first easy07:1.1.1
 
 git checkout another_container
 mvn clean install

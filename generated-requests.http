@@ -1,6 +1,12 @@
 ### Test Controller
 GET http://localhost:8707/easy/get
 
+### Test Controller
+GET http://localhost:8708/easy/get
+
+### Trigger Test Controller
+GET http://localhost:8708/easy/trigger
+
 ###
 GET http://localhost:8707/easy/rest/John
 

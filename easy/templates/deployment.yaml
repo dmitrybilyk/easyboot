@@ -25,4 +25,45 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: easy-port
-              containerPort: 8104
+              containerPort: 8707
+          envFrom:
+            - configMapRef:
+                name: easy-configmap
+          env:
+            - name: APPLICATION.KEYCLOAK.MASTER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-master-client
+                  key: secret
+            - name: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: db.host
+            - name: DATABASE_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: db.port
+            - name: DATABASE_NAME
+              value: auto_qm
+            - name: spring.database.user
+              valueFrom:
+                secretKeyRef:
+                  name: automated-qm-secret
+                  key: spring.datasource.user
+            - name: spring.database.password
+              valueFrom:
+                secretKeyRef:
+                  name: automated-qm-secret
+                  key: spring.datasource.password
+            - name: params.parameter1
+              valueFrom:
+                configMapKeyRef:
+                  key: params.parameter1
+                  name: easy-configmap
+            - name: params.param2
+              valueFrom:
+                configMapKeyRef:
+                  key: params.parameter2
+                  name: easy-configmap

@@ -9,4 +9,4 @@ spec:
     app: easy-pod
   ports:
     - name: easy-port
-      port: 8104
+      port: 8707

@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: easy-configmap
+data:
+  params.parameter1: "{{ .Values.params.parameter1 }}"
+  params.parameter2: "{{ .Values.params.parameter2 }}"

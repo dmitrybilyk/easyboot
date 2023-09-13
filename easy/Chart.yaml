@@ -1,4 +1,4 @@
 apiVersion: v1
 description: Chart for easy
 name: easy
-version: 1.1.1
+version: 1.1.4

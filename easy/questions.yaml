@@ -1,0 +1,15 @@
+questions:
+  - variable: params.parameter1
+    default: 30
+    label: "Parameter1"
+    description: "For Parameter 1"
+    type: int
+    required: true
+    group: "Easy Settings"
+  - variable: review.maxNumber
+    default: 50000
+    label: "Parameter 2"
+    description: "For parameter 2"
+    type: string
+    required: true
+    group: "Easy Settings"

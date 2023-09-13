@@ -1,6 +1,6 @@
 image:
   repository: ""
-  nameWithTag: "localhost:5000/easy:1.2.1"
+  nameWithTag: "localhost:5000/easy:5.5.8"
 
 deployment:
   memory:
@@ -9,3 +9,6 @@ deployment:
     request: "10m"
   app:
     path: "/easy"
+params:
+  parameter1: 30
+  parameter2: "Dmytro"

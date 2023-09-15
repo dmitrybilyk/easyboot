@@ -1,5 +1,6 @@
+package com.learn.easyboot.patterns.oop;
 
-public abstract class Shape   
+public abstract class Shape
 {  
 //abstract method  
 //note that we have not implemented the functionality of the method  

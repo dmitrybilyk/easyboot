@@ -1,3 +1,4 @@
+package com.learn.easyboot.generics;
 
 class GenericContainer<T, V, C> {
 

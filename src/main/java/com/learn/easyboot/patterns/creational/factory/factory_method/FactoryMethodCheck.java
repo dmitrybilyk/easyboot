@@ -2,65 +2,65 @@ package com.learn.easyboot.patterns.creational.factory.factory_method;
 
 public class FactoryMethodCheck {
 	public static void main(String[] args) {
-		CoctailMaker coctailMaker;
+		CocktailMaker cocktailMaker;
 		String whatClientWants = "milk";
 		if (whatClientWants.equals("hot")) {
-			coctailMaker = new HotCoctailMaker();
+			cocktailMaker = new HotCocktailMaker();
 		} else if (whatClientWants.equals("milk")) {
-			coctailMaker = new MilkCoctailMaker();
+			cocktailMaker = new MilkCocktailMaker();
 		} else {
-			coctailMaker = new ColdCoctailMaker();
+			cocktailMaker = new ColdCocktailMaker();
 		}
-		coctailMaker.prepareForMaking();
-		Coctail coctail = coctailMaker.makeCoctail();
-		System.out.println(coctail.name);
+		cocktailMaker.prepareForMaking();
+		Cocktail cocktail = cocktailMaker.makeCocktail();
+		System.out.println(cocktail.name);
 	}
 }
 
-abstract class CoctailMaker {
-	// could be much more logic common for both types of the product (coctail)
+abstract class CocktailMaker {
+	// could be much more logic common for both types of the product (cocktail)
 	void prepareForMaking() {
 		System.out.println("preparing for making");
 	}
-	abstract Coctail makeCoctail();
+	abstract Cocktail makeCocktail();
 }
 
-class HotCoctailMaker extends CoctailMaker {
-	public Coctail makeCoctail() {
+class HotCocktailMaker extends CocktailMaker {
+	public Cocktail makeCocktail() {
 		System.out.println("hot coctail is created");
-		Coctail coctail = new ColdCoctail();
-		coctail.name = "hot coctail";
-		return coctail;
+		Cocktail cocktail = new ColdCocktail();
+		cocktail.name = "hot coctail";
+		return cocktail;
 	}
 }
 
-class ColdCoctailMaker extends CoctailMaker {
-	public Coctail makeCoctail() {
+class ColdCocktailMaker extends CocktailMaker {
+	public Cocktail makeCocktail() {
 		System.out.println("cold coctail is created");
-		Coctail coctail = new ColdCoctail();
-		coctail.name = "cold coctail";
-		return coctail;
+		Cocktail cocktail = new ColdCocktail();
+		cocktail.name = "cold coctail";
+		return cocktail;
 	}
 }
 
-class MilkCoctailMaker extends CoctailMaker {
-	public Coctail makeCoctail() {
+class MilkCocktailMaker extends CocktailMaker {
+	public Cocktail makeCocktail() {
 		System.out.println("milk coctail is created");
-		Coctail coctail = new MilkCoctail();
-		coctail.name = "milk coctail";
-		return coctail;
+		Cocktail cocktail = new MilkCocktail();
+		cocktail.name = "milk coctail";
+		return cocktail;
 	}
 }
 
-class Coctail {
+class Cocktail {
 	public String name;
 }
 
-class HotCoctail extends Coctail {
+class HotCocktail extends Cocktail {
 }
 
-class ColdCoctail extends Coctail {
+class ColdCocktail extends Cocktail {
 }
 
-class MilkCoctail extends Coctail {
+class MilkCocktail extends Cocktail {
 }

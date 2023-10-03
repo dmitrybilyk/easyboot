@@ -1,3 +1,5 @@
+package com.learn.easyboot.patterns.behavioral.chain;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.io.BufferedReader;
@@ -91,7 +93,7 @@ class ThrottlingMiddleware extends Middleware {
     }
 
     /**
-     * Please, not that checkNext() call can be inserted both in the beginning
+     * Please, note that checkNext() call can be inserted both in the beginning
      * of this method and in the end.
      *
      * This gives much more flexibility than a simple loop over all middleware

@@ -1,5 +1,8 @@
 package com.learn.easyboot.patterns.behavioral.iterator;
 
+
+//The iterator pattern provides a way to access the elements of an aggregate
+// object without exposing its underlying representation.
 public class IteratorPattern {
 	public static void main(String[] args) {
 		NotificationCollection nc = new NotificationCollection();

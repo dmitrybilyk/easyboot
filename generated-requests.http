@@ -12,3 +12,19 @@ GET http://localhost:8707/easy/rest/John
 
 ###
 GET http://localhost:8707/easy/rest/example/44
+
+#Camel
+
+#Status
+###
+GET http://localhost:8707/easy/camel/status
+
+#Test Rest Service
+###
+POST http://localhost:8707/easy/camel/api/bean
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "World"
+}

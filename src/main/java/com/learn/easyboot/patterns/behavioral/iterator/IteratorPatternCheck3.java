@@ -28,7 +28,7 @@ public class IteratorPatternCheck3 {
         deviceCollection.addDevice(device9);
 //        deviceCollection.addDevice(device4);
 
-        DeviceIterator deviceIterator = deviceCollection.searchByIterator("5");
+        java.util.Iterator deviceIterator = deviceCollection.searchByIterator("5");
 
         while (deviceIterator.hasNext()) {
             System.out.println(deviceIterator.next());
@@ -47,9 +47,9 @@ class Device {
 interface DeviceCollection {
     void addDevice(Device device);
 
-    DeviceIterator iterator();
-    DeviceIterator iterator3();
-    DeviceIterator searchByIterator(String filter);
+    java.util.Iterator iterator();
+    java.util.Iterator iterator3();
+    java.util.Iterator searchByIterator(String filter);
 }
 
 class DeviceCollectionImpl implements DeviceCollection{
@@ -65,21 +65,21 @@ class DeviceCollectionImpl implements DeviceCollection{
     }
 
     @Override
-    public DeviceIterator iterator() {
+    public java.util.Iterator iterator() {
         return new DeviceAllIteratorImpl();
     }
 
     @Override
-    public DeviceIterator iterator3() {
+    public java.util.Iterator iterator3() {
         return new DeviceWith3IteratorImpl();
     }
 
     @Override
-    public DeviceIterator searchByIterator(String filter) {
+    public java.util.Iterator searchByIterator(String filter) {
         return new DeviceSearchByIteratorImpl(filter);
     }
 
-    private class DeviceAllIteratorImpl implements DeviceIterator {
+    private class DeviceAllIteratorImpl implements java.util.Iterator {
         int position = 0;
         @Override
         public Device next() {
@@ -94,7 +94,7 @@ class DeviceCollectionImpl implements DeviceCollection{
         }
     }
 
-    private class DeviceWith3IteratorImpl implements DeviceIterator {
+    private class DeviceWith3IteratorImpl implements java.util.Iterator {
         int position = 0;
         @Override
         public Device next() {
@@ -120,7 +120,7 @@ class DeviceCollectionImpl implements DeviceCollection{
             return false;
         }
     }
-    private class DeviceSearchByIteratorImpl implements DeviceIterator {
+    private class DeviceSearchByIteratorImpl implements java.util.Iterator {
         String filter;
         int position = 0;
 
@@ -154,7 +154,7 @@ class DeviceCollectionImpl implements DeviceCollection{
     }
 }
 
-interface DeviceIterator {
-    Device next();
-    boolean hasNext();
-}
+//interface Iterator {
+//    Device next();
+//    boolean hasNext();
+//}

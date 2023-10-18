@@ -19,6 +19,9 @@ GET http://localhost:8707/easy/rest/example/44
 ###
 GET http://localhost:8707/easy/camel/status
 
+###
+GET http://localhost:8707/easy/camel/v3/users?testParam=TestData
+
 #Test Rest Service
 ###
 POST http://localhost:8707/easy/camel/api/bean

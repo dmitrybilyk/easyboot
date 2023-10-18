@@ -63,5 +63,36 @@ public class RestApi extends RouteBuilder {
 				.routeId("GET@/status")
 				.log(INFO, "Status called");
 
+
+		rest()
+				.get("v3/users")
+				.description("Gets all users")
+				.param().name("testParam").type(header).description("Test Param").endParam()
+//				.param().name(HEADER_AUTHORIZATION).type(header).description("Authorization header").endParam()
+				.responseMessage().code(HTTP_OK).message("The list of all users").endResponseMessage()
+//				.responseMessage(UNAUTHORIZED_MESSAGE_DEFINITION)
+				.outType(User[].class)
+				.produces(MediaType.APPLICATION_JSON)
+				.to("direct:getUsers");
+
+		from("direct:getUsers").routeId("GET@/v3/users")
+//				.process(this::verifyAuthorizationToken)
+//				.removeHeaders("*", HEADER_AUTHORIZATION, TRACE_HEADERS_PATTERN)
+//				.to(AuthorizationRouteBuilder.URI_AUTHORIZE_UNRESTRICTED_WITH_ABAC)
+				.process(new Processor() {
+					@Override
+					public void process(Exchange exchange) throws Exception {
+						System.out.println("debug");
+					}
+				})
+				.process(this::validateTestParam)
+				.to(UserRouteBuilder.URI_GET_ALL_USERS);
     }
+
+	private void validateTestParam(Exchange exchange) {
+		String testParam = exchange.getIn().getHeader("testParam", String.class);
+		if (testParam.contains("test")) {
+			throw new RuntimeException("Wrong param");
+		}
+	}
 }

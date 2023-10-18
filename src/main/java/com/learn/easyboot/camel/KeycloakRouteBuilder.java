@@ -161,7 +161,8 @@ public class KeycloakRouteBuilder extends RouteBuilder {
 //			log.error("Error when getting all users in Keycloak: {}", e.getMessage());
 //			throw new RuntimeCamelException(e);
 //		}
-		return Collections.singletonList(User.builder().build());
+		return List.of(User.builder().userId("someUserId").build(),
+				User.builder().userId("someUserId2").build());
 	}
 
 //	@NotNull

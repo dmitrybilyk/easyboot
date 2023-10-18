@@ -73,7 +73,18 @@ public class UserRouteBuilder extends RouteBuilder {
 				})
 				.filter(exchange -> {
 					List<User> users = exchange.getIn().getBody(List.class);
-					return users.get(0).getEmail() != null;
+					return users.get(0).getEmail() == null;
+				})
+				.setHeader("testHeader").body(List.class, list -> ((User)list.get(0)).userId)
+				.process(new Processor() {
+					@Override
+					public void process(Exchange exchange) throws Exception {
+						System.out.println("put a breakpoint here");
+					}
+				})
+				.split().body(User.class, (user, stringObjectMap) -> {
+					user.setUserId("new Id");
+					return user;
 				})
 				.enrich(URI_SINGLE_USER, flexible(User.class).storeInProperty("SINGLE_USER"))
 				.process(new Processor() {

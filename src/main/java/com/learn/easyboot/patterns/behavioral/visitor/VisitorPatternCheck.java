@@ -9,10 +9,13 @@ public class VisitorPatternCheck {
 
 		VisitorPat visitor = new NameChangerVisitor();
 		quickCar.accept(visitor);
-		System.out.println(quickCar.name);
-		int p1 = 'N';
-		int p2 = p1 + 32;
-		System.out.println((char) p2);
+		System.out.println(quickCar);
+		visitor = new ImproveSpeedVisitor();
+		quickCar.accept(visitor);
+		System.out.println(quickCar);
+//		int p1 = 'N';
+//		int p2 = p1 + 32;
+//		System.out.println((char) p2);
 
 	}
 }
@@ -30,6 +33,11 @@ class QuickCar extends Car {
 	}
 	void accept(VisitorPat visitor) {
 		visitor.visitQuickCar(this);
+	}
+
+	@Override
+	public String toString() {
+		return "name = " + this.name + "; speed = " + this.speed;
 	}
 }
 

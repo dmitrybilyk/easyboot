@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.behavioral.state;
 
 public class StatePatternCheckTV {
 	public static void main(String[] args) {
@@ -11,8 +12,8 @@ public class StatePatternCheckTV {
 }
 
 class TvSet {
-	State state;
-	public void changeState(State state) {
+	StateClass state;
+	public void changeState(StateClass state) {
 		this.state = state;
 	}
 	public void showing() {
@@ -20,17 +21,17 @@ class TvSet {
 	}
 }
 
-abstract class State {
+abstract class StateClass {
 	abstract void action();
 }
 
-class OnState extends State {
+class OnState extends StateClass {
 	public void action() {
 		System.out.println("Tv is showing");
 	}
 }
 
-class OffState extends State {
+class OffState extends StateClass {
 	public void action() {
 		System.out.println("Tv is off");
 	}

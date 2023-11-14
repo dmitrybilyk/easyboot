@@ -1,5 +1,9 @@
 package com.learn.easyboot.patterns.behavioral.memento;
 
+
+/**
+ * Memento pattern allows to create snapshot of the object without the unveiling it's internal state
+ */
 public class Memento {
 	public static void main(String[] args) {
 		FileWriterCaretaker caretaker = new FileWriterCaretaker();

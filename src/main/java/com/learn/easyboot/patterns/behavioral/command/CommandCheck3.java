@@ -4,11 +4,14 @@ import java.math.BigDecimal;
 
 public class CommandCheck3 {
     public static void main(String[] args) {
+//        Receiver
         Bank bank = new InternationalBank();
 //        bank.transferMoney("from account number", "to account number", BigDecimal.ONE);
-        MoneyTransferCommand moneyTransferCommand = new InternationalMoneyTransfer(bank);
+//        Command
+        MoneyTransferCommand moneyTransferCommand = new InternationalMoneyTransferCommand(bank);
 //        moneyTransferCommand.execute("fromAccountNumber", "toAccountNumber", BigDecimal.ONE);
 
+//        Invoker
         TransferInvoker transferInvoker = new TransferInvokerImpl(moneyTransferCommand);
 //
 //        TransferInvokerImpl transferInvoker =
@@ -29,9 +32,9 @@ interface MoneyTransferCommand {
     void execute(String fromAccount, String toAccount, BigDecimal amount);
 }
 
-class InternationalMoneyTransfer implements MoneyTransferCommand {
+class InternationalMoneyTransferCommand implements MoneyTransferCommand {
     Bank bank;
-    public InternationalMoneyTransfer(Bank bank) {
+    public InternationalMoneyTransferCommand(Bank bank) {
         this.bank = bank;
     }
 
@@ -42,9 +45,9 @@ class InternationalMoneyTransfer implements MoneyTransferCommand {
     }
 }
 
-class LocalMoneyTransfer implements MoneyTransferCommand {
+class LocalMoneyTransferCommand implements MoneyTransferCommand {
     Bank bank;
-    public LocalMoneyTransfer(Bank bank) {
+    public LocalMoneyTransferCommand(Bank bank) {
         this.bank = bank;
     }
 

@@ -6,9 +6,11 @@ import lombok.Setter;
 
 public class VisitorPatternCheck2 {
     public static void main(String[] args) {
-        Laptop laptop = new MacBookLaptop("My New Asus", "Grey", "I7", 6);
+        Laptop laptop = new AsusLaptop("My New Asus", "Grey", "I7", 6);
         System.out.println(laptop.getDescription());
         laptop.accept(new UpgradeLapTopVisitor());
+        System.out.println(laptop.getDescription());
+        laptop.accept(new ChangeKeyboardLapTopVisitor());
         System.out.println(laptop.getDescription());
     }
 }
@@ -91,6 +93,22 @@ class UpgradeLapTopVisitor extends LapTopVisitor {
     @Override
     void visitMacBook(MacBookLaptop laptop) {
         laptop.name = laptop.name + " upgraded specifically";
+    }
+}
+class ChangeKeyboardLapTopVisitor extends LapTopVisitor {
+
+    @Override
+    void visitAll(Laptop laptop) {
+        System.out.println("Preparation to change the keyboard can be don on this model");
+    }
+
+    @Override
+    void visitAsus(AsusLaptop laptop) {
+        laptop.name = laptop.name + " changed the keyboard";
+    }
+    @Override
+    void visitMacBook(MacBookLaptop laptop) {
+        laptop.name = laptop.name + " changed the keyboard";
     }
 }
 

@@ -1,7 +1,6 @@
 package com.learn.easyboot.patterns.structural.adapter;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AdapterCheck3 {
@@ -10,10 +9,10 @@ public class AdapterCheck3 {
 		SomeClientService clientService = new SomeClientService();
 
 		List<String> listToPrint = clientService.returnsList();
-		//service.coolPrint(listToPrint);
+//		service.coolPrint(listToPrint);
 
 		ServiceAdapter adapter = new DoubleCoolServiceAdapter(service);
-		adapter.printAdaptedList(listToPrint);
+		adapter.printListAdapted(listToPrint);
 	}
 }
 
@@ -30,7 +29,7 @@ class SomeClientService {
 }
 
 interface ServiceAdapter {
-	void printAdaptedList(List<String> listToPrint);
+	void printListAdapted(List<String> listToPrint);
 }
 
 class CoolServiceAdapter implements ServiceAdapter {
@@ -38,7 +37,7 @@ class CoolServiceAdapter implements ServiceAdapter {
 	public CoolServiceAdapter(SomeCoolService someCoolService) {
 		this.someCoolService = someCoolService;
 	}
-	public void printAdaptedList(List<String> listToPrint) {
+	public void printListAdapted(List<String> listToPrint) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(String string: listToPrint) {
 			stringBuilder.append(string);
@@ -52,12 +51,11 @@ class DoubleCoolServiceAdapter implements ServiceAdapter {
 	public DoubleCoolServiceAdapter(SomeCoolService someCoolService) {
 		this.someCoolService = someCoolService;
 	}
-	public void printAdaptedList(List<String> listToPrint) {
+	public void printListAdapted(List<String> listToPrint) {
 		StringBuilder stringBuilder = new StringBuilder();
 		for(String string: listToPrint) {
 			stringBuilder.append(string);
 		}
-		someCoolService.coolPrint(stringBuilder.toString());
 		someCoolService.coolPrint(stringBuilder.toString());
 	}
 }

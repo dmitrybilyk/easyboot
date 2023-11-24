@@ -2,9 +2,10 @@ package com.learn.easyboot.patterns.structural.decorator;
 
 public class DecoratorPattern {
 	public static void main(String[] args) {
-		TShirtProducer tShirtProducer = new WhaterProofTshirtDecorator(
-			new ColorfulTshirtDecorator(
-				new SimpleTShirtProducer()));
+		TShirtProducer tShirtProducer = new WaterProofTShirtDecorator(
+			new ColorfulTShirtDecorator(
+//				new SimpleTShirtProducer()
+			));
 		tShirtProducer.produceTShirt();
 	}
 }
@@ -25,15 +26,24 @@ class BaseTShirtProducerDecorator implements TShirtProducer {
 		this.tShirtProducer = tShirtProducer;
 	}
 
+	public BaseTShirtProducerDecorator() {
+
+	}
+
 	public void produceTShirt() {
 		tShirtProducer.produceTShirt();
 	}
 }
 
-class ColorfulTshirtDecorator extends BaseTShirtProducerDecorator {
-	public ColorfulTshirtDecorator(TShirtProducer tShirtProducer) {
+class ColorfulTShirtDecorator extends BaseTShirtProducerDecorator {
+	public ColorfulTShirtDecorator(TShirtProducer tShirtProducer) {
 		super(tShirtProducer);
 	}
+
+	public ColorfulTShirtDecorator() {
+		super();
+	}
+
 	public void produceTShirt() {
 		super.produceTShirt();
 		System.out.println("Added color");
@@ -41,12 +51,12 @@ class ColorfulTshirtDecorator extends BaseTShirtProducerDecorator {
 }
 
 
-class WhaterProofTshirtDecorator extends BaseTShirtProducerDecorator {
-	public WhaterProofTshirtDecorator(TShirtProducer tShirtProducer) {
+class WaterProofTShirtDecorator extends BaseTShirtProducerDecorator {
+	public WaterProofTShirtDecorator(TShirtProducer tShirtProducer) {
 		super(tShirtProducer);
 	}
 	public void produceTShirt() {
 		super.produceTShirt();
-		System.out.println("Added whater proof feature");
+		System.out.println("Added water proof feature");
 	}
 }

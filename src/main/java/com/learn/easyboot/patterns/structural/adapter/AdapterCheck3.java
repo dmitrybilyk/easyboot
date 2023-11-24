@@ -57,5 +57,6 @@ class DoubleCoolServiceAdapter implements ServiceAdapter {
 			stringBuilder.append(string);
 		}
 		someCoolService.coolPrint(stringBuilder.toString());
+		someCoolService.coolPrint(stringBuilder.toString());
 	}
 }

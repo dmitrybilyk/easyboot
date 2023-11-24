@@ -23,7 +23,7 @@ interface ChargeAdapter {
 }
 
 class ChargerAdapterImpl implements ChargeAdapter {
-	private Charger usCharger = new USCharger();
+	private Charger usCharger;
 	public ChargerAdapterImpl(Charger usCharger) {
 		this.usCharger = usCharger;
 	}

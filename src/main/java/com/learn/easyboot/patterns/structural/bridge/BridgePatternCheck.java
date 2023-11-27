@@ -41,7 +41,7 @@ class LuxuryCar extends Car {
 
 class NewbeDriver implements Driver {
 	public void driveCar() {
-		System.out.println("Newbe driver is riding");
+		System.out.println("Newbie driver is riding");
 	}
 }
 

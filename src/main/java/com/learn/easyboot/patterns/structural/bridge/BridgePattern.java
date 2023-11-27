@@ -97,7 +97,7 @@ class BasicRemote implements Remote {
 class AdvancedRemote extends BasicRemote {
 
     public AdvancedRemote(Device device) {
-        super.device = device;
+        super(device);
     }
 
     public void mute() {

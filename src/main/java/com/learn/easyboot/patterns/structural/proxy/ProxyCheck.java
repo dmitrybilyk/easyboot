@@ -1,3 +1,4 @@
+package com.learn.easyboot.patterns.structural.proxy;
 
 public class ProxyCheck {
 	public static void main(String[] args) {

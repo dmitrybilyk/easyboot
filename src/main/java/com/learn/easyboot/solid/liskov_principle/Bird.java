@@ -1,4 +1,4 @@
-package com.learn.easyboot.patterns.solid.liskov_principle;
+package com.learn.easyboot.solid.liskov_principle;
 
 //Bad example
 public class Bird{

@@ -1,4 +1,4 @@
-package com.learn.easyboot.patterns.solid.dependency_inversion;
+package com.learn.easyboot.solid.dependency_inversion;
 
 public class Windows98Machine {
 

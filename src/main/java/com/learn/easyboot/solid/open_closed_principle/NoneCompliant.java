@@ -1,4 +1,4 @@
-package com.learn.easyboot.patterns.solid.open_closed_principle;
+package com.learn.easyboot.solid.open_closed_principle;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.learn.easyboot.patterns.solid.interface_segregation;
+package com.learn.easyboot.solid.interface_segregation;
 
 public interface BearKeeper {
     void washTheBear();

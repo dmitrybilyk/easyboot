@@ -17,7 +17,7 @@ Inheritance is for reusing code. Using inheritance promotes the maintainability 
 Another reason for implementing inheritance is for the purpose of extensibility
 
 What is association:
-Association defines how objects related to each other, know each other and use each other's functionality.
+Association defines how objects are related to each other, know each other and use each other's functionality.
 Two forms of association:
 - composition - It is a “belongs-to” type of association. it's 'has-a' relationship
 - aggregation - also 'has-a' relationship but here objects could exist independently

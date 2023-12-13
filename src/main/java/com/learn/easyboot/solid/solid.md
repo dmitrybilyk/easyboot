@@ -6,11 +6,17 @@ make changes in many places when you make changes in one.
 - Class `Book` and Class `PrintSomething` (from the book) should be separate.
 We can re-use `PrintSomething` btw
 
-
 O pen/Closed principle - open for extension and Closed for modification
-- Instead of modifying existing class we may extend it and change whatever we need
+- Instead of modifying existing class we may extend it and change whatever we need.
+Adding of new features should be done by adding new code, not by editing existing.
 
-L iskov Substitution principle - We should be able to use the derived class anywhere we can use it's parent
+L iskov Substitution principle - We should be able to use the derived class anywhere 
+we can use it's parent.
+
+Rules: 
+1. Exact method argument type in parent and subclass
+2. 
+
 I nterface Segregation - Should have more interfaces with less responsibility rather than to have single 
 with everything
 D ependency inversion principle - Classes should depend on abstractions, not on particular implementations

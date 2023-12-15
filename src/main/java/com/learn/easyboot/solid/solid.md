@@ -15,6 +15,7 @@ we can use it's parent.
 
 I nterface Segregation - Should have more interfaces with less responsibility rather than to have single 
 with everything to avoid empty implementations.
+
 D ependency inversion principle - Classes should depend on abstractions, 
 not on particular implementations. In DIP polymorphism takes part and also DI 
 (which helps to implement IoC). With the abstractions it's easier to test, extend, deploy

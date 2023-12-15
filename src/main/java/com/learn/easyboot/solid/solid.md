@@ -13,10 +13,6 @@ Adding of new features should be done by adding new code, not by editing existin
 L iskov Substitution principle - We should be able to use the derived class anywhere 
 we can use it's parent.
 
-Rules: 
-1. Exact method argument type in parent and subclass
-2. 
-
 I nterface Segregation - Should have more interfaces with less responsibility rather than to have single 
-with everything
+with everything to avoid empty implementations.
 D ependency inversion principle - Classes should depend on abstractions, not on particular implementations

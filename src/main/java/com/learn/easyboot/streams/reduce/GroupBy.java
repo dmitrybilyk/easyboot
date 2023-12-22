@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -50,6 +51,16 @@ public class GroupBy {
                 new Employee(2, "B", 200),
                 new Employee(3, "C", 200),
                 new Employee(4, "D", 400));
+
+//        System.out.println(employeeList.stream().collect(Collectors.groupingBy(employee -> employee.getSalary())));
+
+        Map<Integer, Integer> integerIntegerMap = employeeList.stream().collect(teeing(
+                counting(),
+                groupingBy(employee -> employee.getSalary()), (aLong, aLong2) -> {
+            HashMap hashMap = new HashMap();
+            hashMap.put(aLong, aLong2);
+            return hashMap;}));
+        System.out.println(integerIntegerMap);
 
 //        System.out.println(employeeList.stream().collect(groupingBy(Employee::getSalary)));
 //        System.out.println(employeeList.stream().collect(teeing((Collectors.maxBy(Comparator.comparing(Employee::getSalary))),

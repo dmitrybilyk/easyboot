@@ -12,8 +12,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -60,7 +63,27 @@ public class GroupBy {
             HashMap hashMap = new HashMap();
             hashMap.put(aLong, aLong2);
             return hashMap;}));
-        System.out.println(integerIntegerMap);
+//        System.out.println(integerIntegerMap);
+
+        int i = 2;
+        Employee employee;
+        if (i > 3) {
+            employee = new Employee(3, "fdf", 55);
+        } else {
+            employee = null;
+        }
+
+        Optional<Employee> employee1 = Optional.ofNullable(employee);
+
+        employee1.ifPresent(employee2 -> System.out.println("something " + employee2.getSalary()));
+
+        Arrays.asList(3, 4, 2, 2).stream().distinct().collect(Collectors.toUnmodifiableList()).forEach(System.out::println);
+
+
+        List<Employee> distinctElements = employeeList.stream().filter(distinctByKey(cust -> cust.getSalary()))
+                .collect(Collectors.toList());
+        System.out.println(distinctElements);
+
 
 //        System.out.println(employeeList.stream().collect(groupingBy(Employee::getSalary)));
 //        System.out.println(employeeList.stream().collect(teeing((Collectors.maxBy(Comparator.comparing(Employee::getSalary))),
@@ -81,6 +104,11 @@ public class GroupBy {
 //        System.out.println(result);
 
 
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> uniqueMap = new ConcurrentHashMap<>();
+        return t -> uniqueMap.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 }
 

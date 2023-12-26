@@ -10,4 +10,4 @@ Objects which has references on them are stored here. Instance members are here.
 - Survival space
 - Old generation
 - Perm Space 
-- Metaspace
+- Metaspace (description of classes, internal JDK libraries etc.)

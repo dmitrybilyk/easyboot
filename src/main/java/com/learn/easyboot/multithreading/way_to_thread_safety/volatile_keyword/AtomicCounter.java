@@ -1,3 +1,5 @@
+package com.learn.easyboot.multithreading.way_to_thread_safety.volatile_keyword;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 class Counter extends Thread {

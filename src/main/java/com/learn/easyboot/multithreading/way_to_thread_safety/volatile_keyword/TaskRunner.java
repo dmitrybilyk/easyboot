@@ -1,3 +1,5 @@
+package com.learn.easyboot.multithreading.way_to_thread_safety.volatile_keyword;
+
 public class TaskRunner {
 
     private static int number;

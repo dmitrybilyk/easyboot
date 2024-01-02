@@ -1,6 +1,5 @@
-package com.learn.easyboot.multithreading.way_to_thread_safety.reentrant_locks;
+package com.learn.easyboot.multithreading.way_to_thread_safety.reentrant.reentrant_locks;
 
-import com.learn.easyboot.multithreading.way_to_thread_safety.synchronized_keyword.SynchronizedMethods;
 import lombok.Getter;
 import lombok.Setter;
 

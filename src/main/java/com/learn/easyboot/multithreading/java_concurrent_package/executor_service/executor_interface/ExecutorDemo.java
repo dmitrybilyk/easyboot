@@ -1,5 +1,6 @@
+package com.learn.easyboot.multithreading.java_concurrent_package.executor_service.executor_interface;
+
 import java.util.concurrent.Executor;
-import java.util.concurrent.RejectedExecutionException;
 
 
 public class ExecutorDemo {

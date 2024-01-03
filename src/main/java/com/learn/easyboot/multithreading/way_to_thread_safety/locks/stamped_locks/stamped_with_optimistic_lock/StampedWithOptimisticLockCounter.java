@@ -1,4 +1,4 @@
-package com.learn.easyboot.multithreading.way_to_thread_safety.reentrant.reentrant_read_write_locks;
+package com.learn.easyboot.multithreading.way_to_thread_safety.locks.stamped_locks.stamped_with_optimistic_lock;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,38 +6,31 @@ import lombok.Setter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.StampedLock;
 import java.util.stream.IntStream;
 
 @Getter
 @Setter
-public class ReentrantReadWriteLockCounter {
+public class StampedWithOptimisticLockCounter {
     private int counter;
-    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-    private Lock readLock = lock.readLock();
-    private Lock writeLock = lock.writeLock();
+    private StampedLock lock = new StampedLock();
     public void incrementCounter() {
-        writeLock.lock();
+//        ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+//        Lock writeLock = readWriteLock.writeLock();
+        long writeStamp = lock.writeLock();
+//        long stamp = lock.tryOptimisticRead();
         try {
+//            writeLock.lock();
             counter++;
         } finally {
-            writeLock.unlock();
-        }
-    }
-
-    public int getCounter() {
-        readLock.lock();
-        try {
-            return counter;
-        } finally {
-            readLock.unlock();
+//            writeLock.unlock();
+            lock.unlock(writeStamp);
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService service = Executors.newFixedThreadPool(3);
-        ReentrantReadWriteLockCounter reentrantLockCounter = new ReentrantReadWriteLockCounter();
+        StampedWithOptimisticLockCounter reentrantLockCounter = new StampedWithOptimisticLockCounter();
 
         IntStream.range(0, 1000)
                 .forEach(count -> service.submit(reentrantLockCounter::incrementCounter));

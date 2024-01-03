@@ -1,4 +1,4 @@
-package com.learn.easyboot.multithreading.way_to_thread_safety.reentrant.stamped_lock;
+package com.learn.easyboot.multithreading.way_to_thread_safety.locks.reentrant.reentrant_read_write_locks;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,26 +6,38 @@ import lombok.Setter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.StampedLock;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.IntStream;
 
 @Getter
 @Setter
-public class StampedLockCounter {
+public class ReentrantReadWriteLockCounter {
     private int counter;
-    private StampedLock lock = new StampedLock();
+    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    private Lock readLock = lock.readLock();
+    private Lock writeLock = lock.writeLock();
     public void incrementCounter() {
-        long stamp = lock.readLock();
+        writeLock.lock();
         try {
             counter++;
         } finally {
-            lock.unlock(stamp);
+            writeLock.unlock();
+        }
+    }
+
+    public int getCounter() {
+        readLock.lock();
+        try {
+            return counter;
+        } finally {
+            readLock.unlock();
         }
     }
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService service = Executors.newFixedThreadPool(3);
-        StampedLockCounter reentrantLockCounter = new StampedLockCounter();
+        ReentrantReadWriteLockCounter reentrantLockCounter = new ReentrantReadWriteLockCounter();
 
         IntStream.range(0, 1000)
                 .forEach(count -> service.submit(reentrantLockCounter::incrementCounter));

@@ -1,3 +1,4 @@
+package com.learn.easyboot.multithreading.deadlock;
 
 public class DeadlockInMain {
 	public static void  main(String[] args) {

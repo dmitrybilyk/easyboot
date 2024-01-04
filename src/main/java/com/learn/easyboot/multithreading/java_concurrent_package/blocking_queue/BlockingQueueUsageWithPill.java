@@ -2,10 +2,9 @@ package com.learn.easyboot.multithreading.java_concurrent_package.blocking_queue
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class BlockingQueueUsage {
+public class BlockingQueueUsageWithPill {
     public static void main(String[] args) {
         int BOUND = 10;
         int N_PRODUCERS = 4;

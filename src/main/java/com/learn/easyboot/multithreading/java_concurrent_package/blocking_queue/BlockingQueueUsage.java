@@ -1,3 +1,4 @@
+package com.learn.easyboot.multithreading.java_concurrent_package.blocking_queue;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;

@@ -1,7 +1,9 @@
+package com.learn.easyboot.multithreading.java_concurrent_package.semaphore;
+
 import java.util.concurrent.Semaphore;
 
 
-public class SemathoreDemo {
+public class SemaphoreDemo {
 	public static void main(String[] args) {
 		Semaphore semaphore = new Semaphore(2);
 		        new Worker(semaphore, "Adder", true).start();

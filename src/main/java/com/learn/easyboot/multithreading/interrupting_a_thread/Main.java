@@ -7,7 +7,8 @@ public class Main {
         Thread workerThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
 //                try {
-                    IntStream.range(0, 10000000).forEach(System.out::println);
+                    IntStream.range(0, 100000).forEach(value -> value = value + 1);
+                System.out.println("completed task");
 //                    Thread.sleep(3000);
 //                } catch (InterruptedException e) {
 ////                    System.out.println("interrupt exception");
@@ -18,6 +19,10 @@ public class Main {
             }
             System.out.println("Thread is interrupted and exiting.");
         });
+
+//        Thread.currentThread().interrupt();
+//        Thread.interrupted();
+//        System.out.println(Thread.currentThread().isInterrupted());
 
         workerThread.start();
 
@@ -30,5 +35,7 @@ public class Main {
 //        } catch (RuntimeException e) {
 //            System.out.println("Runtime exception");
 //        }
+
+        System.out.println(Thread.currentThread().getName() + " is completed");
     }
 }

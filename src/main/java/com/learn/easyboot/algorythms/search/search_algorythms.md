@@ -10,3 +10,6 @@ There 2 two types of complexity measures:
 - space complaxity - how much memory it could consume
 
 Measured as: O(1), O(n), O(n2) etc.
+
+Binary search is considered as the best searching algorithm. It 
+implements `divide anc cocuir` principle.

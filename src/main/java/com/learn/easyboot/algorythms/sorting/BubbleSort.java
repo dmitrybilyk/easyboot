@@ -1,8 +1,7 @@
-// Java program for implementation of Bubble Sort
-import java.util.*;
+package com.learn.easyboot.algorythms.sorting;// Java program for implementation of Bubble Sort
 
 class BubbleSort {
-	void bubbleSort(int arr[])
+	void bubbleSort(int[] arr)
 	{
 		int n = arr.length;
 		for (int i = 0; i < n - 1; i++)
@@ -16,19 +15,17 @@ class BubbleSort {
 	}
 
 	/* Prints the array */
-	void printArray(int arr[])
+	void printArray(int[] arr)
 	{
-		int n = arr.length;
-		for (int i = 0; i < n; ++i)
-			System.out.print(arr[i] + " ");
+        for (int j : arr) System.out.print(j + " ");
 		System.out.println();
 	}
 
 	// Driver method to test above
-	public static void main(String args[])
+	public static void main(String[] args)
 	{
 		BubbleSort ob = new BubbleSort();
-		int arr[] = { 5, 1, 4, 2, 8 };
+		int[] arr = { 5, 1, 4, 2, 8 };
 		ob.bubbleSort(arr);
 		System.out.println("Sorted array");
 		ob.printArray(arr);

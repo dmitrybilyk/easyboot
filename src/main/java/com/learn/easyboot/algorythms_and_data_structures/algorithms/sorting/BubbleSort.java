@@ -1,4 +1,4 @@
-package com.learn.easyboot.algorythms.sorting;// Java program for implementation of Bubble Sort
+package com.learn.easyboot.algorythms_and_data_structures.algorithms.sorting;// Java program for implementation of Bubble Sort
 
 class BubbleSort {
 	void bubbleSort(int[] arr)

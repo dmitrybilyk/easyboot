@@ -14,3 +14,13 @@ and again. And left array (sorted array) is getting bigger and bigger.
 Merge Sort.
 Arrays is divided into the set of single element arrays which then
 are compared and merged into bigger arrays back.
+
+Quick Sort.
+Pivot is selected and all elements on the left side are compared to it.
+Left side then is becoming ordered, pivot is put to the proper place
+Effective on the large data sets.
+IT IS THE FASTEST SORTING ALGORITHM!!!
+
+Selection Sort.
+Traversing the array and putting the smallest value on the left side.
+

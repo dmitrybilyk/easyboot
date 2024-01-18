@@ -1,4 +1,4 @@
-package com.learn.easyboot.algorythms.search.binary_search;
+package com.learn.easyboot.algorythms_and_data_structures.algorithms.search.binary_search;
 
 public class IterativeBinarySearch {
     public static void main(String[] args) {

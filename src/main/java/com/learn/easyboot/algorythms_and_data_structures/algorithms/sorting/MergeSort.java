@@ -1,4 +1,4 @@
-package com.learn.easyboot.algorythms.sorting;
+package com.learn.easyboot.algorythms_and_data_structures.algorithms.sorting;
 
 public class MergeSort {
 

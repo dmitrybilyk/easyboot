@@ -1,3 +1,4 @@
+package com.learn.easyboot.algorythms_and_data_structures.algorithms.sorting;
 
 public class QuickSort {
 	public static void main(String[] args) {

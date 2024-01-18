@@ -1,5 +1,5 @@
-// Java program for implementation of Selection Sort
-import java.io.*;
+package com.learn.easyboot.algorythms_and_data_structures.algorithms.sorting;// Java program for implementation of Selection Sort
+
 public class SelectionSort
 {
 	void sort(int arr[])

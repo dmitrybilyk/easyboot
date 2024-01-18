@@ -1,4 +1,4 @@
-package com.learn.easyboot.algorythms.search.linear_search;
+package com.learn.easyboot.algorythms_and_data_structures.algorithms.search.linear_search;
 
 public class LinearSearchExample{
 public static int linearSearch(int[] arr, int key){    

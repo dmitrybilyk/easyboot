@@ -1,4 +1,4 @@
-package com.learn.easyboot.streams.reduce;
+package com.learn.easyboot.streams;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

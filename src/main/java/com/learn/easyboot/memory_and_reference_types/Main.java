@@ -1,4 +1,4 @@
-package com.learn.easyboot.memory;
+package com.learn.easyboot.memory_and_reference_types;
 
 class Person {
     int id;

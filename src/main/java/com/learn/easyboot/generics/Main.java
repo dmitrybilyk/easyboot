@@ -1,56 +1,68 @@
 package com.learn.easyboot.generics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    static class Fruit {
-        int weight;
-    }
-    static class Citrus extends Fruit {
-        int weight;
-    }
-    static class Orange extends Citrus {
-        int color;
-    }
-    static class BigRoundOrange extends Orange {
-        int size = 100;
-    }
-
-//    private static int totalWeight(ArrayList<Orange> oranges) {
-    private static int totalWeight(ArrayList<? extends Orange> oranges) {
-        int weight = 0;
-        Fruit fruit = oranges.get(0);
-//        oranges.add(new BigRoundOrange());
-//        BigRoundOrange bigRoundOrange = oranges.get(0);
-        for (Orange orange : oranges) {
-            weight += orange.weight;
-        }
-        return weight;
-    }
-
-    private static void addOranges(ArrayList<? super Fruit> oranges) {
-        oranges.add(new Fruit());
-    }
-
     public static void main(String[] args) {
-//        Fruit fruit = new Fruit();
-//        Citrus citrus = new Citrus();
-//        Orange orange = new Orange();
-//        fruit = citrus;
-//        citrus = fruit;
-//        ArrayList<Citrus> citrusList = new ArrayList<>();
-//        fruit = citrusList.get(0);
-//        citrus = citrusList.get(0);
-//        orange = citrusList.get(0);
-//
-//        ArrayList<Orange> orangeList = new ArrayList<>();
-//
-//        citrusList = orangeList;
-//
-//        ArrayList<Orange> bigRoundOranges = new ArrayList<>();
-//
-//        totalWeight(bigRoundOranges);
+//        Can't: Java is invariant
+//        List<Human> humans = new ArrayList<Student>();
 
+//        List<Human> humanList = new ArrayList<>();
+//        List<Student> students = new ArrayList<>();
+//        Can't: Java is invariant
+//        humanList = students;
+
+        List<Person> people = new ArrayList<>();
+        people.add(new Student());
+        people.add(new Person());
+//        people.add(new Human());
+        strictGenericType(people);
+
+        List<Student> students = new ArrayList<>();
+        students.add(new Student());
+        students.add(new GoodStudent());
+
+        covariance(students);
+
+        List<Person> personList = new ArrayList<>();
+        personList.add(new Student());
+        contrVariance(personList);
 
     }
+
+    private static void strictGenericType(List<Person> people) {
+        Person person = people.get(0);
+        Human human = people.get(0);
+//        Student student = people.get(0);
+        people.add(new Student());
+        people.add(new Person());
+//        people.add(new Human());
+    }
+
+    private static void covariance(List<? extends Person> people) {
+        Person person = people.get(0);
+        Human human = people.get(0);
+//        Student student = people.get(0);
+
+//        people.add(new Student());
+    }
+
+    private static void contrVariance(List<? super Person> people) {
+        people.add(new Student());
+//        people.add(new Human());
+
+        Object person = people.get(0);
+        Object human = people.get(0);
+
+    }
+
 }
+
+class Human {}
+
+class Person extends Human {}
+
+class Student extends Person {}
+
+class GoodStudent extends Student {}

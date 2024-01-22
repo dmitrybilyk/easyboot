@@ -19,14 +19,16 @@ public class Invariance {
 //    private static int totalWeight(ArrayList<Orange> oranges) {
     private static int totalWeight(ArrayList<Orange> oranges) {
 //        !!!CAN READ - Type or parent types
-//        BigRoundOrange bigRoundOrange = oranges.get(0);
         Orange orange = oranges.get(0);
         Fruit fruit = oranges.get(0);
+//        !!!CAN'T READ child classes
+//        BigRoundOrange bigRoundOrange = oranges.get(0);
 
         //        !!!CAN ADD - Type or subtypes
-//        oranges.add(new Citrus());
         oranges.add(new Orange());
         oranges.add(new BigRoundOrange());
+        //        !!!CAN'T ADD parent
+//        oranges.add(new Citrus());
         return 0;
     }
 
@@ -34,7 +36,7 @@ public class Invariance {
 
 //        This is an invariance - we can assign to list just a list of the same type. Otherwise it's unsafe
 //        !!!CAN ASSIGN - can assign just to a list of the same type
-        ArrayList<Orange> oranges = new ArrayList<>();
+        ArrayList<Orange> oranges = new ArrayList<Orange>();
 //        ArrayList<BigRoundOrange> bigRoundOranges = new ArrayList<>();
 //        totalWeight(bigRoundOranges);
         totalWeight(oranges);

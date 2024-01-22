@@ -19,8 +19,9 @@ public class Contrvariance {
 //    private static int totalWeight(ArrayList<Orange> oranges) {
     private static int totalWeight(ArrayList<? super Orange> oranges) {
 //        !!!CAN READ - just Object type
-//        BigRoundOrange bigRoundOrange = oranges.get(0);
         Object orange = oranges.get(0);
+//        !!!CAN'T READ anything but just can read Object
+//        BigRoundOrange bigRoundOrange = oranges.get(0);
 //        Fruit fruit = oranges.get(0);
 
         //        !!!CAN ADD - element of any type for which Orange is a super or null or Orange type itself
@@ -33,13 +34,14 @@ public class Contrvariance {
 
     public static void main(String[] args) {
 
-//        !!!CAN ASSIGN - can assign list of parent types or the same type
         ArrayList<Orange> oranges = new ArrayList<>();
-        ArrayList<BigRoundOrange> bigRoundOranges = new ArrayList<>();
         ArrayList<Fruit> fruits = new ArrayList<>();
+//        !!!CAN ASSIGN - can assign list of parent types or the same type
         totalWeight(fruits);
-//        totalWeight(bigRoundOranges);
         totalWeight(oranges);
+        ArrayList<BigRoundOrange> bigRoundOranges = new ArrayList<>();
+//        !!!CAN't ASSIGN list of child types
+//        totalWeight(bigRoundOranges);
 
     }
 }

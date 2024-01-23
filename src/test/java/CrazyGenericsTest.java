@@ -1,5 +1,5 @@
-import com.bobocode.basics.util.BaseEntity;
-import com.learn.easyboot.generics.crazy.CrazyGenerics;
+import com.learn.easyboot.bases.generics.crazy.util.BaseEntity;
+import com.learn.easyboot.bases.generics.crazy.CrazyGenerics;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;

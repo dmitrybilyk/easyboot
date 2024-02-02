@@ -1,1 +1,1 @@
-INSERT INTO book VALUES (1, 'Good Book', 'Dmytro');
+INSERT INTO book (id, title, author) VALUES (1, 'Good Book', 'Dmytro');

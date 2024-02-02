@@ -41,7 +41,6 @@ POST http://localhost:8707/easy/api/books
 Content-Type: application/json
 
 {
-  "id": 1,
   "title": "World",
   "author": "World"
 }

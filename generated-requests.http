@@ -34,3 +34,17 @@ Content-Type: application/json
   "id": 1,
   "name": "World"
 }
+
+
+###
+POST http://localhost:8707/easy/api/books
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "World",
+  "author": "World"
+}
+
+###
+GET http://localhost:8707/easy/api/books

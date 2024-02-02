@@ -17,7 +17,9 @@ public class SecurityConfig {
                         expressionInterceptUrlRegistry
                                 .anyRequest()
                                 .permitAll())
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .csrf().disable()
+                .headers().frameOptions().disable();
         return http.build();
     }
 }

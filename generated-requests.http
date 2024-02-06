@@ -4,6 +4,9 @@ GET http://localhost:8707/easy
 ### Test Controller
 GET http://localhost:8707/easy/get
 
+### Test Controller Error
+GET http://localhost:8707/easy/get/error
+
 ### Test Controller
 GET http://localhost:8708/easy/get
 

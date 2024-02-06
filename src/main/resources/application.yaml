@@ -1,0 +1,10 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: run
+params:
+  parameter1: 7
+
+easy:
+  param1: Parameter 1

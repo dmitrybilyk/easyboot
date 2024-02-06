@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,4 +14,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Human implements Serializable {
     private String name;
+    private LocalDateTime now;
+    private String forNull;
 }

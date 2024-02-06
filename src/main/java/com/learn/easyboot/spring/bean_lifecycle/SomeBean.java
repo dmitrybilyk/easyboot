@@ -16,6 +16,10 @@ import javax.annotation.PreDestroy;
 
 public class SomeBean implements BeanNameAware, BeanFactoryAware, ApplicationContextAware,
         BeanPostProcessor, InitializingBean, DisposableBean {
+    public String getName() {
+        return name;
+    }
+
     private String name;
     private AnotherSomeBean anotherSomeBean;
 

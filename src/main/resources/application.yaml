@@ -8,3 +8,5 @@ params:
 
 easy:
   param1: Parameter 1
+#  database:
+#    db-name: dmytro_yaml

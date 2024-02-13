@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <camel.version>3.21.0</camel.version>
         <kotlin.version>1.9.0</kotlin.version>
+        <greeter-starter.version>1.0-SNAPSHOT</greeter-starter.version>
     </properties>
     <dependencies>
 
@@ -148,6 +149,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.easy.auto</groupId>
+            <artifactId>easy-spring-boot-starter</artifactId>
+            <version>${greeter-starter.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

@@ -2,8 +2,10 @@ package com.learn.easyboot;
 
 import com.learn.easyboot.dao.repositories.BookRepository;
 import com.learn.easyboot.models.entities.Book;
+import org.easy.auto.GreeterAutoConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,7 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = GreeterAutoConfiguration.class)
 @EnableJpaRepositories("com.learn.easyboot.dao.repositories")
 @EntityScan("com.learn.easyboot.models.entities")
 @EnableConfigurationProperties(EasyProperties.class)

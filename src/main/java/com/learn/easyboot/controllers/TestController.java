@@ -3,6 +3,7 @@ package com.learn.easyboot.controllers;
 import com.learn.easyboot.EasyProperties;
 import com.learn.easyboot.dao.UserDAO;
 import com.learn.easyboot.models.Human;
+import org.easy.auto.Greeter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,6 +21,12 @@ public class TestController implements ApplicationContextAware {
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    private EasyProperties easyProperties;
+
+//    @Autowired
+//    private Greeter greeter;
 
     @Value("#{someBean.name}")
     private String someBeanName;
@@ -40,7 +47,8 @@ public class TestController implements ApplicationContextAware {
 
     @GetMapping("/get")
     public Human getHuman() {
-        EasyProperties easyProperties = (EasyProperties) applicationContext.getBean("easyProperties");
+//        System.out.println(greeter.greet());
+//        EasyProperties easyProperties = (EasyProperties) applicationContext.getBean("easyProperties");
 
 //        userDAO.getAllUserNames().forEach(System.out::println);
         return Human.builder()

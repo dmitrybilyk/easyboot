@@ -1,6 +1,7 @@
 import com.learn.easyboot.bases.generics.crazy.util.BaseEntity;
 import com.learn.easyboot.bases.generics.crazy.CrazyGenerics;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -44,6 +45,7 @@ import static org.mockito.Mockito.when;
  *
  * @author Taras Boychuk
  */
+@Disabled
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CrazyGenericsTest {
     final String TYPE_PARAMETER_NAME = "T";

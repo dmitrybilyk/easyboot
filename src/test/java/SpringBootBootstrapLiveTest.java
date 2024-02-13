@@ -1,7 +1,13 @@
+import com.learn.easyboot.EasyBootApplication;
+import com.learn.easyboot.dao.repositories.BookRepository;
 import com.learn.easyboot.models.entities.Book;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -12,9 +18,21 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest(classes = EasyBootApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SpringBootBootstrapLiveTest {
 
-    private static final String API_ROOT = "http://localhost:8707/api/books";
+    @LocalServerPort
+    private int port;
+    private String API_ROOT;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @BeforeEach
+    public void before() {
+        API_ROOT = "http://localhost:" + port + "/easy/api/books";
+    }
 
     @Test
     public void whenGetAllBooks_thenOK() {

@@ -1,0 +1,35 @@
+version: "3.3"
+services:
+  postgres:
+    container_name: 'test_postgres'
+    image: 'postgres:14'
+    ports:
+      - '5432:5432'
+#    networks:
+#      - keycloak-network
+    environment:
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata_test:/var/lib/postgresql/data
+volumes:
+  pgdata_test:
+    external: false
+#  solrdata:
+#    external: true
+#networks:
+#  keycloak-network:
+#    external: true
+
+# keycloak
+#  docker run --rm -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=password -it --hostname zoom-keycloak -p 443:443  localhost:5000/zoomint/keycloak:16.1.0-19.6.0
+
+# postgres
+#  docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_DATABASE=postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres --rm -v pgdata:/var/lib/postgresql/data --name postgres_zoom postgres:9.6
+
+# rabbit
+#  docker run --rm -e RABBITMQ_DEFAULT_USER=callrec -e RABBITMQ_DEFAULT_PASS=callrec -it --hostname zoom-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:management
+
+# solr
+#  docker run -p 8983:8983 -p 9983:9983 --rm --name zoom_solr zoomint/zoomint-solr-cloud:7.6.0.15

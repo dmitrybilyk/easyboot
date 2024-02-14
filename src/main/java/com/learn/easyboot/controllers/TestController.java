@@ -3,7 +3,7 @@ package com.learn.easyboot.controllers;
 import com.learn.easyboot.EasyProperties;
 import com.learn.easyboot.dao.UserDAO;
 import com.learn.easyboot.models.Human;
-import org.easy.auto.Greeter;
+//import org.easy.auto.Greeter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

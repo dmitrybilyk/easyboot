@@ -3,6 +3,9 @@ spring:
   config:
     activate:
       on-profile: run
+  security:
+    user:
+      password: password
 params:
   parameter1: 7
 

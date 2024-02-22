@@ -17,7 +17,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 //@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = EasyBootApplication.class)
-public class SecurityConfigurationIntegrationTest {
+public class InMemorySecurityConfigurationIntegrationTest {
 
     TestRestTemplate restTemplate;
     URL base;

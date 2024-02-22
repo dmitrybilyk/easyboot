@@ -1,26 +1,20 @@
 package com.learn.easyboot;
 
 import com.learn.easyboot.dao.repositories.BookRepository;
+import com.learn.easyboot.dao.repositories.UserRepository;
 import com.learn.easyboot.models.entities.Book;
 //import org.easy.auto.GreeterAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 //@SpringBootApplication(exclude = GreeterAutoConfiguration.class)
@@ -32,12 +26,15 @@ import java.util.Map;
 // @Import(AppConfig.class)
 public class EasyBootApplication {
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	public static void main(String[] args) {
 		SpringApplication.run(EasyBootApplication.class, args);
 	}
 
 	@Bean
-	public CommandLineRunner run(BookRepository bookRepository) throws Exception {
+	public CommandLineRunner run(BookRepository bookRepository, UserRepository userRepository) throws Exception {
 		return (String[] args) -> {
 			Arrays.stream(args).forEach(System.out::println);
 			Book book = new Book();
@@ -49,6 +46,12 @@ public class EasyBootApplication {
 			bookRepository.save(book);
 			bookRepository.save(book2);
 			bookRepository.findAll().forEach(System.out::println);
+
+//			User user = new User();
+//			user.setId(1L);
+//			user.setUsername("db-user");
+//			user.setPassword(passwordEncoder.encode("password"));
+//			userRepository.save(user);
 		};
 	}
 

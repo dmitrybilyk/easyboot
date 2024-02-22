@@ -2,7 +2,7 @@
 a) Abstraction
 Abstraction is the process of modeling real world objects into programming language.
 Hence interfaces and abstract classes are just two techniques used in this process.
-We don't show the implementation details to the user, but just show him what he needs.
+We don't show the implementation details to the appUser, but just show him what he needs.
 It's kind of 'details hiding'.
 
 b) Encapsulation.

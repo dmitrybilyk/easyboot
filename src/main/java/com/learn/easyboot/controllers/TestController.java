@@ -28,8 +28,8 @@ public class TestController implements ApplicationContextAware {
 //    @Autowired
 //    private Greeter greeter;
 
-    @Value("#{someBean.name}")
-    private String someBeanName;
+//    @Value("#{someBean.name}")
+//    private String someBeanName;
     @Value("${params.parameter2}")
     private String parameter2;
     @Value("${params.parameter1}")
@@ -52,7 +52,9 @@ public class TestController implements ApplicationContextAware {
 
 //        userDAO.getAllUserNames().forEach(System.out::println);
         return Human.builder()
-                .name("some name2 - " + name + parameter2 + someBeanName + noneExisting +
+                .name("some name2 - " + name + parameter2 +
+//                        someBeanName +
+                        noneExisting +
                 env.getProperty("params.parameter2") + parameter1)
                 .now(LocalDateTime.now())
                 .build();

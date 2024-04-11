@@ -13,12 +13,12 @@ services:
       - KEYCLOAK_DEFAULT_THEME=eleveo
       - KEYCLOAK_PASSWORD=password
       - KEYCLOAK_USER=admin
-      - KEYCLOAK_VERSION=16.1.0-19.0.4
+      - KEYCLOAK_VERSION=20.28.2
       - KEYCLOAK_WELCOME_THEME=eleveo
       - MASTER_CLIENT_DEFAULT_ROLES=manage-clients,manage-users,view-realm
       - MASTER_CLIENT_NAME=client-management-app
       - MASTER_CLIENT_SECRET=password
-      - MESSAGE_QUEUE_HOST=rabbitmq-kc
+      - MESSAGE_QUEUE_HOST=rabbitmq
       - MESSAGE_QUEUE_PASSWORD=guest
       - MESSAGE_QUEUE_PORT=5673
       - MESSAGE_QUEUE_USERNAME=guest
@@ -34,7 +34,7 @@ services:
     container_name: zoom_keycloak
     hostname: keycloak
     depends_on:
-      - rabbitmq-kc
+      - rabbitmq
       - postgres
     image: 'artifactory.zoomint.com/zoomint/keycloak:20.28.2'
   kcproxy:
@@ -44,11 +44,11 @@ services:
       - KEYCLOAK_HOST=keycloak
       - KEYCLOAK_PORT=8080
       - KEYCLOAK_PROXY_PORT=8080
-      - MESSAGE_QUEUE_HOST=rabbitmq-kc
+      - MESSAGE_QUEUE_HOST=rabbitmq
     container_name: zoom_kc_proxy
     hostname: kcproxy
     depends_on:
-      - rabbitmq-kc
+      - rabbitmq
       - keycloak
       - postgres
     image: 'artifactory.zoomint.com/zoomint/keycloak-api-proxy:3.3.0'
@@ -57,21 +57,21 @@ services:
       - '15672:15672'
       - '5672:5672'
     environment:
-      - RABBITMQ_DEFAULT_PASS=callrec
-      - RABBITMQ_DEFAULT_USER=callrec
-    container_name: RabbitMQ
-    hostname: rabbitmq
-    image: 'rabbitmq:management'
-  rabbitmq-kc:
-    ports:
-      - '15673:15672'
-      - '5673:5672'
-    environment:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_USER=guest
-    container_name: RabbitMQ-KC
-    hostname: rabbitmq-kc
+    container_name: RabbitMQ
+    hostname: rabbitmq
     image: 'rabbitmq:3-management'
+#  rabbitmq-kc:
+#    ports:
+#      - '15673:15672'
+#      - '5673:5672'
+#    environment:
+#      - RABBITMQ_DEFAULT_PASS=guest
+#      - RABBITMQ_DEFAULT_USER=guest
+#    container_name: RabbitMQ-KC
+#    hostname: rabbitmq-kc
+#    image: 'rabbitmq:3-management'
 #  solr:
 #    ports:
 #      - '9983:9983'

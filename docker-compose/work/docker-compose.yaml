@@ -1,9 +1,26 @@
 services:
+  kcproxy:
+    ports:
+      - '18081:8080'
+    environment:
+      - KEYCLOAK_HOST=zoom_keycloak
+      - KEYCLOAK_PORT=8080
+      - KEYCLOAK_PROXY_PORT=8080
+      - MESSAGE_QUEUE_HOST=rabbitmq
+    container_name: zoom_kc_proxy
+    hostname: kcproxy
+    depends_on:
+      - rabbitmq
+      - keycloak
+      - postgres
+    image: 'artifactory.zoomint.com/zoomint/keycloak-api-proxy:3.3.0'
   keycloak:
     ports:
       - '18080:8080'
     environment:
-      - DB_DATABASE=keycloak
+      - JDBC_PARAMS=currentSchema=keycloak
+      - DB_DATABASE=eleveo_default_db
+      - DB_SCHEMA=keycloak
       - DB_PASSWORD=postgres
       - DB_USER=postgres
       - DB_VENDOR=postgres
@@ -20,7 +37,7 @@ services:
       - MASTER_CLIENT_SECRET=password
       - MESSAGE_QUEUE_HOST=rabbitmq
       - MESSAGE_QUEUE_PASSWORD=guest
-      - MESSAGE_QUEUE_PORT=5673
+      - MESSAGE_QUEUE_PORT=5672
       - MESSAGE_QUEUE_USERNAME=guest
       - ROOT_LOGLEVEL=INFO
       - SMTP_FROM=keycloak.server@zoomint.com
@@ -32,26 +49,11 @@ services:
       - ZQM_VERSION=ic_do_rici
       - 'true'
     container_name: zoom_keycloak
-    hostname: keycloak
+    hostname: zoom_keycloak
     depends_on:
       - rabbitmq
       - postgres
     image: 'artifactory.zoomint.com/zoomint/keycloak:20.28.2'
-  kcproxy:
-    ports:
-      - '18081:8080'
-    environment:
-      - KEYCLOAK_HOST=keycloak
-      - KEYCLOAK_PORT=8080
-      - KEYCLOAK_PROXY_PORT=8080
-      - MESSAGE_QUEUE_HOST=rabbitmq
-    container_name: zoom_kc_proxy
-    hostname: kcproxy
-    depends_on:
-      - rabbitmq
-      - keycloak
-      - postgres
-    image: 'artifactory.zoomint.com/zoomint/keycloak-api-proxy:3.3.0'
   rabbitmq:
     ports:
       - '15672:15672'
@@ -59,35 +61,33 @@ services:
     environment:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_USER=guest
-    container_name: RabbitMQ
+    container_name: rabbitmq
     hostname: rabbitmq
     image: 'rabbitmq:3-management'
-#  rabbitmq-kc:
-#    ports:
-#      - '15673:15672'
-#      - '5673:5672'
-#    environment:
-#      - RABBITMQ_DEFAULT_PASS=guest
-#      - RABBITMQ_DEFAULT_USER=guest
-#    container_name: RabbitMQ-KC
-#    hostname: rabbitmq-kc
-#    image: 'rabbitmq:3-management'
-#  solr:
-#    ports:
-#      - '9983:9983'
-#      - '8983:8983'
-#    image: 'zoomint/zoomint-solr-cloud:7.6.0.17'
-#    container_name: 'zoom_solr'
   postgres:
     container_name: 'zoom_postgres'
-    image: 'postgres:9.6'
+    hostname: 'zoom_postgres'
+    image: 'postgres:12.14'
     ports:
       - '5432:5432'
     environment:
-      - POSTGRES_DB=eleveo_default_db
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
       - pgdata_correct:/var/lib/postgresql/data
+  encourage-data:
+    container_name: 'encourage_data'
+    image: 'eleveo/encourage/encourage-data:20.6.9-snapshot.unknown.build'
+    ports:
+      - '8300:8300'
+    environment:
+      - DB_ADDRESS=jdbc:postgresql://zoom_postgres:5432/
+      - KEYCLOAK_SERVER_URL=http://kcproxy:18081/auth
+    depends_on:
+      - keycloak
+      - postgres
 volumes:
   pgdata_correct:
+
+

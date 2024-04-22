@@ -1,4 +1,30 @@
 services:
+  solr1:
+    image: solr:8.11.1
+    container_name: solr1
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./solr-cloud/security.json:/var/security.json
+      - .:/mnt/config
+      - solr:/var/solr
+    environment:
+      - ZK_HOST=zoo1:2182
+    depends_on:
+      - zoo1
+    tty: true
+    stdin_open: true
+  zoo1:
+    tty: true
+    image: zookeeper:3.6.2
+    container_name: zoo1
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2182
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2182
   kcproxy:
     ports:
       - '18081:8080'
@@ -7,6 +33,8 @@ services:
       - KEYCLOAK_PORT=8080
       - KEYCLOAK_PROXY_PORT=8080
       - MESSAGE_QUEUE_HOST=rabbitmq
+      - MESSAGE_QUEUE_USERNAME=callrec
+      - MESSAGE_QUEUE_PASSWORD=callrec
     container_name: zoom_kc_proxy
     hostname: kcproxy
     depends_on:
@@ -36,9 +64,9 @@ services:
       - MASTER_CLIENT_NAME=client-management-app
       - MASTER_CLIENT_SECRET=password
       - MESSAGE_QUEUE_HOST=rabbitmq
-      - MESSAGE_QUEUE_PASSWORD=guest
+      - MESSAGE_QUEUE_PASSWORD=callrec
       - MESSAGE_QUEUE_PORT=5672
-      - MESSAGE_QUEUE_USERNAME=guest
+      - MESSAGE_QUEUE_USERNAME=callrec
       - ROOT_LOGLEVEL=INFO
       - SMTP_FROM=keycloak.server@zoomint.com
       - SMTP_HOST=172.17.0.4
@@ -59,15 +87,15 @@ services:
       - '15672:15672'
       - '5672:5672'
     environment:
-      - RABBITMQ_DEFAULT_PASS=guest
-      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=callrec
+      - RABBITMQ_DEFAULT_USER=callrec
     container_name: rabbitmq
     hostname: rabbitmq
     image: 'rabbitmq:3-management'
   postgres:
     container_name: 'zoom_postgres'
     hostname: 'zoom_postgres'
-    image: 'postgres:12.14'
+    image: 'postgres:16.0'
     ports:
       - '5432:5432'
     environment:
@@ -76,18 +104,45 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - pgdata_correct:/var/lib/postgresql/data
-  encourage-data:
-    container_name: 'encourage_data'
-    image: 'eleveo/encourage/encourage-data:20.6.9-snapshot.unknown.build'
-    ports:
-      - '8300:8300'
-    environment:
-      - DB_ADDRESS=jdbc:postgresql://zoom_postgres:5432/
-      - KEYCLOAK_SERVER_URL=http://kcproxy:18081/auth
-    depends_on:
-      - keycloak
-      - postgres
+#  encourage-data:
+#    container_name: 'encourage_data'
+#    image: 'eleveo/encourage/encourage-data:20.6.9-snapshot.unknown.build'
+#    ports:
+#      - '8300:8300'
+#    environment:
+#      - DB_ADDRESS=jdbc:postgresql://zoom_postgres:5432/
+#      - KEYCLOAK_SERVER_URL=http://kcproxy:18081/auth
+#    depends_on:
+#      - keycloak
+#      - postgres
 volumes:
   pgdata_correct:
+  solr:
+
+#  /usr/bin/pg_dump --dbname=eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump.sql --username=postgres --host=10.17.50.85 --port=5432
+#  sWnki6XFPfFr4zxMgukk
+#kubectl get secret/keycloak-master-client -ndefault -ojsonpath='{.data.secret}{"\n"}' | base64 -d;echo
+#kubectl get secret/postgres-secrets -ndefault -ojsonpath='{.data.db\.pass}{"\n"}' | base64 -d;echo
 
 
+# cd  ~/dev/projects/interaction-service && ./gradlew bootRun --args='--spring.profiles.active=run-with-compose'
+# cd  ~/dev/projects/data/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+# cd  ~/dev/projects/conversations/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+# cd  ~/dev/projects/correlation/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+# cd  ~/dev/projects/zqm-connector/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+# cd  ~/dev/projects/scheduler/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+# cd  ~/dev/projects/framework/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+
+#  cd ~/dev/projects/interaction-service && ./gradlew bootRun --args='--spring.profiles.active=run-with-compose'
+#  cd  ~/dev/projects/data/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+#cd  ~/dev/projects/conversations/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+  # cd  ~/dev/projects/correlation/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+  # cd  ~/dev/projects/zqm-connector/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+  # cd  ~/dev/projects/scheduler/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+
+#  curl -X DELETE http://localhost:8108/api/correlation-range/
+#  curl -X DELETE http://localhost:8107/api/v3/conversations/
+#  curl -X DELETE http://localhost:8300/api/v3/events/
+#  curl -X DELETE http://localhost:8300/api/v3/tasks/
+
+  #  curl -X DELETE http://localhost:8108/api/correlation-range/ && curl -X DELETE http://localhost:8107/api/v3/conversations/ && curl -X DELETE http://localhost:8300/api/v3/events/ && curl -X DELETE http://localhost:8300/api/v3/tasks/

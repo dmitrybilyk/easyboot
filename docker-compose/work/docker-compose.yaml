@@ -121,7 +121,9 @@ volumes:
 
 #  /usr/bin/pg_dump --dbname=eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump.sql --username=postgres --host=10.17.50.85 --port=5432
 #  sWnki6XFPfFr4zxMgukk
-#kubectl get secret/keycloak-master-client -ndefault -ojsonpath='{.data.secret}{"\n"}' | base64 -d;echo
+#  /usr/bin/pg_dump --dbname=postgresql://postgres:postgres@0.0.0.0:5432/eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump.sql --username=postgres --host=10.17.50.85
+
+  #kubectl get secret/keycloak-master-client -ndefault -ojsonpath='{.data.secret}{"\n"}' | base64 -d;echo
 #kubectl get secret/postgres-secrets -ndefault -ojsonpath='{.data.db\.pass}{"\n"}' | base64 -d;echo
 
 
@@ -132,6 +134,12 @@ volumes:
 # cd  ~/dev/projects/zqm-connector/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
 # cd  ~/dev/projects/scheduler/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
 # cd  ~/dev/projects/framework/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose
+# cd  ~/dev/projects/speechrec && ./gradlew bootRun --args='--spring.profiles.active=run-with-compose'
+# cd  ~/dev/projects/automatedqm && ./gradlew bootRun --args='--spring.profiles.active=run-with-compose'
+
+#  cd  ~/dev/projects/data/service && nohup mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose &&
+#  cd ~/dev/projects/interaction-service && nohup ./gradlew bootRun --args='--spring.profiles.active=run-with-compose'
+
 
 #  cd ~/dev/projects/interaction-service && ./gradlew bootRun --args='--spring.profiles.active=run-with-compose'
 #  cd  ~/dev/projects/data/service && mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose

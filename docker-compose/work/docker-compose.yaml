@@ -120,7 +120,9 @@ volumes:
   solr:
 
 #  /usr/bin/pg_dump --dbname=postgresql://postgres:postgres@10.17.50.85:5432/eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump.sql --host=10.17.50.85
-#  /usr/bin/pg_dump --dbname=postgresql://postgres:postgres@0.0.0.0:5432/eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump.sql --username=postgres --host=10.17.50.85
+
+#  scp -r root@vm085.eng.cz.zoomint.com:/opt/callrec/data/calls /opt/callrec/data/
+#  scp -r root@vm085.eng.cz.zoomint.com:/opt/callrec/data/scorecard /opt/callrec/data/
 
   #kubectl get secret/keycloak-master-client -ndefault -ojsonpath='{.data.secret}{"\n"}' | base64 -d;echo
 #kubectl get secret/postgres-secrets -ndefault -ojsonpath='{.data.db\.pass}{"\n"}' | base64 -d;echo

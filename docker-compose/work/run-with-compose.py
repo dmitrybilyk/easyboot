@@ -20,10 +20,11 @@ if __name__ == "__main__":
         ("/home/dmytro/dev/projects/zqm-connector/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
         ("/home/dmytro/dev/projects/scheduler/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
         ("/home/dmytro/dev/projects/framework/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
-        ("/home/dmytro/dev/projects/automatedqm", "./gradlew bootRun --args='--spring.profiles.active=run-with-compose'")
+        ("/home/dmytro/dev/projects/automatedqm", "./gradlew bootRun --args='--spring.profiles.active=run-with-compose'"),
+        ("/home/dmytro/dev/projects/speechrec/core", ".././gradlew bootRun --args='--spring.profiles.active=run-with-compose'")
     ]
     custom_names = [
         "Data", "Interaction", "Conversations", "Correlation",
-        "ZQM Connector", "Scheduler", "Framework", "AutomatedQM"
+        "ZQM Connector", "Scheduler", "Framework", "AutomatedQM", "Speechrec"
     ]
     execute_commands_in_terminals(paths_and_commands, custom_names)

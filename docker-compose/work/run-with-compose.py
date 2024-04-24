@@ -1,5 +1,6 @@
 import subprocess
 import os
+import time
 
 def execute_commands_in_terminals(path_and_commands, custom_names=None):
     for (path, command), custom_name in zip(path_and_commands, custom_names or []):
@@ -7,8 +8,10 @@ def execute_commands_in_terminals(path_and_commands, custom_names=None):
         directory_name = custom_name if custom_name else os.path.basename(os.path.normpath(path)) if path else "Default"
         # Launch command in a new terminal window
         if path:
+            time.sleep(1)
             subprocess.Popen(["xfce4-terminal", "--working-directory", path, "--title", directory_name, "--command", command])
         else:
+            time.sleep(1)
             subprocess.Popen(["xfce4-terminal", "--title", directory_name, "--command", command])
 
 if __name__ == "__main__":
@@ -21,10 +24,19 @@ if __name__ == "__main__":
         ("/home/dmytro/dev/projects/scheduler/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
         ("/home/dmytro/dev/projects/framework/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
         ("/home/dmytro/dev/projects/automatedqm", "./gradlew bootRun --args='--spring.profiles.active=run-with-compose'"),
+        ("/home/dmytro/dev/projects/interaction-player/webapp", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
         ("/home/dmytro/dev/projects/speechrec/core", ".././gradlew bootRun --args='--spring.profiles.active=run-with-compose'")
     ]
     custom_names = [
-        "Data", "Interaction", "Conversations", "Correlation",
-        "ZQM Connector", "Scheduler", "Framework", "AutomatedQM", "Speechrec"
+        "Data",
+        "Interaction",
+        "Conversations",
+        "Correlation",
+        "ZQM Connector",
+        "Scheduler",
+        "Framework",
+        "AutomatedQM",
+        "Player",
+        "Speechrec"
     ]
     execute_commands_in_terminals(paths_and_commands, custom_names)

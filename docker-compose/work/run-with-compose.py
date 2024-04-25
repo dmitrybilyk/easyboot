@@ -1,36 +1,42 @@
 import subprocess
+import os
+import time
 
-def get_latest_image_id():
-    # Run 'docker images' command and capture the output
-    output = subprocess.check_output("docker images", shell=True, text=True)
-
-    # Split the output by lines and get the second line (the latest built image)
-    latest_image_info = output.strip().split('\n')[1]
-
-    # Split the line by spaces and get the first element (the image ID)
-    latest_image_id = latest_image_info.split()[0]
-
-    return latest_image_id
-
-def main():
-    path = "/home/dmytro/dev/projects/data"
-    directory_name = "Your_Directory_Name"
-    command = "mvn clean install -Pdocker-image"
-
-    # Open xfce4-terminal with the specified working directory, title, and command
-    subprocess.Popen(["xfce4-terminal", "--working-directory", path, "--title", directory_name, "--command", command])
-
-    # Wait for the command to complete
-    subprocess.wait()
-
-    # Get the ID of the latest built image
-    latest_image_id = get_latest_image_id()
-
-    # Rename the Docker image tag
-    subprocess.run(f"docker tag {latest_image_id} localhost:5000/custom:3.1.1", shell=True)
-
-    # Push the image to the Docker registry
-    subprocess.run("docker push localhost:5000/custom:3.1.1", shell=True)
+def execute_commands_in_terminals(path_and_commands, custom_names=None):
+    for (path, command), custom_name in zip(path_and_commands, custom_names or []):
+        # Get the directory name from the path
+        directory_name = custom_name if custom_name else os.path.basename(os.path.normpath(path)) if path else "Default"
+        # Launch command in a new terminal window
+        if path:
+            time.sleep(1)
+            subprocess.Popen(["xfce4-terminal", "--working-directory", path, "--title", directory_name, "--command", command])
+        else:
+            time.sleep(1)
+            subprocess.Popen(["xfce4-terminal", "--title", directory_name, "--command", command])
 
 if __name__ == "__main__":
-    main()
+    paths_and_commands = [
+        ("/home/dmytro/dev/projects/data/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
+        ("/home/dmytro/dev/projects/interaction-service", "./gradlew bootRun --args='--spring.profiles.active=run-with-compose'"),
+        ("/home/dmytro/dev/projects/conversations/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
+        ("/home/dmytro/dev/projects/correlation/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
+        ("/home/dmytro/dev/projects/zqm-connector/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
+        ("/home/dmytro/dev/projects/scheduler/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
+        ("/home/dmytro/dev/projects/framework/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
+        ("/home/dmytro/dev/projects/automatedqm", "./gradlew bootRun --args='--spring.profiles.active=run-with-compose'"),
+        ("/home/dmytro/dev/projects/interaction-player/webapp", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose"),
+        ("/home/dmytro/dev/projects/speechrec/core", ".././gradlew bootRun --args='--spring.profiles.active=run-with-compose'")
+    ]
+    custom_names = [
+        "Data",
+        "Interaction",
+        "Conversations",
+        "Correlation",
+        "ZQM Connector",
+        "Scheduler",
+        "Framework",
+        "AutomatedQM",
+        "Player",
+        "Speechrec"
+    ]
+    execute_commands_in_terminals(paths_and_commands, custom_names)

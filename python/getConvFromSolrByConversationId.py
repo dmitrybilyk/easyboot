@@ -1,7 +1,7 @@
 import subprocess
 import json
 
-conversation_id = "e717a6d4-7329-4cb7-8ea4-f364bbe8e547"  # Example conversationId
+conversation_id = "e86bd021-7971-40c9-bcb4-4ceca7027fdf"  # Example conversationId
 
 def execute_solr_query(conversation_id):
     try:

@@ -1,0 +1,316 @@
+import subprocess
+import os
+import docker
+import paramiko
+
+# Define the directory path for the Maven project
+service_directory_path = "/home/dmytro/dev/projects/integrations"
+
+# Define the new tag for the Docker image
+new_tag = 'convers:3.1.11'
+
+image_repository = "eleveo/encourage/encourage-integrations-api:latest"
+
+# Function to prompt user for input of a specific type
+def get_input(prompt, type_func):
+    while True:
+        try:
+            user_input = type_func(input(prompt))
+            return user_input
+        except ValueError:
+            print("Invalid input. Please enter a valid value of the specified type.")
+vmIp = get_input("Enter vm IP: ", str)
+
+# def run_maven_build(directory, image_repository, image_tag):
+def run_maven_build(directory, image_repository, image_tag):
+    try:
+        # Change directory to the specified path
+        os.chdir(directory)
+
+        # Define the Maven command to be executed
+        maven_command = [
+            "mvn",
+            "clean",
+            "install",
+            "-Dmaven.test.skip",
+            "-Pdocker-image",
+            f"-Ddocker.image.repository={image_repository}",
+            f"-Ddocker.image.tag={image_tag}"
+        ]
+
+        # Execute the Maven command using subprocess
+        subprocess.run(maven_command, check=True)
+        print("Maven build completed successfully.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred while running Maven command: {e}")
+        return False
+
+# Example usage:
+directory_path = "eleveo/"
+repository_name = "/encourage/encourage-integrations-api"
+image_tag = "latest"
+
+def find_latest_image():
+    try:
+        client = docker.from_env()
+        images = client.images.list()
+
+        # Sort images by creation date to get the latest one
+        images.sort(key=lambda img: img.attrs['Created'], reverse=True)
+
+        if images:
+            latest_image = images[0]
+            return latest_image
+        else:
+            return None
+
+    except docker.errors.APIError as e:
+        print(f"Error: {e}")
+        return None
+
+def tag_latest_image_with_new_tag(latest_image, new_tag):
+    try:
+        # Define the Docker command to tag the image
+        docker_command = [
+            "docker",
+            "tag",
+            image_repository,
+            f"localhost:5000/{new_tag}"
+        ]
+
+        # Execute the Docker command using subprocess
+        subprocess.run(docker_command, check=True)
+        print("Tagging of the Docker image completed successfully.")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred while tagging the Docker image: {e}")
+        return False
+
+def get_last_5_image_tags():
+    try:
+        # Initialize Docker client
+        client = docker.from_env()
+
+        # Get a list of all Docker images
+        images = client.images.list()
+
+        # Sort images by creation date in descending order
+        images.sort(key=lambda img: img.attrs['Created'], reverse=True)
+
+        # Extract tags of the last 5 images (if available)
+        last_5_tags = []
+        for image in images[:5]:
+            tags = image.tags
+            if tags:
+                last_5_tags.extend(tags)
+
+        return last_5_tags
+
+    except docker.errors.APIError as e:
+        print(f"Error: {e}")
+        return []
+
+def copy_file_from_remote(hostname, username, password, remote_path, local_path):
+    # Create SSH client
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    try:
+        # Connect to the remote server
+        ssh_client.connect(hostname, username=username, password=password)
+
+        # Create SFTP session
+        sftp = ssh_client.open_sftp()
+
+        # Download the file
+        sftp.get(remote_path, local_path)
+
+        print("File downloaded successfully.")
+
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+    finally:
+        # Close the SSH client
+        ssh_client.close()
+
+def update_registries_and_restart(hostname, username, password, yaml_content):
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    try:
+        client.connect(hostname, username=username, password=password)
+
+        # Create a temporary file on the remote server to store the YAML content
+        temp_file = "/tmp/registries.yaml"
+        with client.open_sftp() as sftp:
+            with sftp.file(temp_file, "w") as f:
+                f.write(yaml_content)
+
+        # Move the temporary file to the desired location
+        move_command = f"sudo mv {temp_file} /etc/rancher/rke2/registries.yaml"
+        stdin, stdout, stderr = client.exec_command(move_command)
+
+        # Check for any errors during the move operation
+        if stderr.channel.recv_exit_status() != 0:
+            print(f"Error: {stderr.read().decode('utf-8')}")
+        else:
+            print("Registries configuration updated successfully.")
+
+        # Restart the rke2-server service
+        restart_command = "sudo systemctl restart rke2-server"
+        stdin, stdout, stderr = client.exec_command(restart_command)
+
+        # Check for any errors during the restart operation
+        if stderr.channel.recv_exit_status() != 0:
+            print(f"Error: {stderr.read().decode('utf-8')}")
+        else:
+            print("rke2-server restarted successfully.")
+
+    except paramiko.AuthenticationException:
+        print(f"Failed to authenticate to {hostname}.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        client.close()
+
+
+def push_docker_image(image_tag):
+    try:
+        # Execute docker push command
+        subprocess.run(["docker", "push", image_tag], check=True)
+        print(f"Successfully pushed Docker image: {image_tag}")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred while pushing Docker image: {e}")
+        return False
+
+if __name__ == "__main__":
+    # Run Maven build
+    if run_maven_build(service_directory_path, image_repository, new_tag):
+        # Find the latest Docker image
+        latest_image = find_latest_image()
+
+        if latest_image:
+            # Tag the latest image with the defined new tag
+            if tag_latest_image_with_new_tag(latest_image, new_tag):
+                print(f"Successfully tagged the latest image with: localhost:5000/{new_tag}")
+            else:
+                print("Failed to tag the latest image.")
+        else:
+            print("No images found.")
+
+        # Get and display the last 5 Docker image tags
+        last_5_tags = get_last_5_image_tags()
+
+        if last_5_tags:
+            print("\nLast 5 Docker image tags:")
+            for tag in last_5_tags:
+                print(tag)
+        else:
+            print("Failed to retrieve last 5 Docker image tags.")
+    else:
+        print("Maven build failed. Cannot proceed with Docker image operations.")
+hostname = f'vm0{vmIp}.eng.cz.zoomint.com'
+username = 'root'
+password = 'zoomcallrec'
+remote_path = '.kube/config'
+local_path = '/home/dmytro/.kube/config'
+
+remote_port = 5000
+local_port = 5000
+
+def establish_ssh_tunnel(remote_host, remote_port, local_port, ssh_username, ssh_password):
+    try:
+        # Create SSH client instance
+        ssh_client = paramiko.SSHClient()
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Connect to the remote host
+        ssh_client.connect(remote_host, username=ssh_username, password=ssh_password)
+
+        # Open an SSH tunnel (local_port -> remote_host:remote_port)
+        ssh_tunnel_command = f"ssh -L {local_port}:127.0.0.1:{remote_port} {ssh_username}@{remote_host}"
+        ssh_client.exec_command(ssh_tunnel_command)
+
+        print(f"SSH tunnel established: localhost:{local_port} -> {remote_host}:{remote_port}")
+
+        # Keep the SSH session open (you can add additional commands here)
+
+    except paramiko.AuthenticationException:
+        print(f"Authentication failed for {ssh_username}@{remote_host}.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        ssh_client.close()
+
+kubectl_command = f"kubectl set image deployment/encourage-integrations encourage-integrations=localhost:5000/{new_tag}"
+
+def execute_kubectl_command(hostname, username, password, kubectl_command):
+    try:
+        # Create SSH client instance
+        ssh_client = paramiko.SSHClient()
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Connect to the remote host
+        ssh_client.connect(hostname, username=username, password=password)
+
+        # Execute kubectl command remotely
+        stdin, stdout, stderr = ssh_client.exec_command(kubectl_command)
+
+        # Check for any errors during command execution
+        if stderr.channel.recv_exit_status() != 0:
+            print(f"Error executing kubectl command: {stderr.read().decode('utf-8')}")
+        else:
+            print("kubectl command executed successfully.")
+
+    except paramiko.AuthenticationException:
+        print(f"Authentication failed for {username}@{hostname}.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        ssh_client.close()
+
+
+# Call the function to copy the file
+copy_file_from_remote(hostname, username, password, remote_path, local_path)
+
+
+
+# hostname = "vm085.eng.cz.zoomint.com"
+# username = "root"
+# password = "zoomcallrec"
+
+# YAML content to replace /etc/rancher/rke2/registries.yaml
+yaml_content = """\
+mirrors:
+  "docker.io":
+    endpoint:
+      - "https://artifactory.zoomint.com"
+  "artifactory.zoomint.com":
+    endpoint:
+      - "https://artifactory.zoomint.com"
+  "localhost:5000":
+    endpoint:
+      - "https://localhost:5000"
+configs:
+  "docker.io":
+    tls:
+      insecure_skip_verify: true
+  "artifactory.zoomint.com":
+    tls:
+      insecure_skip_verify: true
+  "localhost:5000":
+    tls:
+      insecure_skip_verify: true
+"""
+
+# Update /etc/rancher/rke2/registries.yaml and restart rke2-server on the remote server
+# update_registries_and_restart(hostname, username, password, yaml_content)
+
+# establish_ssh_tunnel(hostname, remote_port, local_port, username, password)
+
+push_docker_image(f"localhost:5000/{new_tag}")
+
+execute_kubectl_command(hostname, username, password, kubectl_command)

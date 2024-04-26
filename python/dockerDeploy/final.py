@@ -2,14 +2,7 @@ import subprocess
 import os
 import docker
 import paramiko
-
-# Define the directory path for the Maven project
-service_directory_path = "/home/dmytro/dev/projects/integrations"
-
-# Define the new tag for the Docker image
-new_tag = 'convers:3.1.11'
-
-image_repository = "eleveo/encourage/encourage-integrations-api:latest"
+import platform
 
 # Function to prompt user for input of a specific type
 def get_input(prompt, type_func):
@@ -19,7 +12,74 @@ def get_input(prompt, type_func):
             return user_input
         except ValueError:
             print("Invalid input. Please enter a valid value of the specified type.")
-vmIp = get_input("Enter vm IP: ", str)
+vmSubIp = get_input("Enter vm IP: ", str)
+
+paths = [
+    ("/home/dmytro/dev/projects/data/service"),
+    ("/home/dmytro/dev/projects/interaction-service"),
+    ("/home/dmytro/dev/projects/conversations/service"),
+    ("/home/dmytro/dev/projects/correlation/service"),
+    ("/home/dmytro/dev/projects/zqm-connector/service"),
+    ("/home/dmytro/dev/projects/scheduler/service"),
+    ("/home/dmytro/dev/projects/framework/service"),
+    ("/home/dmytro/dev/projects/automatedqm",),
+    ("/home/dmytro/dev/projects/interaction-player/webapp"),
+    ("/home/dmytro/dev/projects/speechrec/core")
+]
+
+names = [
+    ("data"),
+    ("interaction-service"),
+    ("conversations"),
+    ("correlation"),
+    ("zqm-connector"),
+    ("scheduler"),
+    ("framework"),
+    ("automatedqm",),
+    ("interaction-player"),
+    ("speechrec")
+]
+
+resources_names = [
+    ("encourage-data"),
+    ("interaction-service"),
+    ("encourage-conversations"),
+    ("encourage-correlation"),
+    ("encourage-zqm-connector"),
+    ("encourage-scheduler"),
+    ("encourage-framework"),
+    ("automatedqm",),
+    ("interaction-player"),
+    ("speechrec")
+]
+
+# Define the new tag for the Docker image
+new_tag = 'data:3.1.17'
+
+
+
+
+
+# vmSubIp = "85"
+
+service_name = get_input("Enter service name: ", str)
+
+resource_name = [name for name in resources_names if service_name in name][0]
+
+image_repository = "eleveo/encourage/%s" % resource_name
+
+service_path = [name for name in paths if service_name in name][0]
+
+# Define the directory path for the Maven project
+service_directory_path = service_path
+
+service = [name for name in names if service_name in name]
+
+tagPathVersion = get_input("Enter Patch Version: ", int)
+
+new_tag = f'{service_name}:8.1.{tagPathVersion}'
+
+hostname = "vm0%s.eng.cz.zoomint.com" % vmSubIp
 
 # def run_maven_build(directory, image_repository, image_tag):
 def run_maven_build(directory, image_repository, image_tag):
@@ -75,7 +135,7 @@ def tag_latest_image_with_new_tag(latest_image, new_tag):
         docker_command = [
             "docker",
             "tag",
-            image_repository,
+            latest_image.tags[0],
             f"localhost:5000/{new_tag}"
         ]
 
@@ -186,9 +246,33 @@ def push_docker_image(image_tag):
         print(f"Error occurred while pushing Docker image: {e}")
         return False
 
+def remove_unused_images():
+    try:
+        # Command to list images with "none" tag
+        cmd_list_images = f"docker image ls --format '{{{{.ID}}}}\t{{{{.Repository}}}}' | awk '$2 ~ /{service_name}/ {{print $1}}'"
+
+        # Run the command to get image IDs
+        result = subprocess.run(cmd_list_images, shell=True, capture_output=True, text=True)
+        image_ids = result.stdout.strip().split()  # Split output into a list of image IDs
+
+        if image_ids:
+            # Command to remove images by IDs
+            cmd_remove_images = f"docker image rm {' '.join(image_ids)} -f"
+
+            # Run the command to remove images
+            subprocess.run(cmd_remove_images, shell=True, check=True)
+            print("Unused Docker images removed successfully.")
+        else:
+            print("No unused Docker images found.")
+
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+        # Handle error if the subprocess command fails
+
 if __name__ == "__main__":
+    remove_unused_images()
     # Run Maven build
-    if run_maven_build(service_directory_path, image_repository, new_tag):
+    if run_maven_build(service_directory_path, image_repository, "latest"):
         # Find the latest Docker image
         latest_image = find_latest_image()
 
@@ -212,7 +296,7 @@ if __name__ == "__main__":
             print("Failed to retrieve last 5 Docker image tags.")
     else:
         print("Maven build failed. Cannot proceed with Docker image operations.")
-hostname = f'vm0{vmIp}.eng.cz.zoomint.com'
+hostname = f'vm0{vmSubIp}.eng.cz.zoomint.com'
 username = 'root'
 password = 'zoomcallrec'
 remote_path = '.kube/config'
@@ -221,31 +305,19 @@ local_path = '/home/dmytro/.kube/config'
 remote_port = 5000
 local_port = 5000
 
-def establish_ssh_tunnel(remote_host, remote_port, local_port, ssh_username, ssh_password):
-    try:
-        # Create SSH client instance
-        ssh_client = paramiko.SSHClient()
-        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+def establish_ssh_tunnel():
 
-        # Connect to the remote host
-        ssh_client.connect(remote_host, username=ssh_username, password=ssh_password)
+    host = hostname
+    port = 5000
+    ssh_command = f'sshpass -p zoomcallrec ssh -L {port}:127.0.0.1:{port} root@%s' % host
 
-        # Open an SSH tunnel (local_port -> remote_host:remote_port)
-        ssh_tunnel_command = f"ssh -L {local_port}:127.0.0.1:{remote_port} {ssh_username}@{remote_host}"
-        ssh_client.exec_command(ssh_tunnel_command)
+    # Command to open a new terminal and run the SSH command
+    if platform.system() == "Linux":
+        subprocess.Popen(['xfce4-terminal', '--command', ssh_command, '--title', (f'{port} %s' % vmSubIp)])
+    else:
+        print("Unsupported platform for xfce4-terminal.")
 
-        print(f"SSH tunnel established: localhost:{local_port} -> {remote_host}:{remote_port}")
-
-        # Keep the SSH session open (you can add additional commands here)
-
-    except paramiko.AuthenticationException:
-        print(f"Authentication failed for {ssh_username}@{remote_host}.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    finally:
-        ssh_client.close()
-
-kubectl_command = f"kubectl set image deployment/encourage-integrations encourage-integrations=localhost:5000/{new_tag}"
+kubectl_command = f"kubectl set image deployment/%s {resource_name}=localhost:5000/{new_tag}" % resource_name
 
 def execute_kubectl_command(hostname, username, password, kubectl_command):
     try:
@@ -309,7 +381,7 @@ configs:
 # Update /etc/rancher/rke2/registries.yaml and restart rke2-server on the remote server
 # update_registries_and_restart(hostname, username, password, yaml_content)
 
-# establish_ssh_tunnel(hostname, remote_port, local_port, username, password)
+# establish_ssh_tunnel()
 
 push_docker_image(f"localhost:5000/{new_tag}")
 

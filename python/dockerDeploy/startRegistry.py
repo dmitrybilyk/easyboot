@@ -1,5 +1,6 @@
 import paramiko
 
+hostname = "vm085.eng.cz.zoomint.com"
 def update_registries_and_restart(hostname, username, password, yaml_content):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -42,7 +43,7 @@ def update_registries_and_restart(hostname, username, password, yaml_content):
 
 # Example usage
 if __name__ == "__main__":
-    hostname = "vm085.eng.cz.zoomint.com"
+
     username = "root"
     password = "zoomcallrec"
 

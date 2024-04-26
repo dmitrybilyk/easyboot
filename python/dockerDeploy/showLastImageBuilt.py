@@ -13,23 +13,14 @@ def get_last_5_image_tags():
 
         # Extract tags of the last 5 images (if available)
         last_5_tags = []
-        for image in images[:5]:
-            tags = image.tags
-            if tags:
-                last_5_tags.extend(tags)
-
-        return last_5_tags
+        return images[0]
 
     except docker.errors.APIError as e:
         print(f"Error: {e}")
         return []
 
 if __name__ == "__main__":
-    last_5_tags = get_last_5_image_tags()
-
-    if last_5_tags:
-        print("Last 5 Docker image tags:")
-        for tag in last_5_tags:
-            print(tag)
-    else:
-        print("No Docker images found or failed to retrieve tags.")
+    print("The latest image:")
+    print("________________________________________________________________________")
+    print("")
+    print(get_last_5_image_tags())

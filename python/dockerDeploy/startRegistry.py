@@ -1,6 +1,6 @@
 import paramiko
 
-hostname = "vm085.eng.cz.zoomint.com"
+hostname = "vm293.eng.cz.zoomint.com"
 def update_registries_and_restart(hostname, username, password, yaml_content):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())

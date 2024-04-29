@@ -17,7 +17,8 @@ def close_terminal_window_by_title(window_title, exclude_title='run-port-forward
 
         for window_id in window_ids:
             # Command to close the window by ID
-            subprocess.Popen(['wmctrl', '-ic', window_id])
+            if window_id:
+                subprocess.Popen(['wmctrl', '-ic', window_id])
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
     except Exception as e:
@@ -42,6 +43,29 @@ def open_ssh_tunnel(vmSubIp):
 
     host = hostname
     port = 5000
+
+
+    # Command to remove the specified host entry from known_hosts file
+    command = 'ssh-keygen -f "/home/dmytro/.ssh/known_hosts" -R %s' % host
+
+    # Execute the command using subprocess
+    try:
+        subprocess.run(command, shell=True, check=True)
+        print("Host entry removed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+
+# Command to fetch the SSH key and add it to known_hosts
+    command = f'echo "yes" | ssh-keyscan {hostname} >> ~/.ssh/known_hosts'
+
+    # Execute the command using subprocess
+    try:
+        subprocess.run(command, shell=True, check=True)
+        print(f"SSH key for {hostname} added to known_hosts.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+
+
     ssh_command = f'sshpass -p zoomcallrec ssh -L {port}:127.0.0.1:{port} root@%s' % host
 
     # Command to open a new terminal and run the SSH command
@@ -51,7 +75,7 @@ def open_ssh_tunnel(vmSubIp):
         print("Unsupported platform for xfce4-terminal.")
 
 if __name__ == "__main__":
-    close_terminal_window_by_title('5000')
+    close_terminal_window_by_title(5000)
     time.sleep(1)
     vmSubIp = get_input("Enter vm ip: ", str)
     open_ssh_tunnel(vmSubIp)

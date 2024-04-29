@@ -1,6 +1,7 @@
 import paramiko
+import subprocess
 
-hostname = "vm293.eng.cz.zoomint.com"
+hostname = "vm085.eng.cz.zoomint.com"
 def update_registries_and_restart(hostname, username, password, yaml_content):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -23,16 +24,30 @@ def update_registries_and_restart(hostname, username, password, yaml_content):
             print(f"Error: {stderr.read().decode('utf-8')}")
         else:
             print("Registries configuration updated successfully.")
+        # Define the command to start the docker-registry service
+        command = "sudo systemctl start docker-registry"
 
-        # Restart the rke2-server service
-        restart_command = "sudo systemctl restart rke2-server"
-        stdin, stdout, stderr = client.exec_command(restart_command)
+        # Create an SSH client instance
+        ssh_client = paramiko.SSHClient()
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        # Check for any errors during the restart operation
-        if stderr.channel.recv_exit_status() != 0:
-            print(f"Error: {stderr.read().decode('utf-8')}")
-        else:
-            print("rke2-server restarted successfully.")
+        try:
+            # Connect to the SSH server
+            ssh_client.connect(hostname, port=22, username=username, password=password)
+
+            # Execute the command over SSH
+            stdin, stdout, stderr = ssh_client.exec_command(command)
+
+            # Check command execution status
+            exit_status = stdout.channel.recv_exit_status()
+            if exit_status == 0:
+                print("Docker registry service started successfully.")
+            else:
+                print(f"Error occurred: {stderr.read().decode()}")
+
+        finally:
+            # Close the SSH connection
+            ssh_client.close()
 
     except paramiko.AuthenticationException:
         print(f"Failed to authenticate to {hostname}.")
@@ -41,8 +56,58 @@ def update_registries_and_restart(hostname, username, password, yaml_content):
     finally:
         client.close()
 
+def restartRegistries(hostname, username, password, yaml_content):
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    try:
+        # Restart the rke2-server service
+        restart_command = "sudo systemctl restart rke2-server"
+
+        ssh_client = paramiko.SSHClient()
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        stdin, stdout, stderr = ssh_client.exec_command(f'systemctl is-active docker-registry')
+        output = stdout.read().decode().strip()
+
+        # Check the output to determine service status
+        if output == 'active':
+            print(f"The service 'docker-registry' is ready.")
+        else:
+            stdin, stdout, stderr = client.exec_command(restart_command)
+        # Check for any errors during the restart operation
+            if stderr.channel.recv_exit_status() != 0:
+                print(f"Error: {stderr.read().decode('utf-8')}")
+            else:
+                print("rke2-server restarted successfully.")
+                print(f"The service 'docker-registry' is not active.")
+
+    except paramiko.AuthenticationException:
+        print(f"Failed to authenticate to {hostname}.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        client.close()
+
+def get_input(prompt, type_func):
+    while True:
+        try:
+            user_input = type_func(input(prompt))
+            return user_input
+        except ValueError:
+            print("Invalid input. Please enter a valid value of the specified type.")
+
+
 # Example usage
 if __name__ == "__main__":
+
+    vmSubIp = get_input("Enter vm ip: ", str)
+
+    if not vmSubIp:
+        hostname = "vm085.eng.cz.zoomint.com"
+    elif len(vmSubIp) == 2:
+        hostname = "vm0%s.eng.cz.zoomint.com" % vmSubIp
+    else:
+        hostname = vmSubIp
 
     username = "root"
     password = "zoomcallrec"
@@ -73,3 +138,4 @@ configs:
 
     # Update /etc/rancher/rke2/registries.yaml and restart rke2-server on the remote server
     update_registries_and_restart(hostname, username, password, yaml_content)
+    # restartRegistries(hostname, username, password, yaml_content)

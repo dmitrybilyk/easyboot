@@ -82,6 +82,33 @@ def port_forward_all():
         title = f"Conversations"
         terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
 
+    # Filter pods containing 'encourage-correlation'
+    encourage_correlation_pods = [line.split()[0] for line in get_pods_output.split('\n') if 'encourage-correlation' in line]
+
+    # Port forward for encourage-correlation pods
+    for index, pod in enumerate(encourage_correlation_pods):
+        port_forward_command = f"kubectl port-forward {pod} 8108:8108"
+        title = f"Correlation"
+        terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
+
+    # Filter pods containing 'encourage-zqm'
+    encourage_zqm_pods = [line.split()[0] for line in get_pods_output.split('\n') if 'encourage-zqm-connector' in line]
+
+    # Port forward for encourage-zqm pods
+    for index, pod in enumerate(encourage_zqm_pods):
+        port_forward_command = f"kubectl port-forward {pod} 8201:8201"
+        title = f"ZQM"
+        terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
+
+    # Filter pods containing 'encourage-framework'
+    encourage_framework_pods = [line.split()[0] for line in get_pods_output.split('\n') if 'encourage-framework' in line]
+
+    # Port forward for encourage-framework pods
+    for index, pod in enumerate(encourage_zqm_pods):
+        port_forward_command = f"kubectl port-forward {pod} 8102:8102"
+        title = f"Framework"
+        terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
+
         # Filter pods containing 'interaction_service'
     interaction_service_pods = [line.split()[0] for line in get_pods_output.split('\n') if 'interaction-service' in line]
 
@@ -105,7 +132,7 @@ def port_forward_all():
 
     # Port forward for speech pods
     for index, pod in enumerate(speech_generative_pods):
-        port_forward_command = f"kubectl port-forward {pod} 8081:8080"
+        port_forward_command = f"kubectl port-forward {pod} 8082:8080"
         title = f"Generative"
         terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
 

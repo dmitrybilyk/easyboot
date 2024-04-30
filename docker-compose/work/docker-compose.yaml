@@ -115,25 +115,25 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
-  automated-qm:
-    container_name: 'automated_qm'
-    image: 'eleveo/automated-qm:1.0.7'
-    ports:
-      - '8207:8207'
-    environment:
-      - DB_ADDRESS=jdbc:postgresql://zoom_postgres:5432/
-      - DATABASE_NAME=eleveo_default_db
-      - application.keycloak.server-url=http://zoom_keycloak:8080/auth
-      - application.keycloak.master-password=password
-      - DATABASE_HOST=zoom_postgres
-      - application.datasource.username=postgres
-      - application.datasource.password=postgres
-      - review.period=5000
-      - review.maxNumber=600
-      - review.maxCores=3
-    depends_on:
-      - keycloak
-      - postgres
+#  automated-qm:
+#    container_name: 'automated_qm'
+#    image: 'eleveo/automated-qm:1.0.7'
+#    ports:
+#      - '8207:8207'
+#    environment:
+#      - DB_ADDRESS=jdbc:postgresql://zoom_postgres:5432/
+#      - DATABASE_NAME=eleveo_default_db
+#      - application.keycloak.server-url=http://zoom_keycloak:8080/auth
+#      - application.keycloak.master-password=password
+#      - DATABASE_HOST=zoom_postgres
+#      - application.datasource.username=postgres
+#      - application.datasource.password=postgres
+#      - review.period=5000
+#      - review.maxNumber=600
+#      - review.maxCores=3
+#    depends_on:
+#      - keycloak
+#      - postgres
 volumes:
   pgdata_correct:
   solr:

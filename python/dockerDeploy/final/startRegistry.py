@@ -1,5 +1,4 @@
 import paramiko
-import subprocess
 
 hostname = "vm085.eng.cz.zoomint.com"
 

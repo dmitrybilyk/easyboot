@@ -87,11 +87,16 @@ service_directory_path = service_path
 
 service = [name for name in names if service_name in name]
 
-tagPathVersion = get_input("Enter Patch Version: ", int)
+tagPathVersion = get_input("Enter Patch Version: ", str)
 
-new_tag = f'{service_name}:8.1.{tagPathVersion}'
+new_tag = f'{service_name}:{tagPathVersion}'
 
-hostname = "vm0%s.eng.cz.zoomint.com" % vmSubIp
+if not vmSubIp:
+    hostname = "vm085.eng.cz.zoomint.com"
+elif len(vmSubIp) == 3:
+    hostname = "vm%s.eng.cz.zoomint.com" % vmSubIp
+else:
+    hostname = vmSubIp
 
 # def run_maven_build(directory, image_repository, image_tag):
 def run_maven_build(directory, image_repository, image_tag):

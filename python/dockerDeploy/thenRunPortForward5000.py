@@ -36,8 +36,8 @@ def open_ssh_tunnel(vmSubIp):
     # SSH command with password
     if not vmSubIp:
         hostname = "vm085.eng.cz.zoomint.com"
-    elif len(vmSubIp) == 2:
-        hostname = "vm0%s.eng.cz.zoomint.com" % vmSubIp
+    elif len(vmSubIp) == 3:
+        hostname = "vm%s.eng.cz.zoomint.com" % vmSubIp
     else:
         hostname = vmSubIp
 

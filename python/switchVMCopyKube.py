@@ -35,9 +35,15 @@ def get_input(prompt, type_func):
 
 
 # Provide remote server details and paths
-vmIp = get_input("Enter vm IP: ", str)
+vmSubIp = get_input("Enter vm IP: ", str)
 # print("You entered:", vmIp)
-hostname = f'vm0{vmIp}.eng.cz.zoomint.com'
+if not vmSubIp:
+    hostname = "vm085.eng.cz.zoomint.com"
+elif len(vmSubIp) == 3:
+    hostname = "vm%s.eng.cz.zoomint.com" % vmSubIp
+else:
+    hostname = vmSubIp
+hostname = f'vm{vmSubIp}.eng.cz.zoomint.com'
 username = 'root'
 password = 'zoomcallrec'
 remote_path = '.kube/config'

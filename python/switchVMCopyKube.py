@@ -38,6 +38,8 @@ def get_input(prompt, type_func):
 
 # Provide remote server details and paths
 vmSubIp = get_input("Enter vm IP: ", str)
+if not vmSubIp:
+    vmSubIp = '085'
 # print("You entered:", vmIp)
 if not vmSubIp:
     hostname = "vm085.eng.cz.zoomint.com"

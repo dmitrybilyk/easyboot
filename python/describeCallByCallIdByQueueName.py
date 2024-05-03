@@ -154,7 +154,7 @@ else:
 
 callid = get_input("Enter Call ID: ", str)
 if not callid:
-    callid = 138009  # Default value
+    callid = 132091  # Default value
 
 # Call the function to execute the query
 execute_db_query(query, callid, hostname)

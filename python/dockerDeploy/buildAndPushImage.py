@@ -346,12 +346,12 @@ if __name__ == "__main__":
     else:
         print("Maven build failed. Cannot proceed with Docker image operations.")
 
-if not vmSubIp:
-    hostname = "vm085.eng.cz.zoomint.com"
-elif len(vmSubIp) == 2:
-    hostname = "vm0%s.eng.cz.zoomint.com" % vmSubIp
-else:
-    hostname = vmSubIp
+# if not vmSubIp:
+#     hostname = "vm085.eng.cz.zoomint.com"
+# elif len(vmSubIp) == 3:
+#     hostname = "vm%s.eng.cz.zoomint.com" % vmSubIp
+# else:
+#     hostname = vmSubIp
 
 # hostname = f'vm0{vmSubIp}.eng.cz.zoomint.com'
 username = 'root'

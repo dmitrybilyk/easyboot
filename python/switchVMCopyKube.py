@@ -1,5 +1,7 @@
 import paramiko
 
+
+local_path = '/home/dmytro/.kube/config'
 def copy_file_from_remote(hostname, username, password, remote_path, local_path):
     # Create SSH client
     ssh_client = paramiko.SSHClient()
@@ -47,7 +49,6 @@ hostname = f'vm{vmSubIp}.eng.cz.zoomint.com'
 username = 'root'
 password = 'zoomcallrec'
 remote_path = '.kube/config'
-local_path = '/home/dmytro/.kube/config'
 
 # Call the function to copy the file
 copy_file_from_remote(hostname, username, password, remote_path, local_path)

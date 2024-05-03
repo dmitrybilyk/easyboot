@@ -22,6 +22,7 @@ paths = [
     ("/home/dmytro/dev/projects/zqm-connector/service"),
     ("/home/dmytro/dev/projects/scheduler/service"),
     ("/home/dmytro/dev/projects/framework/service"),
+    ("/home/dmytro/dev/projects/integrations/service"),
     ("/home/dmytro/dev/projects/automatedqm"),
     ("/home/dmytro/dev/projects/interaction-player/webapp"),
     ("/home/dmytro/dev/projects/speechrec/core")
@@ -34,6 +35,7 @@ mvn_apps = [
     ("/home/dmytro/dev/projects/zqm-connector/service"),
     ("/home/dmytro/dev/projects/scheduler/service"),
     ("/home/dmytro/dev/projects/framework/service"),
+    ("/home/dmytro/dev/projects/integrations/service"),
     ("/home/dmytro/dev/projects/interaction-player/webapp")
 ]
 
@@ -45,6 +47,7 @@ names = [
     ("zqm-connector"),
     ("scheduler"),
     ("framework"),
+    ("integrations"),
     ("automatedqm"),
     ("interaction-player"),
     ("speechrec")
@@ -58,6 +61,7 @@ resources_names = [
     ("encourage-zqm-connector"),
     ("encourage-scheduler"),
     ("encourage-framework"),
+    ("encourage-integrations"),
     ("automated-qm"),
     ("interaction-player"),
     ("speechrec")

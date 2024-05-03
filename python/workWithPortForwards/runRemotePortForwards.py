@@ -1,11 +1,21 @@
 import paramiko
 import subprocess
+import sys
 
 def run_command(command):
     """Helper function to run shell commands."""
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output, error = process.communicate()
     return output.decode().strip(), error.decode().strip()
+
+# Function to prompt user for input of a specific type
+def get_input(prompt, type_func):
+    while True:
+        try:
+            user_input = type_func(input(prompt))
+            return user_input
+        except ValueError:
+            print("Invalid input. Please enter a valid value of the specified type.")
 
 def ssh_download_file(hostname, username, password, remote_path, local_path):
     """Download a file from a remote server via SSH."""
@@ -42,14 +52,22 @@ def open_terminal_with_tabs(terminal_commands):
     subprocess.Popen(command)
 
 def main():
-    vm_sub_ip = input("Enter VM IP: ").strip()
 
-    if not vm_sub_ip:
-        hostname = "vm085.eng.cz.zoomint.com"
-    elif len(vm_sub_ip) == 3:
-        hostname = f"vm{vm_sub_ip}.eng.cz.zoomint.com"
+    vmSubIp = '085'
+    # Check if at least one argument (excluding script name) is passed
+    if len(sys.argv) > 1:
+        vmSubIp = sys.argv[1]
     else:
-        hostname = vm_sub_ip
+        # Provide remote server details and paths
+        vmSubIp = get_input("Enter vm IP: ", str)
+
+    # print("You entered:", vmIp)
+    if not vmSubIp:
+        hostname = "vm085.eng.cz.zoomint.com"
+    elif len(vmSubIp) == 3:
+        hostname = "vm%s.eng.cz.zoomint.com" % vmSubIp
+    else:
+        hostname = vmSubIp
 
     username = 'root'
     password = 'zoomcallrec'
@@ -64,20 +82,13 @@ def main():
 
     # Define port forwarding mappings based on pod names
     port_mappings = [
-        ("encourage-data", 8300, "Data"),
-        ("encourage-conversations", 8107, "Conversations"),
-        ("encourage-correlation", 8108, "Correlation"),
-        ("encourage-zqm", 8201, "ZQM"),
-        ("encourage-framework", 8102, "Framework"),
-        ("interaction-service", 8081, "InteractionService"),
-        ("speech", 8080, "Speech"),
-        ("generative", 8082, "Generative"),
-        ("kubernetes-rabbitmq", 15672, "Rabbit UI"),
-        ("kubernetes-rabbitmq", 5672, "RabbitMQ"),
-        ("kubernetes-postgresql-0", 5432, "Postgres"),
-        ("kubernetes-solrcloud-0", 8983, "SolrCloud"),
-        ("kubernetes-zookeeper", 9181, "ZooKeeper"),
-        ("kubernetes-solrcloud-zookeeper-0", 9983, "SolrZooKeeper")
+        ("encourage-data", 5300, "Data"),
+        ("encourage-conversations", 5002, "Integrations"),
+        ("interaction-player", 5005, "Player"),
+        ("encourage-integrations", 5007, "Conversations"),
+        ("encourage-correlation", 5008, "Correlation"),
+        ("encourage-zqm", 5001, "ZQM"),
+        ("encourage-framework", 5022, "Framework")
     ]
 
     # Prepare terminal commands for port forwarding
@@ -86,7 +97,7 @@ def main():
     for pod_keyword, local_port, title in port_mappings:
         filtered_pods = filter_pods_by_name(pods_output, pod_keyword)
         for pod in filtered_pods:
-            port_forward_command = port_forward(pod, local_port, local_port, title)
+            port_forward_command = port_forward(pod, local_port, 5005, title)
             terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
 
     # Open xfce4-terminal with tabs for port forwarding

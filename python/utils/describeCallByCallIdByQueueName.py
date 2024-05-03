@@ -101,6 +101,13 @@ def execute_solr_query(callId):
                                  # 'customerEmotion',
                                  # 'customerInterruptionCount',
                                  # 'agentInterruptionsCount'
+                                 'autoReviewRuleIds'
+                                 ]
+
+        # Hardcoded list of fields to filter
+        hardcoded_fields_list_to_exclude = [
+                                 '_version_',
+                                 'autoReviewRuleIds'
                                  ]
 
         # Construct the Solr query URL with the provided conversationId
@@ -121,8 +128,10 @@ def execute_solr_query(callId):
         formatted_output = []
         for doc in docs:
             # Filter fields based on the hardcoded list
-            filtered_doc = {key: doc.get(key, None) for key in hardcoded_fields_list}
+            # filtered_doc = {key: doc.get(key, None) for key in hardcoded_fields_list}
+            filtered_doc = {key: doc[key] for key in doc if key not in hardcoded_fields_list_to_exclude}
             formatted_output.append(filtered_doc)
+            # formatted_output.append(docs)
 
         # Convert formatted output to JSON string
         formatted_json = json.dumps(formatted_output, indent=4)
@@ -134,6 +143,23 @@ def execute_solr_query(callId):
         # Copy formatted JSON to clipboard using xclip
         subprocess.Popen(['echo', '-n', formatted_json], stdout=subprocess.PIPE).communicate()
         subprocess.Popen(['xclip', '-selection', 'clipboard'], stdin=subprocess.PIPE).communicate(input=formatted_json.encode())
+
+        # Construct the Solr query URL with the provided conversationId
+        solr_query_url = f"http://vm085.eng.cz.zoomint.com:8983/solr/conversation/update?_=1714743619415&commitWithin=1000&overwrite=true&wt=json"
+
+        # Execute the curl command to send the Solr query and capture the output
+        curl_process = subprocess.Popen(['curl', '-s', '-X', 'POST', '-d', doc, solr_query_url], stdout=subprocess.PIPE)
+        query_output, _ = curl_process.communicate()
+
+        # Decode the output from bytes to string
+        query_output = query_output.decode('utf-8')
+
+        # Parse the JSON response
+        response = json.loads(query_output)
+
+        # Extract field names and values from the response
+        docs = response.get('response', {}).get('docs', [])
+
 
         # Return formatted output as JSON
         return formatted_json
@@ -154,7 +180,7 @@ else:
 
 callid = get_input("Enter Call ID: ", str)
 if not callid:
-    callid = 132091  # Default value
+    callid = 3781010  # Default value
 
 # Call the function to execute the query
 execute_db_query(query, callid, hostname)

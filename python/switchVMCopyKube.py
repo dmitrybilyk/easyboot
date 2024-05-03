@@ -1,5 +1,5 @@
 import paramiko
-
+import sys
 
 local_path = '/home/dmytro/.kube/config'
 def copy_file_from_remote(hostname, username, password, remote_path, local_path):
@@ -35,11 +35,14 @@ def get_input(prompt, type_func):
         except ValueError:
             print("Invalid input. Please enter a valid value of the specified type.")
 
+vmSubIp = '085'
+    # Check if at least one argument (excluding script name) is passed
+if len(sys.argv) > 1:
+    vmSubIp = sys.argv[1]
+else:
+    # Provide remote server details and paths
+    vmSubIp = get_input("Enter vm IP: ", str)
 
-# Provide remote server details and paths
-vmSubIp = get_input("Enter vm IP: ", str)
-if not vmSubIp:
-    vmSubIp = '085'
 # print("You entered:", vmIp)
 if not vmSubIp:
     hostname = "vm085.eng.cz.zoomint.com"
@@ -47,7 +50,7 @@ elif len(vmSubIp) == 3:
     hostname = "vm%s.eng.cz.zoomint.com" % vmSubIp
 else:
     hostname = vmSubIp
-hostname = f'vm{vmSubIp}.eng.cz.zoomint.com'
+# hostname = f'vm{vmSubIp}.eng.cz.zoomint.com'
 username = 'root'
 password = 'zoomcallrec'
 remote_path = '.kube/config'

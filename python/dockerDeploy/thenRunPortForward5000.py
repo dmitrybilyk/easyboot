@@ -36,7 +36,7 @@ port = 5000
 
 username = 'root'
 password = 'zoomcallrec'
-local_path = '127.0.0.1'
+local_host = '127.0.0.1'
 
 def copy_file_from_remote(hostname, username, password, remote_path, local_path):
     # Create SSH client
@@ -106,7 +106,7 @@ def open_ssh_tunnel(vmSubIp):
         print(f"Error: {e}")
 
 
-    ssh_command = f'sshpass -p {password} ssh -L {port}:{local_path}:{port} {username}@%s' % host
+    ssh_command = f'sshpass -p {password} ssh -L {port}:{local_host}:{port} {username}@%s' % host
 
     # Command to open a new terminal and run the SSH command
     if platform.system() == "Linux":

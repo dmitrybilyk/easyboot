@@ -10,6 +10,8 @@ resource_names = [
     "encourage-conversations",
     "encourage-correlation",
     "encourage-zqm-connector",
+    "encourage-integrations",
+    "automated-qm",
     "encourage-scheduler",
     "encourage-framework",
     "automated-qm",
@@ -31,6 +33,8 @@ def execute(command, resource):
         kubectl_command = f"kubectl scale --replicas=0 deployment {deployment_name}"
     elif default_command == 'start':
         kubectl_command = f"kubectl scale --replicas=1 deployment {deployment_name}"
+    elif default_command == 'status':
+        kubectl_command = f"kubectl get deployments | grep {deployment_name}"
     else:
         kubectl_command = f"kubectl rollout restart deployment {deployment_name}"
 

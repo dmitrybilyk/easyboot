@@ -1,6 +1,7 @@
 import psycopg2
 import subprocess
 import json
+import sys
 
 def execute_db_query(query, callid, host):
     try:
@@ -106,7 +107,8 @@ def execute_solr_query(callId):
 
         # Hardcoded list of fields to filter
         hardcoded_fields_list_to_exclude = [
-                                 '_version_',
+                                 '_version_'
+            ,
                                  'autoReviewRuleIds'
                                  ]
 
@@ -135,6 +137,12 @@ def execute_solr_query(callId):
 
         # Convert formatted output to JSON string
         formatted_json = json.dumps(formatted_output, indent=4)
+        non_formatted_json = json.dumps(formatted_output)
+        #
+        # # Check if the 'autoReviewRuleIds' field exists in the data
+        # if 'autoReviewRuleIds' in non_formatted_json:
+        #     # Filter out items with value 1 from the array
+        #     non_formatted_json['autoReviewRuleIds'] = [value for value in non_formatted_json['autoReviewRuleIds'] if value != "10"]
 
         # Print formatted JSON output
         print("Formatted JSON output:")
@@ -148,7 +156,7 @@ def execute_solr_query(callId):
         solr_query_url = f"http://vm085.eng.cz.zoomint.com:8983/solr/conversation/update?_=1714743619415&commitWithin=1000&overwrite=true&wt=json"
 
         # Execute the curl command to send the Solr query and capture the output
-        curl_process = subprocess.Popen(['curl', '-s', '-X', 'POST', '-d', doc, solr_query_url], stdout=subprocess.PIPE)
+        curl_process = subprocess.Popen(['curl', '-s', '-X', 'POST', '-d', non_formatted_json, solr_query_url], stdout=subprocess.PIPE)
         query_output, _ = curl_process.communicate()
 
         # Decode the output from bytes to string
@@ -178,9 +186,10 @@ elif len(vmSubIp) == 3:
 else:
     hostname = vmSubIp
 
-callid = get_input("Enter Call ID: ", str)
-if not callid:
-    callid = 3781010  # Default value
+
+callid = 3781010
+if len(sys.argv) > 1:
+    callid = sys.argv[1]
 
 # Call the function to execute the query
 execute_db_query(query, callid, hostname)

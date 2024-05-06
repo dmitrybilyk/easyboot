@@ -82,29 +82,29 @@ def main():
 
     # Define port forwarding mappings based on pod names
     port_mappings = [
-        ("encourage-data", 8300, "Data"),
-        ("encourage-conversations", 8107, "Conversations"),
-        ("encourage-correlation", 8108, "Correlation"),
-        ("encourage-zqm", 8201, "ZQM"),
-        ("encourage-framework", 8102, "Framework"),
-        ("interaction-service", 8081, "InteractionService"),
-        ("speech", 8080, "Speech"),
-        ("generative", 8082, "Generative"),
-        ("kubernetes-rabbitmq", 15672, "Rabbit UI"),
-        ("kubernetes-rabbitmq", 5672, "RabbitMQ"),
-        ("kubernetes-postgresql-0", 5432, "Postgres"),
-        ("kubernetes-solrcloud-0", 8983, "SolrCloud"),
-        ("kubernetes-zookeeper", 9181, "ZooKeeper"),
-        ("kubernetes-solrcloud-zookeeper-0", 9983, "SolrZooKeeper")
+        ("encourage-data", 8300, 8300, "Data"),
+        ("encourage-conversations", 8107, 8107, "Conversations"),
+        ("encourage-correlation", 8108, 8108, "Correlation"),
+        ("encourage-zqm", 8201, 8201, "ZQM"),
+        ("encourage-framework", 8102, 8102, "Framework"),
+        ("interaction-service", 8081, 8081, "InteractionService"),
+        ("speech", 8080, 8080, "Speech"),
+        ("generative", 8082, 8080, "Generative"),
+        ("kubernetes-rabbitmq", 15672, 15672, "Rabbit UI"),
+        ("kubernetes-rabbitmq", 5672, 5672, "RabbitMQ"),
+        ("kubernetes-postgresql-0", 5432, 5432, "Postgres"),
+        ("kubernetes-solrcloud-0", 8983, 8983, "SolrCloud"),
+        ("kubernetes-zookeeper", 9181, 9181, "ZooKeeper"),
+        ("kubernetes-solrcloud-zookeeper-0", 9983, 9983, "SolrZooKeeper")
     ]
 
     # Prepare terminal commands for port forwarding
     terminal_commands = []
 
-    for pod_keyword, local_port, title in port_mappings:
+    for pod_keyword, local_port, remote_port, title in port_mappings:
         filtered_pods = filter_pods_by_name(pods_output, pod_keyword)
         for pod in filtered_pods:
-            port_forward_command = port_forward(pod, local_port, local_port, title)
+            port_forward_command = port_forward(pod, local_port, remote_port, title)
             terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
 
     # Open xfce4-terminal with tabs for port forwarding

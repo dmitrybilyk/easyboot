@@ -89,7 +89,7 @@ def main():
         ("encourage-framework", 8102, 8102, "Framework"),
         ("interaction-service", 8081, 8081, "InteractionService"),
         ("speech", 8080, 8080, "Speech"),
-        ("generative", 8082, 8080, "Generative"),
+        ("generative", 8301, 8301, "Generative"),
         ("kubernetes-rabbitmq", 15672, 15672, "Rabbit UI"),
         ("kubernetes-rabbitmq", 5672, 5672, "RabbitMQ"),
         ("kubernetes-postgresql-0", 5432, 5432, "Postgres"),

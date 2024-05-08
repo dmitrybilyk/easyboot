@@ -1,3 +1,5 @@
+# sudo apt-get install postgresql-client
+
 # 1. cd /home/dmytro/dev/projects/easyboot/docker-compose/work
 # 2. /usr/bin/pg_dump --dbname=postgresql://postgres:postgres@10.17.50.85:5432/eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump_085.sql --host=10.17.50.85
 # 3. docker-compose down

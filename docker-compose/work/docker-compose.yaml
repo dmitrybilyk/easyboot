@@ -104,17 +104,26 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - pgdata_correct:/var/lib/postgresql/data
-#  encourage-data:
-#    container_name: 'encourage_data'
-#    image: 'eleveo/encourage/encourage-data:20.6.9-snapshot.unknown.build'
-#    ports:
-#      - '8300:8300'
-#    environment:
-#      - DB_ADDRESS=jdbc:postgresql://zoom_postgres:5432/
-#      - KEYCLOAK_SERVER_URL=http://kcproxy:18081/auth
-#    depends_on:
-#      - keycloak
-#      - postgres
+  encourage-data:
+    container_name: 'encourage_data'
+    image: 'eleveo/encourage/encourage-data:20.7.1'
+    ports:
+      - '8300:8300'
+    environment:
+      - data.database.address=jdbc:postgresql://zoom_postgres:5432/
+      - data.database.username=postgres
+      - data.database.password=postgres
+      - data.database.dbName=eleveo_default_db
+      - SPRING.RABBITMQ.HOST=rabbitmq
+      - SPRING.RABBITMQ.USERNAME=callrec
+      - SPRING.RABBITMQ.PASSWORD=callrec
+      - keycloak-client-token-provider.serverUrl=http://zoom_keycloak:8080/auth
+#      - keycloak-client-token-provider.serverUrl=http://localhost:18080/auth
+      - keycloak-client-token-provider.realm=default
+      - keycloak-client-token-provider.master-client-secret=password
+    depends_on:
+      - keycloak
+      - postgres
 #  automated-qm:
 #    container_name: 'automated_qm'
 #    image: 'eleveo/automated-qm:1.0.7'

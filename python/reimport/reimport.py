@@ -3,11 +3,14 @@ import sys
 import psycopg2
 
 # List of shell commands to execute
-commands = [
+allCommands = [
     "curl -X DELETE http://localhost:8108/api/correlation-range/",
     "curl -X DELETE http://localhost:8107/api/v3/conversations/",
     "curl -X DELETE http://localhost:8300/api/v3/events/",
     "curl -X DELETE http://localhost:8300/api/v3/tasks/",
+    "kubectl rollout restart deployment encourage-scheduler"
+]
+justRestartSchedulerCommand = [
     "kubectl rollout restart deployment encourage-scheduler"
 ]
 
@@ -43,12 +46,35 @@ def execute_commands(callId):
             # Commit the transaction
             connection.commit()
 
-            print(callId)
+            for cmd in justRestartSchedulerCommand:
+                print(f"Executing command: {cmd}")
+                try:
+                    # Execute the command and capture the output
+                    result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+                    # Print the command output
+                    if result.stdout:
+                        print("Output:")
+                        print(result.stdout)
+                    if result.stderr:
+                        print("Error:")
+                        print(result.stderr)
+
+                except subprocess.CalledProcessError as e:
+                    # Handle if the command returns a non-zero exit status
+                    print(f"Command '{cmd}' failed with error code {e.returncode}")
+                    print("Error output:")
+                    print(e.stderr)
+
+                print("=" * 50)  # Separator between commands
+
+
+                print(f"Updated just call {callId}")
         finally:
             print("success")
     else:
         # Iterate over each command and execute them one by one
-        for cmd in commands:
+        for cmd in allCommands:
             print(f"Executing command: {cmd}")
             try:
                 # Execute the command and capture the output
@@ -80,6 +106,7 @@ def main():
             execute_commands(value)
     else:
         execute_commands(None)
+        # execute_commands(133007)
         print("No values passed.")
 
     # Execute the specified commands

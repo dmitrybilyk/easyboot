@@ -138,7 +138,19 @@ volumes:
   pgdata_correct:
   solr:
 
-#  /usr/bin/pg_dump --dbname=postgresql://postgres:postgres@10.17.50.85:5432/eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump.sql --host=10.17.50.85
+
+# psql should be installed and .pgpass should be created with content:
+#  localhost:5432:eleveo_default_db:postgres:postgres and permissions 600
+# 0. cd /home/dmytro/dev/projects/easyboot/docker-compose/work
+# 1.  /usr/bin/pg_dump --dbname=postgresql://postgres:postgres@10.17.50.85:5432/eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump_085.sql --host=10.17.50.85
+# 2. docker-compose down   and  docker volume prune -f
+# 3. docker-compose run -d --name zoom_postgres -p 5432:5432 postgres
+#  or better - docker-compose up
+# 4. /usr/bin/psql --host=localhost --port=5432 dbname=eleveo_default_db --username=postgres --file="/home/dmytro/eleveo_default_db_dump_085.sql"
+# 5. docker-compose down
+# 6. docker-compose up
+
+
 
 #  scp -r root@vm085.eng.cz.zoomint.com:/opt/callrec/data/calls /opt/callrec/data/
 #  scp -r root@vm085.eng.cz.zoomint.com:/opt/callrec/data/scorecard /opt/callrec/data/

@@ -1,20 +1,7 @@
-# sudo apt-get install postgresql-client
-
-# 1. cd /home/dmytro/dev/projects/easyboot/docker-compose/work
-# 2. /usr/bin/pg_dump --dbname=postgresql://postgres:postgres@10.17.50.85:5432/eleveo_default_db --file=/home/dmytro/eleveo_default_db_dump_085.sql --host=10.17.50.85
-# 3. docker-compose down
-# 4. docker volume prune -f
-# 5. docker-compose up -d
-# 6. Wait for 10 seconds
-# 7. /usr/bin/psql --host=localhost --port=5432 dbname=eleveo_default_db --username=postgres --file="/home/dmytro/eleveo_default_db_dump_085.sql"
-# 8. docker-compose down
-# 9. docker-compose up
-
 import subprocess
 import time
 import sys
 import os
-
 
 def create_pgpass_file():
     # Define the file path
@@ -88,8 +75,16 @@ def main():
     # Stop Docker containers
     run_command("docker-compose down")
     time.sleep(10)
-    # Remove Docker volumes
-    run_command("docker volume rm work_pgdata_correct")
+
+    # Check if the volume exists before attempting to remove it
+    volume_name = "work_pgdata_correct"
+    volume_exists = subprocess.run(f"docker volume ls -q --filter name={volume_name}", shell=True, capture_output=True, text=True).stdout.strip()
+
+    if volume_exists:
+        # Remove Docker volume if it exists
+        run_command(f"docker volume rm {volume_name}")
+
+    # Prune Docker volumes
     run_command("docker volume prune -f")
 
     # Start Docker containers in detached mode

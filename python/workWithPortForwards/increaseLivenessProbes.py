@@ -2,11 +2,6 @@ import paramiko
 import subprocess
 import sys
 
-def run_command(command):
-    """Helper function to run shell commands."""
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = process.communicate()
-    return output.decode().strip(), error.decode().strip()
 
 # Function to prompt user for input of a specific type
 def get_input(prompt, type_func):
@@ -33,10 +28,6 @@ def ssh_download_file(hostname, username, password, remote_path, local_path):
 
     finally:
         ssh_client.close()
-
-def kubectl_get_pods():
-    """Execute 'kubectl get pods' and return the output."""
-    return run_command("kubectl get pods")
 
 def filter_pods_by_name(pods_output, keyword):
     """Filter pods by name based on a keyword."""
@@ -77,33 +68,23 @@ def main():
     # Download Kubernetes config file from the remote server
     ssh_download_file(hostname, username, password, remote_path, local_path)
 
-    # Get pods information
-    pods_output, _ = kubectl_get_pods()
-
-    # Define port forwarding mappings based on pod names
-    port_mappings = [
-        ("encourage-data", 5300, "Data"),
-        ("automated-qm", 5207, "AutoQM"),
-        ("encourage-conversations", 5002, "Integrations"),
-        ("interaction-player", 5005, "Player"),
-        ("encourage-integrations", 5007, "Conversations"),
-        ("encourage-correlation", 5008, "Correlation"),
-        ("encourage-zqm", 5001, "ZQM"),
-        ("scorecard", 5777, "Score"),
-        ("encourage-framework", 5022, "Framework")
+    resources = [
+        # "encourage-data",
+        # "automated-qm",
+        # "interaction-player",
+        # "encourage-integrations",
+        "scorecard"
     ]
 
-    # Prepare terminal commands for port forwarding
-    terminal_commands = []
+    # Loop through each resource and execute kubectl patch command
+    for resource in resources:
+        command = [
+            "kubectl", "patch", "deployment", resource,
+            "--type", "json",
+            "-p", '[{"op": "replace", "path": "/spec/template/spec/containers/0/livenessProbe/failureThreshold", "value": 80000}]'
+        ]
+        subprocess.run(command)
 
-    for pod_keyword, local_port, title in port_mappings:
-        filtered_pods = filter_pods_by_name(pods_output, pod_keyword)
-        for pod in filtered_pods:
-            port_forward_command = port_forward(pod, local_port, 5005, title)
-            terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
-
-    # Open xfce4-terminal with tabs for port forwarding
-    open_terminal_with_tabs(terminal_commands)
 
 if __name__ == "__main__":
     main()

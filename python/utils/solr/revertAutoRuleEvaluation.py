@@ -1,4 +1,5 @@
 import pysolr
+import sys
 
 # Specify the Solr server URL
 solr_url = 'http://localhost:8983/solr/conversation'
@@ -44,7 +45,13 @@ def find_and_remove_field(conversation_id, field_name):
 
 # Example usage:
 if __name__ == "__main__":
-    conversation_id = "086e977d-89ae-4e17-a7e1-ab0e1a961d8c"
+    conversation_id = "someConversationId"
+
+    # Check if at least one argument (excluding script name) is passed
+    if len(sys.argv) > 1:
+        conversation_id = sys.argv[1]
+
+
     field_name = "autoReviewRuleIds"  # Field to be removed
 
     # Call the function to find and remove the field from the conversation document

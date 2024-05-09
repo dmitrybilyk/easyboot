@@ -2,6 +2,7 @@ import subprocess
 import time
 import sys
 import os
+import psycopg2
 
 def create_pgpass_file():
     # Define the file path
@@ -33,6 +34,33 @@ def get_input(prompt, type_func):
         except ValueError:
             print("Invalid input. Please enter a valid value of the specified type.")
 
+def update_redirects():
+    try:
+        # Establish a connection to the PostgreSQL database
+        connection = psycopg2.connect(
+            user="postgres",
+            password="postgres",
+            host="localhost",
+            port="5432",
+            database="eleveo_default_db"
+        )
+
+        # Create a cursor object using the connection
+        cursor = connection.cursor()
+
+        # Define the update query
+        update_query = """
+            update keycloak.redirect_uris set value = '*' where client_id =
+                                            (select id from keycloak.client where client.client_id = 'encourage-js-client');
+        """
+
+        # Execute the update query with parameter binding
+        cursor.execute(update_query, ())
+
+        # Commit the transaction
+        connection.commit()
+    finally:
+        print("Redirect URIs are updated successfully.")
 
 def run_command(command):
     try:
@@ -106,6 +134,9 @@ def main():
 
     # Start Docker containers
     run_command("docker-compose up -d")
+
+    time.sleep(5)
+    update_redirects()
 
 
 if __name__ == "__main__":

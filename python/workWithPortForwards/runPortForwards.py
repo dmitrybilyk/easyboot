@@ -83,7 +83,7 @@ def main():
     # Define port forwarding mappings based on pod names
     port_mappings = [
         ("automated-qm", 8207, 8207, "Automated QM"),
-        # ("encourage-data", 8300, 8300, "Data"),
+        ("encourage-data", 8300, 8300, "Data"),
         ("encourage-conversations", 8107, 8107, "Conversations"),
         ("encourage-correlation", 8108, 8108, "Correlation"),
         ("encourage-zqm", 8201, 8201, "ZQM"),

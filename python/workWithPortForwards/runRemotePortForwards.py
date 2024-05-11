@@ -88,7 +88,7 @@ def main():
         ("interaction-player", 5005, "Player"),
         ("encourage-integrations", 5007, "Conversations"),
         ("encourage-correlation", 5008, "Correlation"),
-        ("encourage-zqm", 5001, "ZQM"),
+        ("encourage-zqm-connector", 5001, "ZQM"),
         ("scorecard", 5777, "Score"),
         ("encourage-framework", 5022, "Framework")
     ]

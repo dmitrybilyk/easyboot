@@ -113,15 +113,26 @@ def run_maven_build(directory, image_repository, image_tag):
         os.chdir(directory)
         if mvn_apps.__contains__(directory):
             # Define the Maven command to be executed
-            maven_command = [
-                "mvn",
-                "clean",
-                "install",
-                "-Dmaven.test.skip",
-                "-Pdocker-image",
-                f"-Ddocker.image.repository={image_repository}",
-                f"-Ddocker.image.tag={image_tag}"
-            ]
+            if 'zqm' in directory:
+                maven_command = [
+                    "mvn",
+                    # "clean",
+                    "install",
+                    "-Dmaven.test.skip",
+                    "-Pdocker-image",
+                    f"-Ddocker.image.repository={image_repository}",
+                    f"-Ddocker.image.tag={image_tag}"
+                ]
+            else:
+                maven_command = [
+                    "mvn",
+                    "clean",
+                    "install",
+                    "-Dmaven.test.skip",
+                    "-Pdocker-image",
+                    f"-Ddocker.image.repository={image_repository}",
+                    f"-Ddocker.image.tag={image_tag}"
+                ]
 
             # Execute the Maven command using subprocess
             subprocess.run(maven_command, check=True)

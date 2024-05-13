@@ -6,8 +6,8 @@ import psycopg2
 allCommands = [
     "curl -X DELETE http://localhost:8108/api/correlation-range/",
     "curl -X DELETE http://localhost:8107/api/v3/conversations/",
-    "curl -X DELETE http://localhost:8300/api/v3/events/",
-    "curl -X DELETE http://localhost:8300/api/v3/tasks/",
+    "curl -X DELETE http://0.0.0.0:8300/api/v3/events/",
+    "curl -X DELETE http://0.0.0.0:8300/api/v3/tasks/",
     "kubectl rollout restart deployment encourage-scheduler"
 ]
 justRestartSchedulerCommand = [

@@ -1,6 +1,5 @@
 import psycopg2
 import json
-import pika
 
 # Establish a connection to your PostgreSQL database
 conn = psycopg2.connect(
@@ -10,9 +9,6 @@ conn = psycopg2.connect(
     host="localhost",
     port="5432"
 )
-
-# Create a cursor object to execute SQL queries
-cursor = conn.cursor()
 
 # Define your new SQL query
 sql_query = """
@@ -24,6 +20,24 @@ from speechrec_core.speech_phrase_occurrences soc
         sp.id = ttp.phrase_id
 where sid = '17841350192.168.99.206:20036192.168.99.220:18628_1_2';
 """
+
+# Define your new SQL query
+sql_query_for_tags = """
+select soc.*, sp.id, sp.phrase, ttp.tag_id, ttp.phrase_id,
+       st.id as tag_id, st.name as tag_name, st.icon as tag_icon
+from speechrec_core.speech_phrase_occurrences soc
+         join speechrec_core.speech_phrases sp on
+    soc.phrase_id = sp.id
+         join speechrec_core.tags_to_phrases ttp on
+    sp.id = ttp.phrase_id
+        join speechrec_core.speech_tags st on
+    ttp.tag_id = st.id
+where sid = '5248412010.107.86.62:1924410.107.80.115:31262_4';
+"""
+
+
+# Create a cursor object to execute SQL queries
+cursor = conn.cursor()
 
 # Execute the new SQL query
 cursor.execute(sql_query)
@@ -69,12 +83,6 @@ for row in rows:
             }
         }
 
-    # Append tag information as a dictionary to the tags list within the speechPhrase
-    result_dict[result_id]["speechPhrase"]["tags"].append({
-        "tag_id": tag_id,
-        "tag_phrase_id": tag_phrase_id
-    })
-
 # Convert the dictionary values (results) into a list
 result_list = list(result_dict.values())
 
@@ -84,28 +92,3 @@ result_json = json.dumps(result_list, indent=4)
 # Print the JSON object (optional)
 print(result_json)
 
-# Connection parameters for RabbitMQ
-credentials = pika.PlainCredentials('callrec', 'callrec')  # default credentials
-parameters = pika.ConnectionParameters('localhost', 5672, '/', credentials)
-
-# Establish connection to RabbitMQ server
-connection = pika.BlockingConnection(parameters)
-channel = connection.channel()
-
-# Queue declaration (ensure queue exists before pushing)
-channel.queue_declare(queue='my_queue', durable=True)  # durable=True makes the queue persistent
-
-# Push JSON string into the queue
-channel.basic_publish(
-    exchange='',
-    routing_key='encourage-zqm-connector-speechphrase-consumer',
-    body=result_json,
-    properties=pika.BasicProperties(
-        delivery_mode=2,  # make message persistent
-    )
-)
-
-print("JSON object sent to the queue")
-
-# Close the connection
-connection.close()

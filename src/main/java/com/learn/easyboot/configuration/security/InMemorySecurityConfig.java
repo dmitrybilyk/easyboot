@@ -43,7 +43,9 @@ public class InMemorySecurityConfig {
         http.authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
                                 .anyRequest()
-                                .permitAll())
+//                                .permitAll()
+                                .authenticated()
+                )
                 .httpBasic().and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .csrf().disable()

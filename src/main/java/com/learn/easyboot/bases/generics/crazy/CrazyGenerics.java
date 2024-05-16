@@ -32,8 +32,8 @@ public class CrazyGenerics {
      * @param <T> – value type
      */
     @Data
-    public static class Sourced<T> { // todo: refactor class to introduce type parameter and make value generic
-        private T value;
+    public static class Sourced { // todo: refactor class to introduce type parameter and make value generic
+        private Object value;
         private String source;
     }
 

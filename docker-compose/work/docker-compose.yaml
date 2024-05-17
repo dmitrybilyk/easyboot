@@ -58,7 +58,7 @@ services:
       - KEYCLOAK_DEFAULT_THEME=eleveo
       - KEYCLOAK_PASSWORD=password
       - KEYCLOAK_USER=admin
-      - KEYCLOAK_VERSION=20.28.2
+      - KEYCLOAK_VERSION=20.28.11
       - KEYCLOAK_WELCOME_THEME=eleveo
       - MASTER_CLIENT_DEFAULT_ROLES=manage-clients,manage-users,view-realm
       - MASTER_CLIENT_NAME=client-management-app
@@ -81,7 +81,7 @@ services:
     depends_on:
       - rabbitmq
       - postgres
-    image: 'artifactory.zoomint.com/zoomint/keycloak:20.28.2'
+    image: 'artifactory.zoomint.com/zoomint/keycloak:20.28.11'
   rabbitmq:
     ports:
       - '15672:15672'
@@ -106,7 +106,14 @@ services:
       - pgdata_correct:/var/lib/postgresql/data
 #  encourage-data:
 #    container_name: 'encourage_data'
-#    image: 'eleveo/encourage/encourage-data:20.7.1'
+#    image: 'artifactory.zoomint.com/eleveo/encourage/encourage-data:7.1.2'
+##    image: 'eleveo/encourage/encourage-data:5.1.1'
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1G
+#    volumes:
+#      - /tmp/:/home
 #    ports:
 #      - '8300:8300'
 #    environment:
@@ -121,6 +128,11 @@ services:
 ##      - keycloak-client-token-provider.serverUrl=http://localhost:18080/auth
 #      - keycloak-client-token-provider.realm=default
 #      - keycloak-client-token-provider.master-client-secret=password
+##      - JAVA_TOOL_OPTIONS="['-XX:HeapDumpPath=/home', '-XX:+HeapDumpOnOutOfMemoryError']"
+##      - JAVA_TOOL_OPTIONS='-XX:+HeapDumpOnOutOfMemoryError'
+#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home --enable-monitoring=heapdump
+##      - JAVA_TOOL_OPTIONS='-XX:HeapDumpPath=/home/dmytro/dev/heapdump/'
+##      - JAVA_TOOL_OPTIONS='-XX:+HeapDumpOnOutOfMemoryError,-XX:HeapDumpPath=/home/dmytro/dev/heapdump/,--enable-monitoring=heapdump'
 #    depends_on:
 #      - keycloak
 #      - postgres
@@ -187,3 +199,9 @@ volumes:
 #  curl -X DELETE http://localhost:8300/api/v3/tasks/
 
   #  curl -X DELETE http://localhost:8108/api/correlation-range/ && curl -X DELETE http://localhost:8107/api/v3/conversations/ && curl -X DELETE http://localhost:8300/api/v3/events/ && curl -X DELETE http://localhost:8300/api/v3/tasks/
+
+
+
+#  delete from encourage.labels_to_phrases;
+#  delete from encourage.speechphrases;
+#  delete from encourage.labels where type = 'S';

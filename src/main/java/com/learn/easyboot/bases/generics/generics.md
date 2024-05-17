@@ -1,7 +1,7 @@
 `Covariance` is a restriction in java related to having the same
 type of reference type and object in generic object declaration:
 
-`List<Student> studentList = new ArrayList<Student>();`
+`List<Person> studentList = new ArrayList<Student>();`
 
 If it were possible then we would not be able to rely on generics,
 type consistency would be broken.

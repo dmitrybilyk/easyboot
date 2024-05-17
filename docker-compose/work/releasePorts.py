@@ -48,13 +48,14 @@ if __name__ == "__main__":
     # List of ports to release
     ports_to_release = [
         8300,
-        # 8081,
-        # 8107,
-        # 8108,
-        # 8201,
-        # 8102,
-        # 8207,
-        # 8105,
-        # 8080
+        8081,
+        8107,
+        8108,
+        8201,
+        8102,
+        8207,
+        8105,
+        8080,
+        # 8983
     ]
     release_ports(ports_to_release)

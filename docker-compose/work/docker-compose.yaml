@@ -205,3 +205,8 @@ volumes:
 #  delete from encourage.labels_to_phrases;
 #  delete from encourage.speechphrases;
 #  delete from encourage.labels where type = 'S';
+
+#  curl --location --request DELETE 'http://encourage-conversations-svc:8107/api/v3/conversations/
+#  curl --location --request DELETE 'http://encourage-correlation-svc:8108/api/correlation-range/'
+#  curl --location --request DELETE 'http://encourage-data-svc:8300/api/v3/events'
+#  curl --location --request DELETE 'http://encourage-data-svc:8300/api/v3/tasks'

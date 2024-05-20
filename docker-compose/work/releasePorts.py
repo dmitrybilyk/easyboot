@@ -47,7 +47,7 @@ def release_ports(ports):
 if __name__ == "__main__":
     # List of ports to release
     ports_to_release = [
-        8300,
+        # 8300,
         8081,
         8107,
         8108,

@@ -22,7 +22,7 @@ if __name__ == "__main__":
         ("/home/dmytro/dev/projects/zqm-connector/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose", "ZQM"),
         # ("/home/dmytro/dev/projects/scheduler/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose", "Scheduler"),
         ("/home/dmytro/dev/projects/framework/service", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose", "Framework"),
-        # ("/home/dmytro/dev/projects/automatedqm", "./gradlew bootRun --args='--spring.profiles.active=run-with-compose'", "AutoQM"),
+        ("/home/dmytro/dev/projects/automatedqm", "./gradlew bootRun --args='--spring.profiles.active=run-with-compose'", "AutoQM"),
         # ("/home/dmytro/dev/projects/interaction-player/webapp", "mvn spring-boot:run -Dspring-boot.run.profiles=run-with-compose", "Player"),
         # ("/home/dmytro/dev/projects/speech-generative-ai/service", ".././gradlew bootRun --args='--spring.profiles.active=run-with-compose'", "GAI"),
         ("/home/dmytro/dev/projects/speechrec/core", ".././gradlew bootRun --args='--spring.profiles.active=run-with-compose'", "Speech")

@@ -1,6 +1,6 @@
-package com.learn.easyboot.spring.bean_lifecycle.phases._2Initializing_properties_With_Setters;
+package com.learn.easyboot.spring.bean_lifecycle.phases._2Populating_properties_With_Setters;
 
-public class InitializingPropertiesWithSetters {
+public class PopulatingPropertiesWithSetters {
     private Dependency1 dependency1;
     private Dependency2 dependency2;
 

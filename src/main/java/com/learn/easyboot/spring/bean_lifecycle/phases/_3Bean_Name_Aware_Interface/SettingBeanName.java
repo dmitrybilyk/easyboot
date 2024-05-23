@@ -1,4 +1,4 @@
-package com.learn.easyboot.spring.bean_lifecycle.phases._3Setting_Bean_Name_Interface;
+package com.learn.easyboot.spring.bean_lifecycle.phases._3Bean_Name_Aware_Interface;
 
 import org.springframework.beans.factory.BeanNameAware;
 

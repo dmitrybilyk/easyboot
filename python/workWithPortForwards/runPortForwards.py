@@ -88,6 +88,7 @@ def main():
         ("encourage-conversations", 8107, 8107, "Conversations"),
         ("encourage-correlation", 8108, 8108, "Correlation"),
         ("encourage-zqm-connector", 8201, 8201, "ZQM"),
+        ("encourage-integrations", 8202, 8202, "Integrations"),
         ("encourage-framework", 8102, 8102, "Framework"),
         ("interaction-service", 8081, 8081, "InteractionService"),
         ("speech", 8080, 8080, "Speech"),

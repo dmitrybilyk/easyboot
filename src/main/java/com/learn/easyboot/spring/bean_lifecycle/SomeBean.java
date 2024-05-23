@@ -27,50 +27,14 @@ public class SomeBean implements BeanNameAware, BeanFactoryAware, ApplicationCon
         System.out.println("1 - Constructor");
     }
 
-    public void setAnotherSomeBean(AnotherSomeBean anotherSomeBean) {
-        System.out.println("2 - Setter");
-        this.anotherSomeBean = anotherSomeBean;
-    }
-
     public SomeBean(String name) {
         System.out.println("1 - Constructor Really used with Name");
         this.name = name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("6 - Bean Post Processor - before initialization");
-        return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("6 - Bean Post Processor - after initialization");
-        return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
-    }
-
-    @PostConstruct
-    public void initMethod() {
-        System.out.println("7 - Post Construct Annotation");
-    }
-
-    @PreDestroy
-    public void destroyMethod() {
-        System.out.println("10 - PreDestroy Annotation");
-    }
-
-//    @PostConstruct
-    public void customInitMethod() {
-        System.out.println("9 - Custom Init Method");
-    }
-
-//    @PreDestroy
-    public void customDestroyMethod() {
-        System.out.println("12 - Custom Destroy Method");
+    public void setAnotherSomeBean(AnotherSomeBean anotherSomeBean) {
+        System.out.println("2 - Setter");
+        this.anotherSomeBean = anotherSomeBean;
     }
 
     @Override
@@ -89,12 +53,46 @@ public class SomeBean implements BeanNameAware, BeanFactoryAware, ApplicationCon
     }
 
     @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println("6 - Bean Post Processor - before initialization");
+        return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println("6 - Bean Post Processor - after initialization");
+        return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
+    }
+
+    @PostConstruct
+    public void initMethod() {
+        System.out.println("7 - Post Construct Annotation");
+    }
+    @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("8 - Initializing Bean - afterPropertiesSet");
+    }
+
+    @PostConstruct
+    public void customInitMethod() {
+        System.out.println("9 - Custom Init Method");
+    }
+    @PreDestroy
+    public void destroyMethod() {
+        System.out.println("10 - PreDestroy Annotation");
     }
 
     @Override
     public void destroy() throws Exception {
         System.out.println("11 - DisposableBean");
+    }
+
+    @PreDestroy
+    public void customDestroyMethod() {
+        System.out.println("12 - Custom Destroy Method");
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

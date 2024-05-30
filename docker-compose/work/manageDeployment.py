@@ -16,6 +16,7 @@ resource_names = [
     "encourage-framework",
     "automated-qm",
     "interaction-player",
+    "speech-generative-ai",
     "speechrec"
 ]
 

@@ -3,10 +3,12 @@ import time
 import sys
 import os
 import psycopg2
+from datetime import datetime
 
+home_directory = os.path.expanduser("~")
 def create_pgpass_file():
     # Define the file path
-    file_path = '/home/dmytro/.pgpass'
+    file_path = f"{home_directory}/.pgpass"
 
     # Define the content to be written to the file
     content = 'localhost:5432:eleveo_default_db:postgres:postgres\n'
@@ -92,11 +94,15 @@ def main():
     create_pgpass_file()
 
     # Change directory
-    os.chdir("/home/dmytro/dev/projects/easyboot/docker-compose/work")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(script_dir)
+    # os.chdir("~/dev/projects/easyboot/docker-compose/work")
     # run_command("cd /home/dmytro/dev/projects/easyboot/docker-compose/work")
 
+    # Get the current date and time
+    current_datetime = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     # Database dump
-    dump_file = f"/home/dmytro/eleveo_default_db_dump_{db_dump_suffix}.sql"
+    dump_file = f"{home_directory}/eleveo_default_db_dump_{db_dump_suffix}-{current_datetime}.sql"
     dump_command = f"/usr/bin/pg_dump --dbname=postgresql://postgres:postgres@{hostname}:5432/eleveo_default_db --file={dump_file} --host={hostname}"
     run_command(dump_command)
 

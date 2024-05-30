@@ -56,6 +56,7 @@ if __name__ == "__main__":
         8207,
         8105,
         8080,
+        8300,
         # 8983
     ]
     release_ports(ports_to_release)

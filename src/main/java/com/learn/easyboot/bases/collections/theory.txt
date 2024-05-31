@@ -50,3 +50,10 @@ Fail-fast collection (like ArrayList) will throw a ConcurrentModificationExcepti
 But it will not fail if we remove element on iterator object itself.
 Fail-safe collection (like CopyOnWriteArrayList) will work with snapshot of original collection inside so it will
 not throw an exception (but it takes more memory and state of collection is not uptodate while iteration).
+
+
+https://www.geeksforgeeks.org/data-structures-2/
+https://www.geeksforgeeks.org/arrays-in-java/
+https://www.baeldung.com/java-equals-hashcode-contracts
+https://medium.com/@harendrakumarrajpoot5/top-50-java-collections-interview-questions-you-need-to-know-e55fcdc8dbfb
+https://levelup.gitconnected.com/internal-working-of-hashmap-in-java-latest-updated-4c2708f76d2c

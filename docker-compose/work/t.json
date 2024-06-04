@@ -1,0 +1,62 @@
+{
+  "conversationId": "78ec9a64-28c6-47b1-a6b3-2153a43ccc14",
+  "summary": "The representative asked the customer to stay on the line for a survey and thanked them for calling a medical service.",
+  "highlights": [
+    "Customer mentioned a red, yellow, and green circle."
+  ],
+  "nextSteps": [
+    "Identification of the circle was not mentioned in the conversation."
+  ],
+  "aiRatingScore": 30,
+  "aiRatingReasoning": "",
+  "topics": [4, 56, 33],
+  "flags": [
+    {
+      "id": "SENTIMENT",
+      "value": "NEUTRAL"
+    },
+    {
+      "id": "EMOTION",
+      "value": "POSITIVE"
+    },
+    {
+      "id": "DISMOTION",
+      "value": "NEGATIVE"
+    }
+  ]
+}
+
+{
+  "conversationId": "3a3f9519-c6e7-41c3-85a9-c6decd1f41ef",
+  "summary": "The representative asked the customer to stay on the line for a survey and thanked them for calling a medical service.",
+  "highlights": [
+    "Customer mentioned a red, yellow, and green circle."
+  ],
+  "nextSteps": [
+    "Identification of the circle was not mentioned in the conversation."
+  ],
+  "aiRatingScore": 90,
+  "aiRatingReasoning": "",
+  "topics": [14, 3, 33],
+  "flags": [
+    {
+      "id": "SENTIMENT",
+      "value": "POSITIVE"
+    },
+    {
+      "id": "EMOTION",
+      "value": "NEUTRAL"
+    },
+    {
+      "id": "DISMOTION",
+      "value": "POSITIVE"
+    },
+    {
+      "id": "DISMOTION2",
+      "value": "NEGATIVE"
+    }
+  ]
+}
+
+
+

@@ -3,51 +3,54 @@ package com.learn.easyboot.bases.algorythms_and_data_structures.algorithms.sorti
 public class MergeSort {
 
 	public static void main(String[] args) {
-		int[] actual = { 5, 1, 6, 2, 3, 4 };
-       	MergeSort.mergeSort(actual, actual.length);
-       	for(int i = 0; i < actual.length; i++) {
-       		System.out.println(actual[i]);
-       	}
+		int[] arrayToSort = { 5, 1, 6, 2, 3, 4 };
+       	MergeSort.mergeSort(arrayToSort, arrayToSort.length);
+		printArray(arrayToSort);
 	}
 
-
-	public static void mergeSort(int[] a, int n) {
-	    if (n < 2) {
+	public static void mergeSort(int[] array, int length) {
+	    if (length < 2) {
 	        return;
 	    }
-	    int mid = n / 2;
-	    int[] l = new int[mid];
-	    int[] r = new int[n - mid];
+	    int middle = length / 2;
+	    int[] leftHalf = new int[middle];
+	    int[] rightHalf = new int[length - middle];
 
-	    for (int i = 0; i < mid; i++) {
-	        l[i] = a[i];
+	    for (int i = 0; i < middle; i++) {
+	        leftHalf[i] = array[i];
 	    }
-	    for (int i = mid; i < n; i++) {
-	        r[i - mid] = a[i];
+	    for (int i = middle; i < length; i++) {
+	        rightHalf[i - middle] = array[i];
 	    }
-	    mergeSort(l, mid);
-	    mergeSort(r, n - mid);
+	    mergeSort(leftHalf, middle);
+	    mergeSort(rightHalf, length - middle);
 
-	    merge(a, l, r, mid, n - mid);
+	    merge(array, leftHalf, rightHalf, middle, length - middle);
 	}
 
 	public static void merge(
-	  	int[] a, int[] l, int[] r, int left, int right) {
+	  	int[] array, int[] leftHalf, int[] rightHalf, int leftSize, int rightSize) {
 	 
 	    int i = 0, j = 0, k = 0;
-	    while (i < left && j < right) {
-	        if (l[i] <= r[j]) {
-	            a[k++] = l[i++];
+	    while (i < leftSize && j < rightSize) {
+	        if (leftHalf[i] <= rightHalf[j]) {
+	            array[k++] = leftHalf[i++];
 	        }
 	        else {
-	            a[k++] = r[j++];
+	            array[k++] = rightHalf[j++];
 	        }
 	    }
-	    while (i < left) {
-	        a[k++] = l[i++];
+	    while (i < leftSize) {
+	        array[k++] = leftHalf[i++];
 	    }
-	    while (j < right) {
-	        a[k++] = r[j++];
+	    while (j < rightSize) {
+	        array[k++] = rightHalf[j++];
 	    }
+	}
+
+	private static void printArray(int[] array) {
+		for (int j : array) {
+			System.out.println(j);
+		}
 	}
 }

@@ -84,8 +84,8 @@ def main():
     port_mappings = [
         ("automated-qm", 8207, 8207, "Automated QM"),
         ("encourage-data", 8300, 8300, "Data"),
-        ("encourage-scheduler", 8105, 8105, "Scheduler"),
-        # ("encourage-conversations", 8107, 8107, "Conversations"),
+        # ("encourage-scheduler", 8105, 8105, "Scheduler"),
+        ("encourage-conversations", 8107, 8107, "Conversations"),
         ("encourage-correlation", 8108, 8108, "Correlation"),
         ("encourage-zqm-connector", 8201, 8201, "ZQM"),
         ("encourage-integrations", 8202, 8202, "Integrations"),

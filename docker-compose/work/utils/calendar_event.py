@@ -23,7 +23,7 @@ def get_credentials():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                '/home/dmytro/Dropbox/pers/google_api/calendar/credentials.json', SCOPES)
+                '/home/dmytro/dev/projects/easyboot/docker-compose/work/utils/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
 
         # Save the credentials for the next run
@@ -39,7 +39,7 @@ def main(event_summary):
 
     # Calculate start and end times
     now = datetime.datetime.utcnow()
-    start_time = now + datetime.timedelta(minutes=30)
+    start_time = now + datetime.timedelta(minutes=12)
     end_time = start_time + datetime.timedelta(days=2, hours=14)  # Event duration is 2 days and 14 hours
 
     # Define the event details
@@ -59,7 +59,7 @@ def main(event_summary):
             'useDefault': False,
             'overrides': [
                 {'method': 'popup', 'minutes': 1},
-                {'method': 'popup', 'minutes': 29}
+                {'method': 'popup', 'minutes': 10}
             ],
         },
         'visibility': 'public',

@@ -39,14 +39,14 @@ def main(event_summary):
 
     # Calculate start and end times
     now = datetime.datetime.utcnow()
-    start_time = now + datetime.timedelta(minutes=30)
-    end_time = start_time + datetime.timedelta(days=2, hours=14)  # Event duration is 2 days and 14 hours
+    start_time = now.replace(hour=9, minute=0, second=0, microsecond=0)
+    end_time = datetime.datetime.combine(start_time.date(), datetime.time.max)
 
     # Define the event details
     event = {
         'summary': event_summary,
-        'location': 'Lviv, Ukraine',
-        'description': 'This event will be lasting for 2 days unless you swipe it',
+        'location': 'Location details here',
+        'description': '',
         'start': {
             'dateTime': start_time.isoformat() + 'Z',  # 'Z' indicates UTC time
             'timeZone': 'Europe/Kiev',
@@ -55,20 +55,21 @@ def main(event_summary):
             'dateTime': end_time.isoformat() + 'Z',  # 'Z' indicates UTC time
             'timeZone': 'Europe/Kiev',
         },
+        'recurrence': [
+            'RRULE:FREQ=DAILY;COUNT=3'  # Repeat for 3 days
+        ],
+        'colorId': '1',  # Blue color
         'reminders': {
             'useDefault': False,
             'overrides': [
-                {'method': 'popup', 'minutes': 1},
-                {'method': 'popup', 'minutes': 29}
+                {'method': 'popup', 'minutes': 10},
             ],
         },
-        'visibility': 'public',
-        'colorId': '9'  # Magenta color
     }
 
     # Call the Calendar API to add the event
     event = service.events().insert(calendarId='primary', body=event).execute()
-    print('Event is added to a Google Calendar')
+    print(f'Event created: {event.get("htmlLink")}')
 
 if __name__ == '__main__':
     event_summary = ' '.join(sys.argv[1:])

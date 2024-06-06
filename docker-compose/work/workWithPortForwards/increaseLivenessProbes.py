@@ -70,10 +70,10 @@ def main():
 
     resources = [
         # "encourage-data",
-        # "automated-qm",
+        "automated-qm",
         # "interaction-player",
         # "encourage-integrations",
-        "scorecard"
+        # "scorecard"
     ]
 
     # Loop through each resource and execute kubectl patch command

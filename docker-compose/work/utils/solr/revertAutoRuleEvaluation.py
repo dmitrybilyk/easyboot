@@ -45,7 +45,7 @@ def find_and_remove_field(conversation_id, field_name):
 
 # Example usage:
 if __name__ == "__main__":
-    conversation_id = "someConversationId"
+    conversation_id = "6c09ca35-896d-46e1-a39a-f8eeced2347d"
 
     # Check if at least one argument (excluding script name) is passed
     if len(sys.argv) > 1:

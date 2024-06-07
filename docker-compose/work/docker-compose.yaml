@@ -104,6 +104,12 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - pgdata_correct:/var/lib/postgresql/data
+
+
+
+
+
+#
 #  encourage-data:
 #    container_name: 'encourage_data'
 #    image: 'eleveo/encourage/encourage-data:20.7.10'
@@ -135,6 +141,8 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
+#      - kcproxy
+#
 #  encourage-zqm-connector:
 #    container_name: 'encourage_zqm_connector'
 #    image: 'eleveo/encourage/encourage-zqm-connector:20.7.10'
@@ -158,6 +166,10 @@ services:
 #      - SPRING.RABBITMQ.HOST=rabbitmq
 #      - SPRING.RABBITMQ.USERNAME=callrec
 #      - SPRING.RABBITMQ.PASSWORD=callrec
+#      - enc-zqm-connector.dataApi=http://encourage_data:8300/api
+#      - enc-zqm-connector.qmApiUrl=http://localhost:8080/qm/api
+#        enc-zqm-connector.callrecApi.url=http://mc_interaction_service:8081
+#
 #      - keycloak-client-token-provider.serverUrl=http://zoom_keycloak:8080/auth
 #      - keycloak-client-token-provider.realm=default
 #      - keycloak-client-token-provider.master-client-secret=password
@@ -165,6 +177,7 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
+#      - kcproxy
 #
 #  encourage-correlation:
 #    container_name: 'encourage_correlation'
@@ -192,6 +205,7 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
+#      - kcproxy
 #
 #  encourage-conversations:
 #    container_name: 'encourage_conversations'
@@ -212,7 +226,13 @@ services:
 #      - SPRING.RABBITMQ.PORT=5672
 #      - SPRING.RABBITMQ.USERNAME=callrec
 #      - SPRING.RABBITMQ.PASSWORD=callrec
+#      - SPRING.RABBITMQ.virtual-host=/
 #      - spring.rabbitmq.addresses=rabbitmq:5672
+#      - camel.rest.component.rabbitmq.hostname=rabbitmq
+#      - camel.rest.component.rabbitmq.port-number=5672
+#      - camel.rest.component.rabbitmq.username=callrec
+#      - camel.rest.component.rabbitmq.password=callrec
+#      - camel.rest.component.rabbitmq.vhost=/
 #      - enc-conversations.solr.zookeeper=zoo1:2182
 #      - enc-conversations.solr-configset-path=/app/config/solr-config-set/conversation
 #      - hide.gender=false
@@ -224,6 +244,7 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
+#      - kcproxy
 #
 #  mc-interaction-service:
 #    container_name: 'mc_interaction_service'
@@ -266,6 +287,7 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
+#      - kcproxy
 #
 #  speechrec-core:
 #    container_name: 'speechrec_core'
@@ -294,10 +316,11 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
-
+#      - kcproxy
+#
 #  automated-qm:
 #    container_name: 'automated_qm'
-#    image: 'eleveo/automated-qm:1.0.7'
+#    image: 'eleveo/automated-qm:1.0.15'
 #    ports:
 #      - '8207:8207'
 #    environment:
@@ -314,6 +337,12 @@ services:
 #    depends_on:
 #      - keycloak
 #      - postgres
+#      - kcproxy
+
+
+
+
+
 volumes:
   pgdata_correct:
   solr:

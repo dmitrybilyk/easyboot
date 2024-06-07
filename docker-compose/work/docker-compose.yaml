@@ -106,8 +106,7 @@ services:
       - pgdata_correct:/var/lib/postgresql/data
 #  encourage-data:
 #    container_name: 'encourage_data'
-#    image: 'artifactory.zoomint.com/eleveo/encourage/encourage-data:7.1.2'
-##    image: 'eleveo/encourage/encourage-data:5.1.1'
+#    image: 'eleveo/encourage/encourage-data:20.7.10'
 #    deploy:
 #      resources:
 #        limits:
@@ -130,9 +129,168 @@ services:
 #      - keycloak-client-token-provider.master-client-secret=password
 ##      - JAVA_TOOL_OPTIONS="['-XX:HeapDumpPath=/home', '-XX:+HeapDumpOnOutOfMemoryError']"
 ##      - JAVA_TOOL_OPTIONS='-XX:+HeapDumpOnOutOfMemoryError'
-#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home --enable-monitoring=heapdump
+#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home
 ##      - JAVA_TOOL_OPTIONS='-XX:HeapDumpPath=/home/dmytro/dev/heapdump/'
 ##      - JAVA_TOOL_OPTIONS='-XX:+HeapDumpOnOutOfMemoryError,-XX:HeapDumpPath=/home/dmytro/dev/heapdump/,--enable-monitoring=heapdump'
+#    depends_on:
+#      - keycloak
+#      - postgres
+#  encourage-zqm-connector:
+#    container_name: 'encourage_zqm_connector'
+#    image: 'eleveo/encourage/encourage-zqm-connector:20.7.10'
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1G
+#    volumes:
+#      - /tmp/:/home
+#    ports:
+#      - '8201:8201'
+#    environment:
+#      - ENC-ZQM-CONNECTOR_WBSC-DATABASE_ADDRESS=jdbc:postgresql://zoom_postgres:5432/
+#      - ENC-ZQM-CONNECTOR_WBSC-DATABASE_USERNAME=postgres
+#      - ENC-ZQM-CONNECTOR_WBSC-DATABASE_PASSWORD=postgres
+#      - ENC-ZQM-CONNECTOR_WBSC-DATABASE_HOST=zoom_postgres
+#      - ENC-ZQM-CONNECTOR_WBSC-DATABASE_PORT=5432
+#      - ENC-ZQM-CONNECTOR_WBSC-DATABASE_dbName=eleveo_default_db
+#      - ENC-ZQM-CONNECTOR.BATCH-SIZE=20
+#      - ENC-ZQM-CONNECTOR.SPEECH-REC-ENABLED=true
+#      - SPRING.RABBITMQ.HOST=rabbitmq
+#      - SPRING.RABBITMQ.USERNAME=callrec
+#      - SPRING.RABBITMQ.PASSWORD=callrec
+#      - keycloak-client-token-provider.serverUrl=http://zoom_keycloak:8080/auth
+#      - keycloak-client-token-provider.realm=default
+#      - keycloak-client-token-provider.master-client-secret=password
+#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home
+#    depends_on:
+#      - keycloak
+#      - postgres
+#
+#  encourage-correlation:
+#    container_name: 'encourage_correlation'
+#    image: 'eleveo/encourage/encourage-correlation:20.7.5'
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1G
+#    volumes:
+#      - /tmp/:/home
+#    ports:
+#      - '8108:8108'
+#    environment:
+#      - enc-correlation.database.address=jdbc:postgresql://zoom_postgres:5432/
+#      - enc-correlation.database.username=postgres
+#      - enc-correlation.database.password=postgres
+#      - enc-correlation.database.dbName=eleveo_default_db
+#      - SPRING.RABBITMQ.HOST=rabbitmq
+#      - SPRING.RABBITMQ.USERNAME=callrec
+#      - SPRING.RABBITMQ.PASSWORD=callrec
+#      - keycloak-client-token-provider.serverUrl=http://zoom_keycloak:8080/auth
+#      - keycloak-client-token-provider.realm=default
+#      - keycloak-client-token-provider.master-client-secret=password
+#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home
+#    depends_on:
+#      - keycloak
+#      - postgres
+#
+#  encourage-conversations:
+#    container_name: 'encourage_conversations'
+#    image: 'eleveo/encourage/encourage-conversations:20.7.9'
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1G
+#    volumes:
+#      - /tmp/:/home
+#    ports:
+#      - '8107:8107'
+#    environment:
+#      - enc-conversations.solr.collection=conversations
+#      - enc-conversations.solr.host=solr1
+#      - enc-conversations.solr.port=8983
+#      - SPRING.RABBITMQ.HOST=rabbitmq
+#      - SPRING.RABBITMQ.PORT=5672
+#      - SPRING.RABBITMQ.USERNAME=callrec
+#      - SPRING.RABBITMQ.PASSWORD=callrec
+#      - spring.rabbitmq.addresses=rabbitmq:5672
+#      - enc-conversations.solr.zookeeper=zoo1:2182
+#      - enc-conversations.solr-configset-path=/app/config/solr-config-set/conversation
+#      - hide.gender=false
+#      - processing.delay=0
+#      - keycloak-client-token-provider.serverUrl=http://zoom_keycloak:8080/auth
+#      - keycloak-client-token-provider.realm=default
+#      - keycloak-client-token-provider.master-client-secret=password
+#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home
+#    depends_on:
+#      - keycloak
+#      - postgres
+#
+#  mc-interaction-service:
+#    container_name: 'mc_interaction_service'
+#    image: 'eleveo/mc/eleveo-mc-interaction-service:1.29.3'
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1G
+#    volumes:
+#      - /opt/callrec/:/opt/callrec
+#    ports:
+#      - '8081:8081'
+#    environment:
+#      - spring.datasource.url=jdbc:postgresql://zoom_postgres:5432/eleveo_default_db
+#      - spring.datasource.username=postgres
+#      - spring.datasource.password=postgres
+#      - spring.datasource.hikari.schema=callrec
+#      - spring.datasource.hikari.username=postgres
+#      - spring.datasource.hikari.password=postgres
+#      - spring.rabbitmq.username=callrec
+#      - spring.rabbitmq.password=callrec
+#      - keycloak-client-management.keycloak-server-url=http://zoom_keycloak:8080/auth
+#      - keycloak-client-management.application-name=SEGS
+#      - keycloak-client-token-provider.serverUrl=http://zoom_keycloak:8080/auth
+#      - keycloak-client-token-provider.realm=default
+#      - keycloak-client-token-provider.master-client-secret=password
+#      - interaction-service.temp-max-age=60m
+#      - interaction-service.media-location=/opt/callrec/data/calls
+#      - interaction-service.keycloak.url=http://zoom_keycloak:8080/auth
+#      - interaction-service.keycloak.frontend-url=http://zoom_keycloak:8080/auth
+#      - interaction-service.keycloak.realm=default
+#      - interaction-service.rabbitmq-management.username=callrec
+#      - interaction-service.rabbitmq-management.password=callrec
+#      - interaction-service.rabbitmq-management.url=http://rabbitmq:15672/api
+#      - spring.rabbitmq.host=rabbitmq
+#      - spring.rabbitmq.port=5672
+#      - spring.rabbitmq.username=callrec
+#      - spring.rabbitmq.password=callrec
+#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home
+#    depends_on:
+#      - keycloak
+#      - postgres
+#
+#  speechrec-core:
+#    container_name: 'speechrec_core'
+#    image: 'eleveo/speechrec/core:3.27.0'
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 1G
+#    ports:
+#      - '8080:8080'
+#    environment:
+#      - application.web-client.segment-service-url=http://mc_interaction_service:8081
+#      - application.keycloak.server-url=http://zoom_keycloak:8080/auth
+#      - application.keycloak.realm=default
+#      - application.keycloak.master-password=password
+#      - spring.rabbitmq.username=callrec
+#      - spring.rabbitmq.password=callrec
+#      - spring.rabbitmq.host=rabbitmq
+#      - spring.r2dbc.schema=speechrec_core
+#      - spring.r2dbc.database=eleveo_default_db
+#      - spring.r2dbc.host=zoom_postgres
+#      - spring.r2dbc.port=5432
+#      - spring.r2dbc.username=postgres
+#      - spring.r2dbc.password=postgres
+#      - JAVA_TOOL_OPTIONS=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home
 #    depends_on:
 #      - keycloak
 #      - postgres

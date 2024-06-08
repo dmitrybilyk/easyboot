@@ -397,3 +397,5 @@ volumes:
 #  curl --location --request DELETE 'http://encourage-correlation-svc:8108/api/correlation-range/'
 #  curl --location --request DELETE 'http://encourage-data-svc:8300/api/v3/events'
 #  curl --location --request DELETE 'http://encourage-data-svc:8300/api/v3/tasks'
+
+#  pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib

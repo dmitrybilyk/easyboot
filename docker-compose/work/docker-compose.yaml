@@ -58,7 +58,7 @@ services:
       - KEYCLOAK_DEFAULT_THEME=eleveo
       - KEYCLOAK_PASSWORD=password
       - KEYCLOAK_USER=admin
-      - KEYCLOAK_VERSION=20.28.11
+      - KEYCLOAK_VERSION=20.32.1
       - KEYCLOAK_WELCOME_THEME=eleveo
       - MASTER_CLIENT_DEFAULT_ROLES=manage-clients,manage-users,view-realm
       - MASTER_CLIENT_NAME=client-management-app
@@ -81,7 +81,7 @@ services:
     depends_on:
       - rabbitmq
       - postgres
-    image: 'artifactory.zoomint.com/zoomint/keycloak:20.28.11'
+    image: 'artifactory.zoomint.com/zoomint/keycloak:20.32.1'
   rabbitmq:
     ports:
       - '15672:15672'

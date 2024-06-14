@@ -7,4 +7,4 @@ compose_dir="/home/dmytro/dev/projects/easyboot/docker-compose/work"
 cd "$compose_dir" || exit
 
 # Execute docker-compose up
-docker-compose up -d
+docker-compose stop

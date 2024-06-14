@@ -1,33 +1,3 @@
-# import psutil
-#
-# # List of terminal names to close
-# # terminals = ["Data", "Interaction", "Conversations", "Correlation",
-# #              "ZQM Connector", "Scheduler", "Framework", "AutomatedQM", "PLAYER", "Speechrec"]
-# terminals = ["mvn"]
-#
-# # Iterate through the list of terminal names
-# for term_name in terminals:
-#     # Search for processes containing the terminal name
-#     for proc in psutil.process_iter(['pid', 'name']):
-#         if term_name in proc.info['name']:
-#             # Terminate the process
-#             proc.kill()
-#             print(f"Closed {term_name}")
-#             break
-#     else:
-#         print(f"{term_name} not found")
-#
-#
-# sudo fuser -k 8300/tcp
-# sudo fuser -k 8081/tcp
-# sudo fuser -k 8107/tcp
-# sudo fuser -k 8108/tcp
-# sudo fuser -k 8201/tcp
-# sudo fuser -k 8207/tcp
-# sudo fuser -k 8102/tcp
-# sudo fuser -k 8105/tcp
-# sudo fuser -k 8080/tcp
-
 import psutil
 
 def release_ports(ports):
@@ -57,6 +27,14 @@ if __name__ == "__main__":
         8105,
         8080,
         8300,
-        # 8983
+
+        # 9983,
+        # 8202,
+        # 8301,
+        # 15672,
+        # 5672,
+        # 5432,
+        # 8983,
+        # 9181
     ]
     release_ports(ports_to_release)

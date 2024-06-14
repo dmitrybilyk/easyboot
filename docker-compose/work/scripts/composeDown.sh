@@ -1,5 +1,10 @@
 #!/bin/bash
 
-# Execute the Python script with the provided arguments
-python3 /home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/composeDown.py
+# Define your Docker Compose directory path
+compose_dir="/home/dmytro/dev/projects/easyboot/docker-compose/work"
 
+# Change directory to the Docker Compose directory
+cd "$compose_dir" || exit
+
+# Execute docker-compose up
+docker-compose down

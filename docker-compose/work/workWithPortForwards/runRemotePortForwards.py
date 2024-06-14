@@ -83,7 +83,7 @@ def main():
     # Define port forwarding mappings based on pod names
     port_mappings = [
         # ("encourage-data", 8000, "Data"),
-        ("automated-qm", 5207, "AutoQM"),
+        # ("automated-qm", 5207, "AutoQM"),
         # ("encourage-conversations", 5002, "Integrations"),
         # ("interaction-player", 5005, "Player"),
         # ("encourage-integrations", 5007, "Conversations"),
@@ -91,6 +91,7 @@ def main():
         # ("encourage-zqm-connector", 5001, "ZQM"),
         # ("scorecard", 5006, "scorecard"),
         # ("encourage-framework", 5022, "Framework")
+        ("speech-generative-ai", 5022, "Framework")
     ]
 
     # Prepare terminal commands for port forwarding

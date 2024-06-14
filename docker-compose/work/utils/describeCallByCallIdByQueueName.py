@@ -65,16 +65,16 @@ def execute_solr_query(callId):
         # Hardcoded list of fields to filter
         hardcoded_fields_list = ['conversationId',
                                  '_version_',
-                                 'eventIds',
-                                 'schemaVersion',
-                                 # 'correlationIds',
-                                 'direction',
-                                 'duration',
-                                 'dayOfWeek',
-                                 'secondOfDay',
-                                 'startDateTime',
-                                 'latestSegmentStartDateTime',
-                                 'communicationTypes',
+                                 # 'eventIds',
+                                 # 'schemaVersion',
+                                 'correlationIds',
+                                 # 'direction',
+                                 # 'duration',
+                                 # 'dayOfWeek',
+                                 # 'secondOfDay',
+                                 # 'startDateTime',
+                                 # 'latestSegmentStartDateTime',
+                                 # 'communicationTypes',
                                  # 'md_CDM_SegmentCallingAgentEleveoGroupId',
                                  # 'md_CDM_SegmentCallingAgentEmail',
                                  # 'md_CDM_SegmentCallingAgentLogin',
@@ -102,7 +102,7 @@ def execute_solr_query(callId):
                                  # 'customerEmotion',
                                  # 'customerInterruptionCount',
                                  # 'agentInterruptionsCount'
-                                 'autoReviewRuleIds'
+                                 # 'autoReviewRuleIds'
                                  ]
 
         # Hardcoded list of fields to filter
@@ -113,7 +113,7 @@ def execute_solr_query(callId):
                                  ]
 
         # Construct the Solr query URL with the provided conversationId
-        solr_query_url = f"http://vm085.eng.cz.zoomint.com:8983/solr/conversation/query?q=correlationIds:*{callId}&indent=true&rows=1000"
+        solr_query_url = f"http://{hostname}:8983/solr/conversation/query?q=correlationIds:*{callId}&indent=true&rows=1000"
 
         # Execute the curl command to send the Solr query and capture the output
         curl_process = subprocess.Popen(['curl', '-s', solr_query_url], stdout=subprocess.PIPE)
@@ -153,7 +153,7 @@ def execute_solr_query(callId):
         subprocess.Popen(['xclip', '-selection', 'clipboard'], stdin=subprocess.PIPE).communicate(input=formatted_json.encode())
 
         # Construct the Solr query URL with the provided conversationId
-        solr_query_url = f"http://vm085.eng.cz.zoomint.com:8983/solr/conversation/update?_=1714743619415&commitWithin=1000&overwrite=true&wt=json"
+        solr_query_url = f"http://{hostname}:8983/solr/conversation/update?_=1714743619415&commitWithin=1000&overwrite=true&wt=json"
 
         # Execute the curl command to send the Solr query and capture the output
         curl_process = subprocess.Popen(['curl', '-s', '-X', 'POST', '-d', non_formatted_json, solr_query_url], stdout=subprocess.PIPE)
@@ -177,17 +177,18 @@ def execute_solr_query(callId):
 
 
 # Prompt user for input to execute the query
-vmSubIp = get_input("Enter vm IP: ", str)
+# vmSubIp = get_input("Enter vm IP: ", str)
+#
+# if not vmSubIp:
+#     hostname = "vm085.eng.cz.zoomint.com"
+# elif len(vmSubIp) == 3:
+#     hostname = f"vm{vmSubIp}.eng.cz.zoomint.com"
+# else:
+#     hostname = vmSubIp
 
-if not vmSubIp:
-    hostname = "vm085.eng.cz.zoomint.com"
-elif len(vmSubIp) == 3:
-    hostname = f"vm{vmSubIp}.eng.cz.zoomint.com"
-else:
-    hostname = vmSubIp
+hostname = "localhost"
 
-
-callid = 3781010
+callid = 138004
 if len(sys.argv) > 1:
     callid = sys.argv[1]
 

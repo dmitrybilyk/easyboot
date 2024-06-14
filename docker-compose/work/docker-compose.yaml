@@ -58,7 +58,7 @@ services:
       - KEYCLOAK_DEFAULT_THEME=eleveo
       - KEYCLOAK_PASSWORD=password
       - KEYCLOAK_USER=admin
-      - KEYCLOAK_VERSION=20.32.1
+      - KEYCLOAK_VERSION=20.35.1
       - KEYCLOAK_WELCOME_THEME=eleveo
       - MASTER_CLIENT_DEFAULT_ROLES=manage-clients,manage-users,view-realm
       - MASTER_CLIENT_NAME=client-management-app
@@ -68,6 +68,7 @@ services:
       - MESSAGE_QUEUE_PORT=5672
       - MESSAGE_QUEUE_USERNAME=callrec
       - ROOT_LOGLEVEL=INFO
+      - MESSAGE_QUEUE_VHOST=/
       - SMTP_FROM=keycloak.server@zoomint.com
       - SMTP_HOST=172.17.0.4
       - SMTP_PASSWORD=password
@@ -75,13 +76,12 @@ services:
       - SMTP_USERNAME=any
       - X509_CA_BUNDLE=/zoom-ca-bundle.crt
       - ZQM_VERSION=ic_do_rici
-      - 'true'
     container_name: zoom_keycloak
     hostname: zoom_keycloak
     depends_on:
       - rabbitmq
       - postgres
-    image: 'artifactory.zoomint.com/zoomint/keycloak:20.32.1'
+    image: 'artifactory.zoomint.com/zoomint/keycloak:20.35.1'
   rabbitmq:
     ports:
       - '15672:15672'

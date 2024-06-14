@@ -84,23 +84,23 @@ def main():
 
     # Define port forwarding mappings based on pod names
     port_mappings = [
-        # ("automated-qm", 8207, 8207, "Automated QM"),
-        # ("encourage-data", 8300, 8300, "Data"),
-        # ("encourage-scheduler", 8105, 8105, "Scheduler"),
-        # ("encourage-conversations", 8107, 8107, "Conversations"),
-        # ("encourage-correlation", 8108, 8108, "Correlation"),
-        # ("encourage-zqm-connector", 8201, 8201, "ZQM"),
-        # ("encourage-integrations", 8202, 8202, "Integrations"),
-        # ("encourage-framework", 8102, 8102, "Framework"),
-        # ("interaction-service", 8081, 8081, "InteractionService"),
-        # ("speech", 8080, 8080, "Speech"),
+        ("automated-qm", 8207, 8207, "Automated QM"),
+        ("encourage-data", 8300, 8300, "Data"),
+        ("encourage-scheduler", 8105, 8105, "Scheduler"),
+        ("encourage-conversations", 8107, 8107, "Conversations"),
+        ("encourage-correlation", 8108, 8108, "Correlation"),
+        ("encourage-zqm-connector", 8201, 8201, "ZQM"),
+        ("encourage-integrations", 8202, 8202, "Integrations"),
+        ("encourage-framework", 8102, 8102, "Framework"),
+        ("interaction-service", 8081, 8081, "InteractionService"),
+        ("speech", 8080, 8080, "Speech"),
         ("generative", 8301, 8301, "Generative"),
-        # ("kubernetes-rabbitmq", 15672, 15672, "Rabbit UI"),
-        # ("kubernetes-rabbitmq", 5672, 5672, "RabbitMQ"),
-        # ("kubernetes-postgresql-0", 5432, 5432, "Postgres"),
-        # ("kubernetes-solrcloud-0", 8983, 8983, "SolrCloud"),
-        # ("kubernetes-zookeeper", 9181, 9181, "ZooKeeper"),
-        # ("kubernetes-solrcloud-zookeeper-0", 9983, 2181, "SolrZooKeeper")
+        ("kubernetes-rabbitmq", 15672, 15672, "Rabbit UI"),
+        ("kubernetes-rabbitmq", 5672, 5672, "RabbitMQ"),
+        ("kubernetes-postgresql-0", 5432, 5432, "Postgres"),
+        ("kubernetes-solrcloud-0", 8983, 8983, "SolrCloud"),
+        ("kubernetes-zookeeper", 9181, 9181, "ZooKeeper"),
+        ("kubernetes-solrcloud-zookeeper-0", 9983, 2181, "SolrZooKeeper")
     ]
 
     # Prepare terminal commands for port forwarding

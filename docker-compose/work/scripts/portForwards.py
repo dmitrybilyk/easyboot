@@ -69,7 +69,7 @@ def main():
     else:
         hostname = vmSubIp
 
-    hostname = "lab-enc-stage1.lab.zoomint.com"
+    # hostname = "lab-enc-stage1.lab.zoomint.com"
 
     username = 'root'
     password = 'zoomcallrec'

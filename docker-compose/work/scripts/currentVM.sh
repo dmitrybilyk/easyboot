@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the path to the config file
-CONFIG_FILE="/home/dmytro/.kube/config"
+CONFIG_FILE="$HOME/.kube/config"
 
 # Check if the config file exists
 if [[ ! -f "$CONFIG_FILE" ]]; then

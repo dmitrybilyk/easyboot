@@ -12,5 +12,5 @@ SINCE_MINUTES=${2:-5}
 TO_FOLLOW=${3:-true}
 
 # Execute the Python script with the provided arguments
-python3 /home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/logs.py "$POD_NAME" "$SINCE_MINUTES" "$TO_FOLLOW"
+python3 $HOME/dev/projects/easyboot/docker-compose/work/scripts/logs.py "$POD_NAME" "$SINCE_MINUTES" "$TO_FOLLOW"
 

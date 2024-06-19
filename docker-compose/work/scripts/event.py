@@ -23,7 +23,7 @@ def get_credentials():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                '/home/dmytro/dev/projects/easyboot/docker-compose/work/utils/credentials.json', SCOPES)
+                '~/dev/projects/easyboot/docker-compose/work/utils/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
 
         # Save the credentials for the next run

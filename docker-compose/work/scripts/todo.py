@@ -8,7 +8,7 @@ from googleapiclient.http import MediaFileUpload
 SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/keep']
 
 # Path to the credentials JSON file downloaded from Google Cloud Console
-SERVICE_ACCOUNT_FILE = '/home/dmytro/dev/projects/easyboot/docker-compose/work/utils/credentials.json'
+SERVICE_ACCOUNT_FILE = '~/dev/projects/easyboot/docker-compose/work/utils/credentials.json'
 
 # Path to save the JSON file locally
 LOCAL_JSON_FILE_PATH = 'local_file.json'

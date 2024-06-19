@@ -41,7 +41,7 @@ def import_certificate(certificate_path, hostname):
     alias = f"{hostname[:50]}_{random_chars}"  # Limit alias length to 64 characters
 
     # Import the certificate into Java keystore (cacerts)
-    keystore_path = "/home/dmytro/.jdks/corretto-17.0.10/lib/security/cacerts"
+    keystore_path = "~/.jdks/corretto-17.0.10/lib/security/cacerts"
     keystore_password = "changeit"  # Default Java keystore password
 
     # Construct the keytool command

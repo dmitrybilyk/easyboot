@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define your Docker Compose directory path
-compose_dir="/home/dmytro/dev/projects/easyboot/docker-compose/work"
+compose_dir="$HOME/dev/projects/easyboot/docker-compose/work"
 
 # Change directory to the Docker Compose directory
 cd "$compose_dir" || exit

@@ -7,4 +7,4 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # Execute Python script with parameters
-/home/dmytro/dev/projects/easyboot/venv/bin/python3 /home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/event.py "$@"
+$HOME/dev/projects/easyboot/venv/bin/python3 $HOME/dev/projects/easyboot/docker-compose/work/scripts/event.py "$@"

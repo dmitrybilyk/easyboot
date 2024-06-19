@@ -72,7 +72,7 @@ def main():
     username = 'root'
     password = 'zoomcallrec'
     remote_path = '.kube/config'
-    local_path = '/home/dmytro/.kube/config'
+    local_path = '~/.kube/config'
 
     # Download Kubernetes config file from the remote server
     ssh_download_file(hostname, username, password, remote_path, local_path)

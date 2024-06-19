@@ -8,4 +8,4 @@ SERVICE_NAME=$2
 TAG_VERSION=$3
 
 # Run Python script with parameters
-/home/dmytro/dev/projects/easyboot/venv/bin/python /home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/buildAndPushImage.py "$VM_IP" "$SERVICE_NAME" "$TAG_VERSION"
+$HOME/dev/projects/easyboot/venv/bin/python $HOME/dev/projects/easyboot/docker-compose/work/scripts/buildAndPushImage.py "$VM_IP" "$SERVICE_NAME" "$TAG_VERSION"

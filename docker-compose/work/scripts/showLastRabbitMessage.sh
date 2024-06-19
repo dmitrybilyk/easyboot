@@ -7,5 +7,5 @@ if [ -z "$1" ]; then
 fi
 
 # Run the Python script with the provided queue name
-/home/dmytro/dev/projects/easyboot/venv/bin/python /home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/showLatestRabbitMessage.py "$1"
+$HOME/dev/projects/easyboot/venv/bin/python $HOME/dev/projects/easyboot/docker-compose/work/scripts/showLatestRabbitMessage.py "$1"
 

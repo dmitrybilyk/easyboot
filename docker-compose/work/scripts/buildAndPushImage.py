@@ -12,73 +12,67 @@ def get_input(prompt, type_func):
             return user_input
         except ValueError:
             print("Invalid input. Please enter a valid value of the specified type.")
-vmSubIp = get_input("Enter vm IP: ", str)
 
+# Initialize lists
 paths = [
-    ("/home/dmytro/dev/projects/data/service"),
-    ("/home/dmytro/dev/projects/interaction-service"),
-    ("/home/dmytro/dev/projects/conversations/service"),
-    ("/home/dmytro/dev/projects/correlation/service"),
-    ("/home/dmytro/dev/projects/zqm-connector/service"),
-    ("/home/dmytro/dev/projects/scorecard"),
-    ("/home/dmytro/dev/projects/scheduler/service"),
-    ("/home/dmytro/dev/projects/framework/service"),
-    ("/home/dmytro/dev/projects/integrations/service"),
-    ("/home/dmytro/dev/projects/automatedqm"),
-    ("/home/dmytro/dev/projects/interaction-player/webapp"),
-    ("/home/dmytro/dev/projects/speechrec/core")
+    os.path.expanduser("~/dev/projects/data/service"),
+    os.path.expanduser("~/dev/projects/interaction-service"),
+    os.path.expanduser("~/dev/projects/conversations/service"),
+    os.path.expanduser("~/dev/projects/correlation/service"),
+    os.path.expanduser("~/dev/projects/zqm-connector/service"),
+    os.path.expanduser("~/dev/projects/scorecard"),
+    os.path.expanduser("~/dev/projects/scheduler/service"),
+    os.path.expanduser("~/dev/projects/framework/service"),
+    os.path.expanduser("~/dev/projects/integrations/service"),
+    os.path.expanduser("~/dev/projects/automatedqm"),
+    os.path.expanduser("~/dev/projects/interaction-player/webapp"),
+    os.path.expanduser("~/dev/projects/speechrec/core")
 ]
 
 mvn_apps = [
-    ("/home/dmytro/dev/projects/data/service"),
-    ("/home/dmytro/dev/projects/conversations/service"),
-    ("/home/dmytro/dev/projects/correlation/service"),
-    ("/home/dmytro/dev/projects/zqm-connector/service"),
-    ("/home/dmytro/dev/projects/scorecard"),
-    ("/home/dmytro/dev/projects/scheduler/service"),
-    ("/home/dmytro/dev/projects/framework/service"),
-    ("/home/dmytro/dev/projects/integrations/service"),
-    ("/home/dmytro/dev/projects/interaction-player/webapp")
+    os.path.expanduser("~/dev/projects/data/service"),
+    os.path.expanduser("~/dev/projects/conversations/service"),
+    os.path.expanduser("~/dev/projects/correlation/service"),
+    os.path.expanduser("~/dev/projects/zqm-connector/service"),
+    os.path.expanduser("~/dev/projects/scorecard"),
+    os.path.expanduser("~/dev/projects/scheduler/service"),
+    os.path.expanduser("~/dev/projects/framework/service"),
+    os.path.expanduser("~/dev/projects/integrations/service"),
+    os.path.expanduser("~/dev/projects/interaction-player/webapp")
 ]
 
 names = [
-    ("data"),
-    ("interaction-service"),
-    ("conversations"),
-    ("correlation"),
-    ("zqm-connector"),
-    ("scorecard"),
-    ("scheduler"),
-    ("framework"),
-    ("integrations"),
-    ("automatedqm"),
-    ("interaction-player"),
-    ("speechrec")
+    "data",
+    "interaction-service",
+    "conversations",
+    "correlation",
+    "zqm-connector",
+    "scorecard",
+    "scheduler",
+    "framework",
+    "integrations",
+    "automatedqm",
+    "interaction-player",
+    "speechrec"
 ]
 
 resources_names = [
-    ("encourage-data"),
-    ("interaction-service"),
-    ("encourage-conversations"),
-    ("encourage-correlation"),
-    ("encourage-zqm-connector"),
-    ("scorecard"),
-    ("encourage-scheduler"),
-    ("encourage-framework"),
-    ("encourage-integrations"),
-    ("automated-qm"),
-    ("interaction-player"),
-    ("speechrec")
+    "encourage-data",
+    "interaction-service",
+    "encourage-conversations",
+    "encourage-correlation",
+    "encourage-zqm-connector",
+    "scorecard",
+    "encourage-scheduler",
+    "encourage-framework",
+    "encourage-integrations",
+    "automated-qm",
+    "interaction-player",
+    "speechrec"
 ]
 
-# Define the new tag for the Docker image
-new_tag = 'data:3.1.17'
-
-
-
-
-
-# vmSubIp = "85"
+# Get user inputs
+vmSubIp = get_input("Enter VM IP: ", str)
 
 service_name = get_input("Enter service name: ", str)
 
@@ -376,7 +370,7 @@ if __name__ == "__main__":
 username = 'root'
 password = 'zoomcallrec'
 remote_path = '.kube/config'
-local_path = '/home/dmytro/.kube/config'
+local_path = os.path.expanduser('~/.kube/config')
 
 remote_port = 5000
 local_port = 5000
@@ -423,12 +417,6 @@ def execute_kubectl_command(hostname, username, password, kubectl_command):
 
 # Call the function to copy the file
 copy_file_from_remote(hostname, username, password, remote_path, local_path)
-
-
-
-# hostname = "vm085.eng.cz.zoomint.com"
-# username = "root"
-# password = "zoomcallrec"
 
 # YAML content to replace /etc/rancher/rke2/registries.yaml
 yaml_content = """\

@@ -4,7 +4,7 @@
 PYTHON_EXECUTABLE=python3
 
 # Define your Python script path
-PYTHON_SCRIPT=/home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/manageDeployment.py
+PYTHON_SCRIPT=$HOME/dev/projects/easyboot/docker-compose/work/scripts/manageDeployment.py
 
 # Check if at least two arguments are passed
 if [ $# -ge 2 ]; then

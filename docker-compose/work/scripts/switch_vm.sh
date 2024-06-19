@@ -11,5 +11,5 @@ else
 fi
 
 # Execute the Python script with the provided arguments
-python3 /home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/switch_vm.py "$VM_SUB_IP"
+$HOME/dev/projects/easyboot/venv/bin/python $HOME/dev/projects/easyboot/docker-compose/work/scripts/switch_vm.py "$VM_SUB_IP"
 

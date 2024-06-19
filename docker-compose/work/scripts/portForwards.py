@@ -1,6 +1,7 @@
 import paramiko
 import subprocess
 import sys
+import os
 
 def run_command(command):
     """Helper function to run shell commands."""
@@ -8,7 +9,6 @@ def run_command(command):
     output, error = process.communicate()
     return output.decode().strip(), error.decode().strip()
 
-# Function to prompt user for input of a specific type
 def get_input(prompt, type_func):
     while True:
         try:
@@ -42,7 +42,7 @@ def filter_pods_by_name(pods_output, keyword):
     """Filter pods by name based on a keyword."""
     return [line.split()[0] for line in pods_output.split('\n') if keyword in line]
 
-def port_forward(pod_name, local_port, remote_port, title):
+def port_forward(pod_name, local_port, remote_port):
     """Create a port forwarding command for a specific pod."""
     return f"kubectl port-forward {pod_name} {local_port}:{remote_port}"
 
@@ -61,7 +61,6 @@ def main():
         # Provide remote server details and paths
         vmSubIp = get_input("Enter vm IP: ", str)
 
-    # print("You entered:", vmIp)
     if not vmSubIp:
         hostname = "vm085.eng.cz.zoomint.com"
     elif len(vmSubIp) == 3:
@@ -69,12 +68,21 @@ def main():
     else:
         hostname = vmSubIp
 
-    # hostname = "lab-enc-stage1.lab.zoomint.com"
-
     username = 'root'
     password = 'zoomcallrec'
-    remote_path = '.kube/config'
-    local_path = '/home/dmytro/.kube/config'
+    remote_path = '/root/.kube/config'  # Absolute remote path
+    local_path = os.path.expanduser('~/.kube/config')  # Expand user home directory
+
+    # Ensure the local directory exists
+    local_dir = os.path.dirname(local_path)
+    if not os.path.exists(local_dir):
+        os.makedirs(local_dir)
+
+    # Check if kubectl is installed
+    kubectl_check, _ = run_command("which kubectl")
+    if not kubectl_check:
+        print("kubectl is not installed. Please install kubectl and try again.")
+        sys.exit(1)
 
     # Download Kubernetes config file from the remote server
     ssh_download_file(hostname, username, password, remote_path, local_path)
@@ -109,11 +117,14 @@ def main():
     for pod_keyword, local_port, remote_port, title in port_mappings:
         filtered_pods = filter_pods_by_name(pods_output, pod_keyword)
         for pod in filtered_pods:
-            port_forward_command = port_forward(pod, local_port, remote_port, title)
+            port_forward_command = port_forward(pod, local_port, remote_port)
             terminal_commands.extend(["--tab", f"--title={title}", "--command", port_forward_command])
 
-    # Open xfce4-terminal with tabs for port forwarding
-    open_terminal_with_tabs(terminal_commands)
+    if terminal_commands:
+        # Open xfce4-terminal with tabs for port forwarding
+        open_terminal_with_tabs(terminal_commands)
+    else:
+        print("No pods found for the specified keywords.")
 
 if __name__ == "__main__":
     main()

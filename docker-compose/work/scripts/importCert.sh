@@ -10,6 +10,6 @@ fi
 hostname="$1"
 
 # Run the Python script with the provided hostname
-/home/dmytro/dev/projects/easyboot/venv/bin/python /home/dmytro/dev/projects/easyboot/docker-compose/work/scripts/importCert.py "$hostname"
+$HOME/dev/projects/easyboot/venv/bin/python $HOME/dev/projects/easyboot/docker-compose/work/scripts/importCert.py "$hostname"
 
 
